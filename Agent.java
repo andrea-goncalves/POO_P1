@@ -8,18 +8,15 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 
 
-public class Agent extends Character
+public abstract class Agent extends Character
 {
     /**
      * Act - do whatever the Agent wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    private String leftKey;
-    private String rightKey;
-    private String jumpKey;
-    
-    private int speed=7;
-    private int jumpStrength = 18;
+    private String leftKey, rightKey, jumpKey;
+    private int speed;
+    private int jumpStrength;
     
     private GreenfootImage[] walkRight, walkLeft;
     private GreenfootImage[] jumpRight, jumpLeft;
@@ -28,26 +25,36 @@ public class Agent extends Character
     private int frameDelay = 0;        
     private boolean facingRight = true;
     
-    public Agent (String leftKey, String rightKey, String jumpKey, String prefix){
+    public Agent (int lives, int speed, int jumpStrength, String leftKey, String rightKey, String jumpKey, String prefix){
+        super(lives);
+        this.speed = speed;
+        this.jumpStrength = jumpStrength;
         this.leftKey = leftKey;
         this.rightKey = rightKey;
         this.jumpKey = jumpKey;
+        
         walkRight = loadFrames(prefix + "_walk", 4);
         walkLeft  = mirrorAll(walkRight);
-    
         jumpRight = loadFrames(prefix + "_jump", 7);
         jumpLeft  = mirrorAll(jumpRight);
         
         setImage(walkRight[0]);
     }
-
+    protected abstract void useAbility();//falta completar isto
     public void act()
     {
         checkKeys();
         checkFall();
+        updateInvulnerability();
+        getWorld().showText("Lives: " + getLives(), 60, 20);
     }
     
-    private void  checkKeys(){
+    @Override
+    protected void onNoLives()
+    {
+        // TODO: go back to the last checkpoint once the levels exist
+    }
+        private void  checkKeys(){
         boolean moving = false;
         
         if (Greenfoot.isKeyDown(leftKey) &&  !touchingWall(-getImage().getWidth()/2 - speed)){
