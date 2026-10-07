@@ -22,3 +22,4 @@ public class Wall extends Scenery
         super(width, height);
     }
 }
+

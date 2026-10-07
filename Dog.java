@@ -7,8 +7,7 @@ import greenfoot.*;
  */
 public class Dog extends Enemy 
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    
 
     /**
      * Constructor for objects of class Dog
@@ -20,9 +19,9 @@ public class Dog extends Enemy
         img.fill();
         setImage(img);
     }
-    @Override
-    public void neutralize(){
-        // TODO: fall asleep (stop moving for a few seconds)
-    }
+    
+    //public void neutralize(){
+        // falta fall asleep (stop moving for a few seconds)
+    //}
     
 }

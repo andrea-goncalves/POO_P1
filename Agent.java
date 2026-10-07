@@ -1,22 +1,16 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/**
- * Write a description of class Agent here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 
-
-public abstract class Agent extends Character
+public class Agent extends Character
 {
-    /**
-     * Act - do whatever the Agent wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+   
     private String leftKey, rightKey, jumpKey;
     private int speed;
     private int jumpStrength;
+    private boolean jumpKeyReleased = false;
+    private int airDrift=0;
+    private static final int DRIFT_SPEED=3;
+
     
     private GreenfootImage[] walkRight, walkLeft;
     private GreenfootImage[] jumpRight, jumpLeft;
@@ -40,22 +34,19 @@ public abstract class Agent extends Character
         
         setImage(walkRight[0]);
     }
-    protected abstract void useAbility();//falta completar isto
+    
     public void act()
     {
         checkKeys();
         checkFall();
         updateInvulnerability();
-        getWorld().showText("Lives: " + getLives(), 60, 20);
+        
     }
     
-    @Override
-    protected void onNoLives()
-    {
-        // TODO: go back to the last checkpoint once the levels exist
-    }
-        private void  checkKeys(){
+    private void  checkKeys(){
         boolean moving = false;
+        boolean jumpDown = Greenfoot.isKeyDown(jumpKey);
+        boolean grounded = onGround();
         
         if (Greenfoot.isKeyDown(leftKey) &&  !touchingWall(-getImage().getWidth()/2 - speed)){
             
@@ -69,14 +60,47 @@ public abstract class Agent extends Character
             facingRight = true;
             moving = true;
         }
-        if(Greenfoot.isKeyDown(jumpKey)&& onGround()){
+        
+        if (grounded && jumpDown) {
+        
             jump(jumpStrength);
-
+            airDrift = facingRight ? DRIFT_SPEED : -DRIFT_SPEED;
+            jumpKeyReleased = false;
         }
+        else if (grounded) {
+           
+            setGliding(false);
+            jumpKeyReleased = false;
+            airDrift = 0;
+        }
+        else {
+           
+            if (!jumpDown) {
+                jumpKeyReleased = true;
+            }
+            setGliding(jumpDown && jumpKeyReleased && getVerticalSpeed() > 0);
+        
+            if (!moving) {
+                driftInAir();
+            }
+        }
+
         animate(moving);
         
     }
-         private void animate(boolean moving) {
+    
+        private void driftInAir()
+    {
+        if (airDrift == 0) {
+            return;
+        }
+        int edge = (airDrift > 0 ? 1 : -1) * getImage().getWidth() / 2;
+        if (!touchingWall(edge + airDrift)) {
+          setLocation(getX() + airDrift, getY());
+        }
+    }
+    
+    private void animate(boolean moving) {
         if (!onGround()) {
             int index = jumpFrameIndex();
             setImage(facingRight ? jumpRight[index] : jumpLeft[index]);
@@ -100,7 +124,7 @@ public abstract class Agent extends Character
         return Math.max(0, Math.min(last, index));
     }
             
-        private GreenfootImage[] loadFrames(String prefix, int count) {
+    private GreenfootImage[] loadFrames(String prefix, int count) {
         GreenfootImage[] frames = new GreenfootImage[count];
         for (int i = 0; i < count; i++) {
             frames[i] = new GreenfootImage(prefix + (i + 1) + ".png");
@@ -116,7 +140,5 @@ public abstract class Agent extends Character
         }
         return flipped;
     }
-    
-   
-    
+       
 }

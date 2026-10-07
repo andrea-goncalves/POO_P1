@@ -1,17 +1,8 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/**
- * Write a description of class Enemy here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
+
 public abstract class Enemy extends Character
 {
-    /**
-     * Act - do whatever the Enemy wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
     
     private int speed;
     private int direction = 1;
@@ -43,6 +34,6 @@ public abstract class Enemy extends Character
         setLocation(getX() + direction * speed, getY());
     }
     
-    public abstract void neutralize();//still need to work on this
+    //public abstract void neutralize();//still need to work on this
     
 }

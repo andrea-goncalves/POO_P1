@@ -1,21 +1,18 @@
+
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/**
- * Write a description of class Character here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
+
+
 public abstract class Character extends Actor
 {
-    /**
-     * Act - do whatever the Character wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+   
     
-    private int vSpeed=0;//incremento do movimento vertical
-    private final int acceleration = 2;
-        
+    private double vSpeed=0;
+    private final double ACCELARATION = 1;
+    private boolean gliding=false;
+    private static final double GLIDE_FACTOR=0.25;
+    private static final double GLIDE_MAX_SPEED=3;
+    
     private int lives;
     private int invulnerableTimer = 0;  
     private static final int INVULNERABLE_TIME = 60;
@@ -25,22 +22,26 @@ public abstract class Character extends Actor
         this.lives = lives;
     }
     
+    public void act(){}
+    
     public void takeDamage()
     {
-        takeDamage(1);
+          takeDamage(1);
     }
     
     public void takeDamage(int amount)
     {
-        if (invulnerableTimer > 0) return;
+       if (invulnerableTimer > 0) { 
+           return; 
+       } 
     
         lives -= amount;
         invulnerableTimer = INVULNERABLE_TIME;
     
-        if (lives <= 0) {
+       if (lives <= 0) {
             lives = 0;
             onNoLives();
-        }
+       }
     }
     public int getLives()
     {
@@ -52,11 +53,14 @@ public abstract class Character extends Actor
     }
     protected void updateInvulnerability()
     {
-        if (invulnerableTimer > 0) invulnerableTimer--;
+        if (invulnerableTimer > 0) 
+            invulnerableTimer--;
     }
+    
     protected void onNoLives()
     {//alterar quando tenha os niveis
     }
+    
     protected void checkFall(){
         if (onGround()&& vSpeed >= 0){
             while (getOneObjectAtOffset(0, getImage().getHeight()/2, Ground.class) != null){
@@ -69,9 +73,21 @@ public abstract class Character extends Actor
         }
     }
     
+     protected void setGliding(boolean gliding) { 
+         this.gliding = gliding; 
+    } 
+        
     protected void fall(){
-        setLocation(getX(), getY()+ vSpeed);
-        vSpeed +=acceleration;
+        setLocation(getX(), getY()+ (int) vSpeed);
+        if (gliding && vSpeed>0){
+            vSpeed +=ACCELARATION* GLIDE_FACTOR;
+            if (vSpeed>GLIDE_MAX_SPEED){
+                vSpeed= GLIDE_MAX_SPEED;
+            }
+        }else {
+            vSpeed += ACCELARATION;
+        }
+        
     }
     
     protected void jump(int strength)
@@ -85,6 +101,7 @@ public abstract class Character extends Actor
     
     protected int getVerticalSpeed()
     {
-        return vSpeed;
+        return (int)vSpeed;
     }
 }
+
