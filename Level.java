@@ -5,7 +5,8 @@ public abstract class Level extends World
 {
 
     private int score = 0;
-    
+    private boolean powerUnlocked = false;
+
     
     Level(int width, int height)
     {    
@@ -25,13 +26,12 @@ public abstract class Level extends World
     
     protected abstract Level createNew();
     
-    public void act()
-    {
-        
+    public void act(){
+        checkPowerUnlock();
         checkRestart();
         
     }
-    
+
     private void checkRestart()
     {
         for (Agent agent : getObjects(Agent.class)) {
@@ -42,13 +42,23 @@ public abstract class Level extends World
         }
     }
     
-        public void addScore(int points)
-    {
+        public void addScore(int points){
         score += points;
     }
-        public int getScore()
-    {
+        public int getScore(){
         return score;
+    }
+    
+    public abstract int getUnlockScore();
+    public abstract String getPowerName();
+    public abstract void usePower(Agent user);
+    public boolean isPowerUnlocked(){
+        return powerUnlocked;
+    }
+    private void checkPowerUnlock(){
+        if (!powerUnlocked && score >= getUnlockScore()) {
+            powerUnlocked = true;
+        }
     }
     
 }

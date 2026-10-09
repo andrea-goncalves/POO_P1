@@ -8,10 +8,6 @@ import greenfoot.*;
 public class Dog extends Enemy 
 {
     
-
-    /**
-     * Constructor for objects of class Dog
-     */
     public Dog(){
         super(1, 3);
         GreenfootImage img = new GreenfootImage(50, 30);
@@ -19,9 +15,17 @@ public class Dog extends Enemy
         img.fill();
         setImage(img);
     }
+        
+    @Override
+    public void neutralize()
+    {
+        sleep(300);                       
+        getImage().setTransparency(100);  
+    }
     
-    //public void neutralize(){
-        // falta fall asleep (stop moving for a few seconds)
-    //}
-    
+    @Override
+    protected void onWake()
+    {
+        getImage().setTransparency(255);
+    }
 }

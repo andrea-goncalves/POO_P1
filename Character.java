@@ -103,5 +103,18 @@ public abstract class Character extends Actor
     {
         return (int)vSpeed;
     }
+    
+    protected boolean keepInsideWorld(){
+        int halfWidth = getImage().getWidth() / 2;
+        int minX = halfWidth;
+        int maxX = getWorld().getWidth() - halfWidth;
+    
+        int x = Math.max(minX, Math.min(maxX, getX()));
+        if (x != getX()) {
+            setLocation(x, getY());
+            return true;
+        }
+        return false;
+    }
 }
 

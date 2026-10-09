@@ -10,7 +10,10 @@ public class Agent extends Character
     private boolean jumpKeyReleased = false;
     private int airDrift=0;
     private static final int DRIFT_SPEED=3;
-
+    
+    private String powerKey;
+    private int powerCooldown = 0;
+    private static final int POWER_COOLDOWN = 240;
     
     private GreenfootImage[] walkRight, walkLeft;
     private GreenfootImage[] jumpRight, jumpLeft;
@@ -19,13 +22,14 @@ public class Agent extends Character
     private int frameDelay = 0;        
     private boolean facingRight = true;
     
-    public Agent (int lives, int speed, int jumpStrength, String leftKey, String rightKey, String jumpKey, String prefix){
+    public Agent (int lives, int speed, int jumpStrength, String leftKey, String rightKey, String jumpKey, String powerKey, String prefix){
         super(lives);
         this.speed = speed;
         this.jumpStrength = jumpStrength;
         this.leftKey = leftKey;
         this.rightKey = rightKey;
         this.jumpKey = jumpKey;
+        this.powerKey = powerKey;
         
         walkRight = loadFrames(prefix + "_walk", 4);
         walkLeft  = mirrorAll(walkRight);
@@ -39,8 +43,9 @@ public class Agent extends Character
     {
         checkKeys();
         checkFall();
+        keepInsideWorld();
         updateInvulnerability();
-        
+        checkPower();
     }
     
     private void  checkKeys(){
@@ -140,5 +145,18 @@ public class Agent extends Character
         }
         return flipped;
     }
-       
+        
+        private void checkPower(){
+        if (powerCooldown > 0) {
+            powerCooldown--;
+            return;
+        }
+        Level level = (Level) getWorld();
+        if (Greenfoot.isKeyDown(powerKey) && level.isPowerUnlocked()) {
+            level.usePower(this);
+            powerCooldown = POWER_COOLDOWN;
+        }
+    }
+    
+    
 }

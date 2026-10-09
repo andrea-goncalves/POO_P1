@@ -13,12 +13,20 @@ public class HUD extends Actor
     
     public void act()
     {
+        Level level = (Level) getWorld();
+        
         String text = "";
         for (Agent agent : getWorld().getObjects(Agent.class)) {
             text += "Lives: " + agent.getLives() + "     ";
         }
-        text += "Score: " + ((Level) getWorld()).getScore();
+        text += "Score: " + ((Level) getWorld()).getScore() + "     ";
 
+        if (level.isPowerUnlocked()) {
+            text += level.getPowerName() + ": READY";
+        } else {
+            text += level.getPowerName() + ": " + level.getScore() + "/" + level.getUnlockScore();
+        }
+        
         GreenfootImage img = getImage();
         img.clear();                      
         img.setColor(Color.WHITE);
