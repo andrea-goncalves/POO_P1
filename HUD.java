@@ -10,7 +10,6 @@ public class HUD extends Actor
     {
         setImage(new GreenfootImage(width, 30));
     }
-    
     public void act()
     {
         Level level = (Level) getWorld();

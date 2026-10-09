@@ -9,7 +9,6 @@ public class Clue extends Actor
     {
         this(10);
     }
-    
     public Clue(int points)
     {
         this.points = points;
@@ -21,8 +20,6 @@ public class Clue extends Actor
         img.drawOval(0, 0, 23, 23);
         setImage(img);
     }
-    
-    
     public void act()
     {
         if (isTouching(Agent.class)) {

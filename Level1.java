@@ -12,10 +12,11 @@ public class Level1 extends Level
         setBackground(background);
 
         addGround(0, 500, 960, 40);
+        //addPlatform(300, 380, 200); 
         //addWall(90, 400, 20, 100);       
         //addWall(490, 400, 20, 100);
 
-        addObject(new Dog(), 200, 470);
+        //addObject(new Dog(), 200, 470);
         addObject(new Agent(5, 6, 16, "a", "d", "w", "s", "zig"), 400, 300);
         //addObject(new Agent(5, 6, 16, "left", "right", "up", "down", "zag"), 400, 300);
         addObject(new Clue(), 300, 470);
@@ -33,13 +34,11 @@ public class Level1 extends Level
     {
         return 40;
     }
-    
     @Override
     public String getPowerName()
     {
         return "Whistle";
     }
-    
     @Override
     public void usePower(Agent user){
         Greenfoot.playSound("whistle.wav");
@@ -51,6 +50,4 @@ public class Level1 extends Level
             }
         }
     }        
-    
-    
 }

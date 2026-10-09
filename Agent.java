@@ -8,8 +8,10 @@ public class Agent extends Character
     private int speed;
     private int jumpStrength;
     private boolean jumpKeyReleased = false;
+    private boolean jumpKeyHeld = false;
     private int airDrift=0;
     private static final int DRIFT_SPEED=3;
+    private boolean moving = false;  
     
     private String powerKey;
     private int powerCooldown = 0;
@@ -37,12 +39,21 @@ public class Agent extends Character
         jumpLeft  = mirrorAll(jumpRight);
         
         setImage(walkRight[0]);
+        /*
+        for (GreenfootImage img : walkRight) {
+            System.out.println("walk: " + img.getWidth() + "x" + img.getHeight());
+        }
+        for (GreenfootImage img : jumpRight) {
+            System.out.println("jump: " + img.getWidth() + "x" + img.getHeight());
+        }
+        */
     }
     
     public void act()
     {
         checkKeys();
         checkFall();
+        animate(moving); 
         keepInsideWorld();
         updateInvulnerability();
         checkPower();
@@ -50,10 +61,9 @@ public class Agent extends Character
     }
     
     private void  checkKeys(){
-        boolean moving = false;
+        moving = false;
         boolean jumpDown = Greenfoot.isKeyDown(jumpKey);
         boolean grounded = onGround();
-        
         if (Greenfoot.isKeyDown(leftKey) &&  !touchingWall(-getImage().getWidth()/2 - speed)){
             
             setLocation(getX()-speed, getY());
@@ -66,8 +76,7 @@ public class Agent extends Character
             facingRight = true;
             moving = true;
         }
-        
-        if (grounded && jumpDown) {
+        if (grounded && jumpDown && !jumpKeyHeld) {
         
             jump(jumpStrength);
             airDrift = facingRight ? DRIFT_SPEED : -DRIFT_SPEED;
@@ -89,11 +98,8 @@ public class Agent extends Character
                 driftInAir();
             }
         }
-
-        animate(moving);
-        
+        jumpKeyHeld = jumpDown;
     }
-    
         private void driftInAir()
     {
         if (airDrift == 0) {
@@ -104,7 +110,17 @@ public class Agent extends Character
           setLocation(getX() + airDrift, getY());
         }
     }
-    
+        private void checkPower(){
+        if (powerCooldown > 0) {
+            powerCooldown--;
+            return;
+        }
+        Level level = (Level) getWorld();
+        if (Greenfoot.isKeyDown(powerKey) && level.isPowerUnlocked()) {
+            level.usePower(this);
+            powerCooldown = POWER_COOLDOWN;
+        }
+    }
     private void animate(boolean moving) {
         if (!onGround()) {
             int index = jumpFrameIndex();
@@ -129,16 +145,4 @@ public class Agent extends Character
         return Math.max(0, Math.min(last, index));
     }
              
-        private void checkPower(){
-        if (powerCooldown > 0) {
-            powerCooldown--;
-            return;
-        }
-        Level level = (Level) getWorld();
-        if (Greenfoot.isKeyDown(powerKey) && level.isPowerUnlocked()) {
-            level.usePower(this);
-            powerCooldown = POWER_COOLDOWN;
-        }
-    }
-  
 }

@@ -49,15 +49,6 @@ public abstract class Enemy extends Character
         }
         setImage(direction > 0 ? walkRight[frame] : walkLeft[frame]);
     }
-    
-    protected void sleep(int acts){
-        sleepTimer = acts;
-    }
-    
-    protected void onWake(){}
-    
-    public abstract void neutralize();
-        
     protected void patrol()
     {
         if (touchingWall(direction * (getImage().getWidth()/2 + speed))) {
@@ -68,8 +59,7 @@ public abstract class Enemy extends Character
             direction = -direction;
         }
     }
-       
-      private void damageAgentOnContact(){
+    private void damageAgentOnContact(){
         Agent agent = (Agent) getOneIntersectingObject(Agent.class);
         if (agent != null && !agent.isInvulnerable()) {
             agent.takeDamage();
@@ -77,7 +67,11 @@ public abstract class Enemy extends Character
         }
     }
     protected void onHitAgent(){}
-    
+    protected void sleep(int acts){
+        sleepTimer = acts;
+    }
+    protected void onWake(){}
+    public abstract void neutralize();
     public boolean isInvulnerable(){
         return invulnerableTimer > 0;
     }
