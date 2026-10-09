@@ -12,6 +12,7 @@ public abstract class Enemy extends Character
     private int direction = 1;
     private int sleepTimer = 0;
     
+    private boolean moving = false;
     public Enemy(int lives, int speed)
     {
         super(lives);              
@@ -28,8 +29,9 @@ public abstract class Enemy extends Character
             }
             return;
         }
+        moving = false;
         patrol();
-        animateWalk();
+        animate();
         checkFall();
         damageAgentOnContact();
     }
@@ -38,9 +40,15 @@ public abstract class Enemy extends Character
         walkLeft = mirrorAll(walkRight);
         setImage(walkRight[0]);
     }
-        private void animateWalk(){
+    protected void animate(){
         if (walkRight == null) {
             return;                         
+        }
+        if (!moving) {
+            setImage(direction > 0 ? walkRight[0] : walkLeft[0]);  
+            frame = 0;
+            frameDelay = 0;
+            return;
         }
         frameDelay++;
         if (frameDelay >= ANIMATION_DELAY) {
@@ -55,6 +63,7 @@ public abstract class Enemy extends Character
             direction = -direction;
         }
         setLocation(getX() + direction * speed, getY());
+        moving = true;
         if (keepInsideWorld()) {
             direction = -direction;
         }
@@ -74,5 +83,12 @@ public abstract class Enemy extends Character
     public abstract void neutralize();
     public boolean isInvulnerable(){
         return invulnerableTimer > 0;
+    }
+    
+    protected int getDirection(){
+        return direction;
+    }
+    protected void setDirection(int direction){
+        this.direction = direction;
     }
 }

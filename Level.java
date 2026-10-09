@@ -11,7 +11,7 @@ public abstract class Level extends World
     Level(int width, int height)
     {    
         super(width, height, 1);
-        setPaintOrder(Agent.class, Enemy.class,Clue.class, Scenery.class, Ceiling.class);
+        setPaintOrder(HUD.class, DarknessOverlay.class, Agent.class, Enemy.class,Bullet.class, Clue.class, Scenery.class, Ceiling.class);
         addObject(new HUD(width), width / 2, 15);
     }
     public void act(){
