@@ -10,10 +10,9 @@ public class Dog extends Enemy
     
     public Dog(){
         super(1, 3);
-        GreenfootImage img = new GreenfootImage(50, 30);
-        img.setColor(Color.ORANGE);
-        img.fill();
-        setImage(img);
+        setWalkFrames("dog_walk", 4);
+        
+
     }
         
     @Override
@@ -27,5 +26,10 @@ public class Dog extends Enemy
     protected void onWake()
     {
         getImage().setTransparency(255);
+    }
+    
+    @Override
+    protected void onHitAgent(){
+        Greenfoot.playSound("bark.wav");
     }
 }

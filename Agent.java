@@ -46,6 +46,7 @@ public class Agent extends Character
         keepInsideWorld();
         updateInvulnerability();
         checkPower();
+        applyBlink();
     }
     
     private void  checkKeys(){
@@ -79,7 +80,6 @@ public class Agent extends Character
             airDrift = 0;
         }
         else {
-           
             if (!jumpDown) {
                 jumpKeyReleased = true;
             }
@@ -128,24 +128,7 @@ public class Agent extends Character
         int index = (getVerticalSpeed() + jumpStrength) * last / (2 * jumpStrength);
         return Math.max(0, Math.min(last, index));
     }
-            
-    private GreenfootImage[] loadFrames(String prefix, int count) {
-        GreenfootImage[] frames = new GreenfootImage[count];
-        for (int i = 0; i < count; i++) {
-            frames[i] = new GreenfootImage(prefix + (i + 1) + ".png");
-        }
-        return frames;
-    }
-    
-    private GreenfootImage[] mirrorAll(GreenfootImage[] frames) {
-        GreenfootImage[] flipped = new GreenfootImage[frames.length];
-        for (int i = 0; i < frames.length; i++) {
-            flipped[i] = new GreenfootImage(frames[i]);   
-            flipped[i].mirrorHorizontally();
-        }
-        return flipped;
-    }
-        
+             
         private void checkPower(){
         if (powerCooldown > 0) {
             powerCooldown--;
@@ -157,6 +140,5 @@ public class Agent extends Character
             powerCooldown = POWER_COOLDOWN;
         }
     }
-    
-    
+  
 }

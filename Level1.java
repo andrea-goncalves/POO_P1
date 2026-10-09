@@ -23,7 +23,6 @@ public class Level1 extends Level
         addObject(new Clue(20), 800, 470); 
     }
         
-    
     @Override
     protected Level createNew()
     {
@@ -41,10 +40,10 @@ public class Level1 extends Level
         return "Whistle";
     }
     
-    /** Puts every dog within range to sleep. */
     @Override
-    public void usePower(Agent user)
-    {
+    public void usePower(Agent user){
+        Greenfoot.playSound("whistle.wav");
+        
         for (Dog dog : getObjects(Dog.class)) {
             double distance = Math.hypot(dog.getX() - user.getX(), dog.getY() - user.getY());
             if (distance <= 250) {

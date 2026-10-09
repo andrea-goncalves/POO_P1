@@ -14,7 +14,7 @@ public abstract class Character extends Actor
     private static final double GLIDE_MAX_SPEED=3;
     
     private int lives;
-    private int invulnerableTimer = 0;  
+    protected int invulnerableTimer = 0;  
     private static final int INVULNERABLE_TIME = 60;
     
     public Character(int lives)
@@ -23,6 +23,22 @@ public abstract class Character extends Actor
     }
     
     public void act(){}
+
+    protected GreenfootImage[] loadFrames(String prefix, int count) {
+        GreenfootImage[] frames = new GreenfootImage[count];
+        for (int i = 0; i < count; i++) {
+            frames[i] = new GreenfootImage(prefix + (i + 1) + ".png");
+        }
+        return frames;
+    }
+    protected GreenfootImage[] mirrorAll(GreenfootImage[] frames) {
+        GreenfootImage[] flipped = new GreenfootImage[frames.length];
+        for (int i = 0; i < frames.length; i++) {
+            flipped[i] = new GreenfootImage(frames[i]);   
+            flipped[i].mirrorHorizontally();
+        }
+        return flipped;
+    }
     
     public void takeDamage()
     {
@@ -57,8 +73,8 @@ public abstract class Character extends Actor
             invulnerableTimer--;
     }
     
-    protected void onNoLives()
-    {//alterar quando tenha os niveis
+    protected void onNoLives(){
+        //alterar quando tenha os niveis
     }
     
     protected void checkFall(){
@@ -115,6 +131,23 @@ public abstract class Character extends Actor
             return true;
         }
         return false;
+    }
+    
+    public boolean isInvulnerable(){
+        return invulnerableTimer > 0;
+    }
+    
+    protected void applyBlink(){
+        if (!isInvulnerable()) {
+            return;
+        }
+    
+        double progress = (double) (INVULNERABLE_TIME - invulnerableTimer) / INVULNERABLE_TIME;
+        int transparency = (int) (177 + 78 * Math.cos(4 * Math.PI * progress));
+    
+        GreenfootImage copy = new GreenfootImage(getImage());  
+        copy.setTransparency(transparency);
+        setImage(copy);
     }
 }
 
