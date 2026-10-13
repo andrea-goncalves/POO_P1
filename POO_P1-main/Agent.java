@@ -1,0 +1,179 @@
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
+
+public class Agent extends Character
+{
+   
+    private String leftKey, rightKey, jumpKey;
+    private int speed;
+    private int jumpStrength;
+    private boolean jumpKeyReleased = false;
+    private boolean jumpKeyHeld = false;
+    private int airDrift=0;
+    private static final int DRIFT_SPEED=3;
+    private boolean moving = false;  
+    
+    private String powerKey;
+    private int powerCooldown = 0;
+    private static final int POWER_COOLDOWN = 240;
+    
+    private GreenfootImage glideRight, glideLeft;
+    private GreenfootImage[] walkRight, walkLeft;
+    private GreenfootImage[] jumpRight, jumpLeft;
+    
+    
+    
+    private int frame = 0;
+    private int frameDelay = 0;        
+    private boolean facingRight = true;
+    
+    public Agent (int lives, int speed, int jumpStrength, String leftKey, String rightKey, String jumpKey, String powerKey, String prefix){
+        super(lives);
+        this.speed = speed;
+        this.jumpStrength = jumpStrength;
+        this.leftKey = leftKey;
+        this.rightKey = rightKey;
+        this.jumpKey = jumpKey;
+        this.powerKey = powerKey;
+        
+        walkRight = loadFrames(prefix + "_walk", 4);
+        walkLeft  = mirrorAll(walkRight);
+        jumpRight = loadFrames(prefix + "_jump", 8);
+        jumpLeft  = mirrorAll(jumpRight);
+        glideRight = new GreenfootImage("zig_jump9.png");
+        glideLeft = new GreenfootImage(glideRight);
+        glideLeft.mirrorHorizontally();
+        
+        setImage(walkRight[0]);
+        /*
+        for (GreenfootImage img : walkRight) {
+            System.out.println("walk: " + img.getWidth() + "x" + img.getHeight());
+        }
+        for (GreenfootImage img : jumpRight) {
+            System.out.println("jump: " + img.getWidth() + "x" + img.getHeight());
+        }
+        */
+    }
+    
+    public void act()
+    {
+        checkKeys();
+        checkFall();
+        animate(moving); 
+        keepInsideWorld();
+        updateInvulnerability();
+        checkPower();
+        applyBlink();
+    }
+    
+    private void  checkKeys(){
+        moving = false;
+        boolean jumpDown = Greenfoot.isKeyDown(jumpKey);
+        boolean grounded = onGround();
+    
+        if (Greenfoot.isKeyDown(leftKey) && !touchingWall(-getImage().getWidth()/2 - speed)) {
+            sideScrolling(-speed); // Usa sideScrolling em vez de setLocation
+            facingRight = false;
+            moving = true;
+        }
+        if (Greenfoot.isKeyDown(rightKey) && !touchingWall(getImage().getWidth()/2 + speed)) {
+            sideScrolling(speed); // Usa sideScrolling em vez de setLocation
+            facingRight = true;
+            moving = true;
+        }
+        if (grounded && jumpDown && !jumpKeyHeld) {
+        
+            jump(jumpStrength);
+            airDrift = facingRight ? DRIFT_SPEED : -DRIFT_SPEED;
+            jumpKeyReleased = false;
+        }
+        else if (grounded) {
+           
+            setGliding(false);
+            jumpKeyReleased = false;
+            airDrift = 0;
+        }
+        else {
+            if (!jumpDown) {
+                jumpKeyReleased = true;
+            }
+            setGliding(jumpDown && jumpKeyReleased && getVerticalSpeed() > 0);
+        
+            if (!moving) {
+                driftInAir();
+            }
+        }
+        jumpKeyHeld = jumpDown;
+    }
+        private void driftInAir()
+    {
+        if (airDrift == 0) {
+            return;
+        }
+        int edge = (airDrift > 0 ? 1 : -1) * getImage().getWidth() / 2;
+        if (!touchingWall(edge + airDrift)) {
+          setLocation(getX() + airDrift, getY());
+        }
+    }
+        private void checkPower(){
+        if (powerCooldown > 0) {
+            powerCooldown--;
+            return;
+        }
+        Level level = (Level) getWorld();
+        if (Greenfoot.isKeyDown(powerKey) && level.isPowerUnlocked()) {
+            level.usePower(this);
+            powerCooldown = POWER_COOLDOWN;
+        }
+    }
+    private void animate(boolean moving) {
+        if (!onGround() && Greenfoot.isKeyDown(jumpKey)
+        && jumpKeyReleased && getVerticalSpeed() > 0) {
+
+        setImage(facingRight ? glideRight : glideLeft);
+        return;
+        }
+        if (!onGround()) {
+            int index = jumpFrameIndex();
+            setImage(facingRight ? jumpRight[index] : jumpLeft[index]);
+            return;
+        }
+        if (!moving) {
+            setImage(facingRight ? walkRight[0] : walkLeft[0]);   
+            return;
+        }
+        frameDelay++;
+        if (frameDelay >= 5) {            
+            frameDelay = 0;
+            frame = (frame + 1) % walkRight.length;
+        }
+        setImage(facingRight ? walkRight[frame] : walkLeft[frame]);
+    }
+    private int jumpFrameIndex()
+    {
+        int last = jumpRight.length - 1;
+        int index = (getVerticalSpeed() + jumpStrength) * last / (2 * jumpStrength);
+        return Math.max(0, Math.min(last, index));
+    }
+    private void sideScrolling(int moveX) {
+    Level level = (Level) getWorld();
+    int worldWidth = level.getWidth();
+    
+    // Limites da câmera na janela (ex: 50% do centro)
+    int rightBound = (int) (worldWidth * 0.5);
+    int leftBound  = (int) (worldWidth * 0.3);
+
+    // Se o jogador tenta passar do limite da DIREITA
+    if (getX() > rightBound && moveX > 0) {
+        level.scrollWorld(-moveX); // Empurra todo o cenário para a esquerda
+    }
+    // Se o jogador tenta passar do limite da ESQUERDA
+    else if (getX() < leftBound && moveX < 0) {
+        level.scrollWorld(-moveX); // Empurra todo o cenário para a direita
+    }
+    // Se estiver dentro da área central, anda normalmente
+    else {
+        setLocation(getX() + moveX, getY());
+    }
+}         
+}
