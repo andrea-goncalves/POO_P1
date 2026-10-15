@@ -84,36 +84,36 @@ public abstract class Character extends Actor
         
     }
     protected void checkFall(){
-        if (vSpeed < 0 && hitHead()) {
-            while (hitHead()) {
-                setLocation(getX(), getY() + 1);   
-            }
-            vSpeed = 0;                            
+    if (vSpeed < 0 && hitHead()) {
+        while (hitHead()) {
+            setLocation(getX(), getY() + 1);
         }
-        
-        if (onGround()&& vSpeed >= 0){
-            while (getOneObjectAtOffset(0, getImage().getHeight()/2, Ground.class) != null){
-                setLocation(getX(), getY()-1);
-            }
-            vSpeed=0;
+        vSpeed = 0;
+    }
+
+    if (onGround() && vSpeed >= 0){
+        while (getOneObjectAtOffset(0, getImage().getHeight()/2, Solid.class) != null){
+            setLocation(getX(), getY() - 1);
         }
-        else {
-            fall();
+        vSpeed = 0;
+    }
+    else {
+        fall();
         }
     }
+
     protected int getVerticalSpeed()
     {
         return (int)vSpeed;
     }
     protected boolean onGround(){
-        Actor under= getOneObjectAtOffset(0, getImage().getHeight() /2+1, Ground.class );
-        return under!=null;
+    return getOneObjectAtOffset(0, getImage().getHeight() / 2 + 1, Solid.class) != null;
     }
     protected boolean hitHead(){
-        return getOneObjectAtOffset(0, -getImage().getHeight() / 2, Ceiling.class) != null;
+    return getOneObjectAtOffset(0, -getImage().getHeight() / 2, Solid.class) != null;
     }
     protected boolean touchingWall(int dx){
-        return getOneObjectAtOffset(dx, 0, Wall.class) != null;
+    return getOneObjectAtOffset(dx, 0, Solid.class) != null;
     }
     protected boolean keepInsideWorld(){
         int halfWidth = getImage().getWidth() / 2;

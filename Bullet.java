@@ -24,8 +24,8 @@ public class Bullet extends Actor
             getWorld().removeObject(this);
             return;                         
         }
-
-        if (isTouching(Wall.class) || isAtEdge()) {
+        
+        if (isTouching(Solid.class) || isAtEdge()) {
             getWorld().removeObject(this);
         }
     }

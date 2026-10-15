@@ -15,9 +15,9 @@ public class Level2 extends Level
         background.fill();
         setBackground(background);
         
-        addGround(0, 500, 960, 40);
-        addWall(0, 380, 20, 120);
-        addWall(940, 380, 20, 120);
+        //addGround(0, 500, 960, 40);
+        //addWall(0, 380, 20, 120);
+        //addWall(940, 380, 20, 120);
 
         addObject(new Soldier(), 700, 470);
         //addObject(new Soldier(), 700, 470);

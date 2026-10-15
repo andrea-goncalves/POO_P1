@@ -3,7 +3,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public abstract class Level extends World
 {
-
+    public static final int TILE_SIZE = 32;
     private int score = 0;
     private boolean powerUnlocked = false;
     private static final int PLATFORM_THICKNESS = 16;
@@ -11,7 +11,7 @@ public abstract class Level extends World
     Level(int width, int height)
     {    
         super(width, height, 1);
-        setPaintOrder(HUD.class, DarknessOverlay.class, Agent.class, Enemy.class,Bullet.class, Clue.class, Scenery.class, Ceiling.class);
+        setPaintOrder(HUD.class, DarknessOverlay.class, Agent.class, Enemy.class,Bullet.class, Clue.class, Scenery.class);
         addObject(new HUD(width), width / 2, 15);
     }
     public void act(){
@@ -29,18 +29,23 @@ public abstract class Level extends World
             }
         }
     }
+    /*
     protected void addWall(int x, int y, int w, int h)
     {
         addObject(new Wall(w, h), x + w / 2, y + h / 2);
     }
+    
     protected void addGround(int x, int y, int w, int h)
     {
         addObject(new Ground(w, h), x + w / 2, y + h / 2);
     }
+    
+   
     protected void addPlatform(int x, int y, int w){
-        addObject(new Ceiling(w, PLATFORM_THICKNESS), x + w / 2, y + PLATFORM_THICKNESS / 2);
+        //addObject(new Ceiling(w, PLATFORM_THICKNESS), x + w / 2, y + PLATFORM_THICKNESS / 2);
         addGround(x, y, w, PLATFORM_THICKNESS);
     }
+    */
     public void addScore(int points){
         score += points;
     }
