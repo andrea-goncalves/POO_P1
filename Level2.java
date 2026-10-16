@@ -9,9 +9,10 @@ public class Level2 extends Level
     private DarknessOverlay overlay;
     public Level2(){
         super(960, 540);
-        carregarColisoes("Colisao_fase1.1.csv");
-        setBackground("fase1.1.png");
+        carregarColisoes("Colisao_fase2.csv");
+        setBackground("fase2.png");
         addObject(new Agent(5, 6, 16, "a", "d", "w", "s", "zig"), 25, 484);
+        addObject(new Agent(5, 6, 16, "left", "right", "up", "down", "zag"), 30, 484);
         MovingPlatform plataform1 = new MovingPlatform(0, -6 * TILE_SIZE);
         MovingPlatform plataform2 = new MovingPlatform(0, 5 * TILE_SIZE);
         MovingPlatform plataform3 = new MovingPlatform(0, 5 * TILE_SIZE);

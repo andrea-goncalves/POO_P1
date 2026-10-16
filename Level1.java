@@ -8,15 +8,17 @@ public class Level1 extends Level
         super(960, 540);
 
         carregarColisoes("Colisao_fase1.csv");
-        setBackground("_composite.png");
+        setBackground("fase1.png");
     
         addObject(new Agent(5, 6, 16, "a", "d", "w", "s", "zig"), 25, 484);
+        addObject(new Agent(5, 6, 16, "left", "right", "up", "down", "zag"), 30, 484);
     
         Door door1 = new Door(2);
         //Door door2 = new Door(5);
         Door door2 = new Door(0);
     
-        MovingPlatform plataform1 = new MovingPlatform(0, -5 * TILE_SIZE);
+        MovingPlatform plataform1 = new MovingPlatform(0 , -5 * TILE_SIZE);
+        //MovingPlatform plataform2 = new MovingPlatform(0, -5 * TILE_SIZE);
 
         addObject(plataform1, 770, 335);
     

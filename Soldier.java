@@ -16,7 +16,7 @@ public class Soldier extends Enemy
     public Soldier(){
         super(1, 2);                               
         setWalkFrames("soldier_walk", 4);           
-        shootRight = loadFrames("soldier_shoot", 9);            
+        shootRight = loadFrames("soldier_atack", 9);            
         shootLeft = mirrorAll(shootRight);
     }
     @Override
