@@ -12,12 +12,24 @@ public class Level2 extends Level
         carregarColisoes("Colisao_fase1.1.csv");
         setBackground("fase1.1.png");
         addObject(new Agent(5, 6, 16, "a", "d", "w", "s", "zig"), 25, 484);
-        MovingPlatform plataform1 = new MovingPlatform(0, 5 * TILE_SIZE);
+        MovingPlatform plataform1 = new MovingPlatform(0, -6 * TILE_SIZE);
+        MovingPlatform plataform2 = new MovingPlatform(0, 5 * TILE_SIZE);
+        MovingPlatform plataform3 = new MovingPlatform(0, 5 * TILE_SIZE);
+        Door door1 = new Door(0);
         
-        addObject(plataform1, 31, 332);
-        addObject(new Computador(new Door[]{},new MovingPlatform[]{plataform1}), 900, 482);
-        addObject(new Dog(),800,295);
-        addObject(new Soldier(),25,100);
+        addObject(plataform1, 31, 333);
+        addObject(plataform2, 928, 333);
+        addObject(plataform3, 512, 142);
+        addObject(door1,450,475);
+        addObject(new Computador(new Door[]{},new MovingPlatform[]{plataform1}), 200, 482);
+        addObject(new Computador(door1), 420, 100);
+        //addObject(new Computador(door1), 420, 500);
+        addObject(new Computador(new Door[]{},new MovingPlatform[]{plataform2}), 700, 482);
+        addObject(new Computador(new Door[]{},new MovingPlatform[]{plataform3}), 580, 295);
+        
+        addObject(new Dog(),512,295);
+        addObject(new Dog(),920,100);
+        //addObject(new Soldier(),25,100);
     
     }
     private void carregarColisoes(String caminhoCSV)
