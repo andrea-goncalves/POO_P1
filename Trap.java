@@ -1,4 +1,3 @@
-
 import greenfoot.*;
 
 public class Trap extends Solid

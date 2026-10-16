@@ -7,25 +7,29 @@ public class Level1 extends Level
     {
         super(960, 540);
 
-        //GreenfootImage background = new GreenfootImage(getWidth(), getHeight());
-        //background.setColor(Color.DARK_GRAY);
-        //background.fill();
-        //setBackground(background);
-
-        //addGround(0, 500, 960, 40);
-        
-        //addPlatform(300, 380, 200); 
-        //addWall(90, 400, 20, 100);       
-        //addWall(490, 400, 20, 100);
         carregarColisoes("Colisao_fase1.csv");
         setBackground("_composite.png");
+    
+        addObject(new Agent(5, 6, 16, "a", "d", "w", "s", "zig"), 25, 484);
+    
+        Door door1 = new Door(2);
+        //Door door2 = new Door(5);
+        Door door2 = new Door(0);
+    
+        MovingPlatform plataform1 = new MovingPlatform(0, -5 * TILE_SIZE);
 
-        //addObject(new Dog(), 200, 470);
-        addObject(new Agent(5, 6, 16, "a", "d", "w", "s", "zig"), 0, 0);
-        //addObject(new Agent(5, 6, 16, "left", "right", "up", "down", "zag"), 400, 300);
-        addObject(new Clue(), 300, 470);
-        addObject(new Clue(), 600, 470);
-        addObject(new Clue(20), 800, 470); 
+        addObject(plataform1, 770, 335);
+    
+        addObject(door1, 155, 190);
+        //addObject(door2, 510, 90);
+        addObject(door2, 910, 475);
+        addObject(plataform1, 785, 335);
+    
+        addObject(new Computador(door1), 600, 484);
+        //addObject(new Computador(door2), 50, 190);
+        //Se a pista abrir a última porta,não precisa que um computador abre várias coisas
+        addObject(new Computador(new Door[]{door1},new MovingPlatform[]{plataform1}), 50, 190);
+        addObject(new Computador(new Door[]{door2},new MovingPlatform[]{plataform1}), 500, 100);
     }
     private void carregarColisoes(String caminhoCSV)
     {

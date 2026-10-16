@@ -1,14 +1,19 @@
 
 import greenfoot.*;
 
-public class Computador extends Scenery {
+public class Computador extends Actor
+{
     private Door[] portasAssociadas;
+    private MovingPlatform[] plataformasAssociadas;
     private boolean teclaPressionada = false;
 
-    // Recebe uma ou várias portas
+    public Computador(Door[] portas, MovingPlatform[] plataformas) {
+        portasAssociadas = portas;
+        plataformasAssociadas = plataformas;
+        setImage("computer.png");
+    }
     public Computador(Door... portas) {
-        this.portasAssociadas = portas;
-        setImage("computador.png");
+    this(portas, new MovingPlatform[]{});
     }
 
     public void act() {
@@ -23,10 +28,15 @@ public class Computador extends Scenery {
 
         if (character != null && teclaE && !teclaPressionada) {
 
-            // Abre todas as portas associadas
             for (Door porta : portasAssociadas) {
                 if (porta != null) {
                     porta.openDoor();
+                }
+            }
+
+            for (MovingPlatform plataforma : plataformasAssociadas) {
+                if (plataforma != null) {
+                    plataforma.activate();
                 }
             }
         }

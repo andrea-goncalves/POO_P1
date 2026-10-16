@@ -9,24 +9,36 @@ public class Level2 extends Level
     private DarknessOverlay overlay;
     public Level2(){
         super(960, 540);
-
-        GreenfootImage background = new GreenfootImage(getWidth(), getHeight());
-        background.setColor(Color.DARK_GRAY);
-        background.fill();
-        setBackground(background);
+        carregarColisoes("Colisao_fase1.1.csv");
+        setBackground("fase1.1.png");
+        addObject(new Agent(5, 6, 16, "a", "d", "w", "s", "zig"), 25, 484);
+        MovingPlatform plataform1 = new MovingPlatform(0, 5 * TILE_SIZE);
         
-        //addGround(0, 500, 960, 40);
-        //addWall(0, 380, 20, 120);
-        //addWall(940, 380, 20, 120);
-
-        addObject(new Soldier(), 700, 470);
-        //addObject(new Soldier(), 700, 470);
-        addObject(new Agent(5, 6, 16, "a", "d", "w", "s", "zig"), 100, 470);
-        addObject(new Clue(), 200, 470);
-        addObject(new Clue(), 500, 470);
-        addObject(new Clue(20), 850, 470);
+        addObject(plataform1, 31, 332);
+        addObject(new Computador(new Door[]{},new MovingPlatform[]{plataform1}), 900, 482);
+        addObject(new Dog(),800,295);
+        addObject(new Soldier(),25,100);
     
     }
+    private void carregarColisoes(String caminhoCSV)
+    {
+    int[][] mapa = CSVReader.carregarMatriz(caminhoCSV);
+
+    for (int linha = 0; linha < mapa.length; linha++) {
+        for (int coluna = 0; coluna < mapa[linha].length; coluna++) {
+            if (mapa[linha][coluna] == 1) {
+                int x = coluna * TILE_SIZE + TILE_SIZE / 2;
+                int y = linha * TILE_SIZE + TILE_SIZE / 2;
+                addObject(new Solid(), x, y);
+            }
+            if (mapa[linha][coluna] == 2) {
+                int x = coluna * TILE_SIZE + TILE_SIZE / 2;
+                int y = linha * TILE_SIZE + TILE_SIZE / 2;
+                addObject(new Trap(), x, y);
+            }
+        }
+    }
+}
     @Override
         public void usePower(Agent user){
             // Greenfoot.playSound("switch.wav");
@@ -68,6 +80,5 @@ public class Level2 extends Level
     @Override
     public String getPowerName(){
         return "Lights off";
-    }
-        
+    } 
 }
