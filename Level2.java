@@ -31,6 +31,7 @@ public class Level2 extends Level
         addObject(new Dog(),512,295);
         addObject(new Dog(),920,100);
         //addObject(new Soldier(),25,100);
+        addObject(new ExitPoint(),950,100);
     
     }
     private void carregarColisoes(String caminhoCSV)
@@ -94,4 +95,8 @@ public class Level2 extends Level
     public String getPowerName(){
         return "Lights off";
     } 
+    @Override
+    protected Level nextLevel() {
+    return new Level3();
+}
 }

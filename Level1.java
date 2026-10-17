@@ -5,7 +5,7 @@ public class Level1 extends Level
 {
     public Level1()
     {
-        super(960, 540);
+        super(960, 544);
 
         carregarColisoes("Colisao_fase1.csv");
         setBackground("fase1.png");
@@ -32,6 +32,8 @@ public class Level1 extends Level
         //Se a pista abrir a última porta,não precisa que um computador abre várias coisas
         addObject(new Computador(new Door[]{door1},new MovingPlatform[]{plataform1}), 50, 190);
         addObject(new Computador(new Door[]{door2},new MovingPlatform[]{plataform1}), 500, 100);
+        
+        addObject(new ExitPoint(),955,490);
     }
     private void carregarColisoes(String caminhoCSV)
     {
@@ -78,5 +80,9 @@ public class Level1 extends Level
                 dog.neutralize();
             }
         }
-    }        
+    }
+    @Override
+    protected Level nextLevel() {
+    return new Level2();
+}
 }

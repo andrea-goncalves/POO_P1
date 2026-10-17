@@ -3,6 +3,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public abstract class Level extends World
 {
+    protected abstract Level nextLevel();
     public static final int TILE_SIZE = 32;
     private int score = 0;
     private boolean powerUnlocked = false;
@@ -29,6 +30,13 @@ public abstract class Level extends World
             }
         }
     }
+    public void advanceLevel() {
+    Level next = nextLevel();
+
+    if (next != null) {
+        Greenfoot.setWorld(next);
+    }
+}
     /*
     protected void addWall(int x, int y, int w, int h)
     {

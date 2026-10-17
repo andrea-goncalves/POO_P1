@@ -113,4 +113,8 @@ public class Level3 extends Level
     public String getPowerName(){
         return "Lights off";
     } 
+    @Override
+    protected Level nextLevel() {
+    return new BossLevel();
+    }
 }
