@@ -80,5 +80,10 @@ public class Level2 extends Level
     @Override
     protected Level nextLevel() {
     return new Level3();
-}
+    }
+    @Override
+    public int getLevelNumber()
+    {
+        return 2;
+    }
 }

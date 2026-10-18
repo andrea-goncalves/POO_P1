@@ -26,6 +26,7 @@ public class CrushingWall extends Solid
     
         topo = loadImage("crushWallTopo.png");
         //meio = loadImage("crusher_meio.png");
+        meio=topo;
         baixo = loadImage("crusherWall_down.png");
     
         setImage(topo);

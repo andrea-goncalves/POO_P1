@@ -21,12 +21,11 @@ public class Computador extends Actor
     }
 
     private void checkInteraction() {
-        Character character =
-            (Character) getOneIntersectingObject(Character.class);
+        Agent character = (Agent) getOneIntersectingObject(Agent.class);
 
         boolean teclaE = Greenfoot.isKeyDown("e");
 
-        if (character != null && teclaE && !teclaPressionada) {
+       if (character != null && teclaE && !teclaPressionada) {
 
             for (Door porta : portasAssociadas) {
                 if (porta != null) {

@@ -3,8 +3,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Level1 extends Level
     
 {
-    public Level1()
-    {
+     public Level1(){
         super(960, 544);
 
         carregarColisoes("Colisao_fase1.csv");
@@ -64,5 +63,10 @@ public class Level1 extends Level
     @Override
     protected Level nextLevel() {
     return new Level2();
-}
+    }
+    @Override
+    public int getLevelNumber()
+    {
+        return 1;
+    }
 }

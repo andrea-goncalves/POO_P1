@@ -85,7 +85,7 @@ public class Level3 extends Level
     }
     @Override
     protected Level createNew(){
-        return new Level2();
+        return new Level3();
     }
     @Override
     public int getUnlockScore(){
@@ -98,5 +98,10 @@ public class Level3 extends Level
     @Override
     protected Level nextLevel() {
     return new BossLevel();
+    }
+    @Override
+    public int getLevelNumber()
+    {
+        return 3;
     }
 }
