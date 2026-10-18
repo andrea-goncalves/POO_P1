@@ -19,24 +19,17 @@ public class Trap extends Solid
 
         for (Character player : getWorld().getObjects(Character.class)) {
 
-            int playerBottom = player.getY()
-                + player.getImage().getHeight() / 2;
+            int playerBottom = player.getY() + player.getImage().getHeight() / 2;
 
-            int trapTop = getY()
-                - getImage().getHeight() / 2;
+            int trapTop = getY() - getImage().getHeight() / 2;
 
-            int horizontalDistance =
-                Math.abs(player.getX() - getX());
+            int horizontalDistance = Math.abs(player.getX() - getX());
 
-            int maxDistance =
-                (player.getImage().getWidth()
-                + getImage().getWidth()) / 2;
+            int maxDistance =(player.getImage().getWidth() + getImage().getWidth()) / 2;
 
-            boolean touchingTop =
-                Math.abs(playerBottom - trapTop) <= 5;
+            boolean touchingTop = Math.abs(playerBottom - trapTop) <= 5;
 
-            boolean overlappingHorizontally =
-                horizontalDistance < maxDistance;
+            boolean overlappingHorizontally = horizontalDistance < maxDistance;
 
             if (touchingTop && overlappingHorizontally) {
                 player.takeDamage();

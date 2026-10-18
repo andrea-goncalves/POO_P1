@@ -34,25 +34,7 @@ public class Level2 extends Level
         addObject(new ExitPoint(),950,100);
     
     }
-    private void carregarColisoes(String caminhoCSV)
-    {
-    int[][] mapa = CSVReader.carregarMatriz(caminhoCSV);
 
-    for (int linha = 0; linha < mapa.length; linha++) {
-        for (int coluna = 0; coluna < mapa[linha].length; coluna++) {
-            if (mapa[linha][coluna] == 1) {
-                int x = coluna * TILE_SIZE + TILE_SIZE / 2;
-                int y = linha * TILE_SIZE + TILE_SIZE / 2;
-                addObject(new Solid(), x, y);
-            }
-            if (mapa[linha][coluna] == 2) {
-                int x = coluna * TILE_SIZE + TILE_SIZE / 2;
-                int y = linha * TILE_SIZE + TILE_SIZE / 2;
-                addObject(new Trap(), x, y);
-            }
-        }
-    }
-}
     @Override
         public void usePower(Agent user){
             // Greenfoot.playSound("switch.wav");

@@ -49,25 +49,7 @@ public class Level3 extends Level
         addObject(new Soldier(),900,50);
 
     }
-    private void carregarColisoes(String caminhoCSV)
-    {
-    int[][] mapa = CSVReader.carregarMatriz(caminhoCSV);
-
-    for (int linha = 0; linha < mapa.length; linha++) {
-        for (int coluna = 0; coluna < mapa[linha].length; coluna++) {
-            if (mapa[linha][coluna] == 1) {
-                int x = coluna * TILE_SIZE + TILE_SIZE / 2;
-                int y = linha * TILE_SIZE + TILE_SIZE / 2;
-                addObject(new Solid(), x, y);
-            }
-            if (mapa[linha][coluna] == 2) {
-                int x = coluna * TILE_SIZE + TILE_SIZE / 2;
-                int y = linha * TILE_SIZE + TILE_SIZE / 2;
-                addObject(new Trap(), x, y);
-            }
-        }
-    }
-}
+    
     public void fall(){
         //Se o agent (zig e zag) estiver na posição y=544, ele volta pra localização (55, 135)
     }

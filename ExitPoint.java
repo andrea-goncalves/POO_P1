@@ -6,7 +6,7 @@ public class ExitPoint extends Actor
     public void act()
     {
         checkExit();
-        setImage("soldier_atack2.png");
+        setImage("soldier_attack2.png");
     }
 
     private void checkExit()

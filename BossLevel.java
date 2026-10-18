@@ -5,25 +5,16 @@ public class BossLevel extends Level
     public BossLevel()
     {
         super(960, 540);
+        carregarColisoes("Colisao_boss.csv");
+        setBackground("faseBoss.png");
 
         addObject(
-            new Agent(5, 6, 16, "a", "d", "w", "s", "zig"),
-            100, 450
-        );
+            new Agent(5, 6, 16, "a", "d", "w", "s", "zig"),100, 223);
 
         addObject(
-            new Agent(5, 6, 16,
-                "left", "right", "up", "down", "zag"),
-            160, 450
-        );
-
-        // Chão
-        for (int x = 16; x < 960; x += TILE_SIZE) {
-            addObject(new Solid(), x, 524);
-        }
-
-        // Boss
-        addObject(new Boss(), 750, 448);
+            new Agent(5, 6, 16,"left", "right", "up", "down", "zag"),160, 223);
+        
+        addObject(new Boss(), 750, 223);
     }
 
     public void bossDefeated()

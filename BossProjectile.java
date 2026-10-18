@@ -10,7 +10,7 @@ public class BossProjectile extends Actor
         this.direction = direction;
 
         GreenfootImage img = new GreenfootImage(20, 20);
-        img.setColor(Color.ORANGE);
+        img.setColor(Color.RED);
         img.fillOval(0, 0, 20, 20);
 
         setImage(img);
@@ -18,13 +18,9 @@ public class BossProjectile extends Actor
 
     public void act()
     {
-        setLocation(
-            getX() + direction * SPEED,
-            getY()
-        );
+        setLocation(getX() + direction * SPEED,getY());
 
-        Agent player =
-            (Agent) getOneIntersectingObject(Agent.class);
+        Agent player = (Agent) getOneIntersectingObject(Agent.class);
 
         if (player != null) {
             player.takeDamage();

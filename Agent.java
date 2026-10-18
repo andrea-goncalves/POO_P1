@@ -24,6 +24,21 @@ public class Agent extends Character
     private int frameDelay = 0;        
     private boolean facingRight = true;
     
+    private String attackKey;
+
+    private int attackCooldown = 0;
+    private static final int ATTACK_COOLDOWN = 20;
+    private static final int ATTACK_DAMAGE = 10;
+    
+    private boolean attackKeyHeld = false;
+    private GreenfootImage[] attackRight, attackLeft;
+
+    private boolean attacking = false;
+    private int attackFrame = 0;
+    private int attackFrameDelay = 0;
+    
+    private static final int ATTACK_FRAME_DELAY = 4;
+    
     public Agent (int lives, int speed, int jumpStrength, String leftKey, String rightKey, String jumpKey, String powerKey, String prefix){
         super(lives);
         this.speed = speed;
@@ -32,11 +47,21 @@ public class Agent extends Character
         this.rightKey = rightKey;
         this.jumpKey = jumpKey;
         this.powerKey = powerKey;
+        if (prefix.equals("zig")) {
+        attackKey = "f";
+    }
+    else {
+        attackKey = "0";
+    }
         
         walkRight = loadFrames(prefix + "_walk", 4);
         walkLeft  = mirrorAll(walkRight);
         jumpRight = loadFrames(prefix + "_jump", 7);
         jumpLeft  = mirrorAll(jumpRight);
+        int attackFrameCount = prefix.equals("zig") ? 3 : 7;
+
+        attackRight = loadFrames(prefix + "_attack", attackFrameCount);
+        attackLeft = mirrorAll(attackRight);
         
         setImage(walkRight[0]);
         /*
@@ -58,6 +83,7 @@ public class Agent extends Character
         updateInvulnerability();
         checkPower();
         applyBlink();
+        checkAttack();
     }
     
     private void  checkKeys(){
@@ -121,28 +147,107 @@ public class Agent extends Character
             powerCooldown = POWER_COOLDOWN;
         }
     }
-    private void animate(boolean moving) {
-        if (!onGround()) {
-            int index = jumpFrameIndex();
-            setImage(facingRight ? jumpRight[index] : jumpLeft[index]);
-            return;
-        }
-        if (!moving) {
-            setImage(facingRight ? walkRight[0] : walkLeft[0]);   
-            return;
-        }
-        frameDelay++;
-        if (frameDelay >= 5) {            
-            frameDelay = 0;
-            frame = (frame + 1) % walkRight.length;
-        }
-        setImage(facingRight ? walkRight[frame] : walkLeft[frame]);
+    private void animate(boolean moving)
+{
+    if (attacking) {
+        animateAttack();
+        return;
     }
+
+    if (!onGround()) {
+        int index = jumpFrameIndex();
+        setImage(facingRight ? jumpRight[index] : jumpLeft[index]);
+        return;
+    }
+
+    if (!moving) {
+        setImage(facingRight ? walkRight[0] : walkLeft[0]);
+        return;
+    }
+
+    frameDelay++;
+
+    if (frameDelay >= 5) {
+        frameDelay = 0;
+        frame = (frame + 1) % walkRight.length;
+    }
+
+    setImage(facingRight ? walkRight[frame] : walkLeft[frame]);
+}
     private int jumpFrameIndex()
     {
         int last = jumpRight.length - 1;
         int index = (getVerticalSpeed() + jumpStrength) * last / (2 * jumpStrength);
         return Math.max(0, Math.min(last, index));
     }
+    private void checkAttack()
+{
+    if (attackCooldown > 0) {
+        attackCooldown--;
+    }
+
+    boolean attackDown = Greenfoot.isKeyDown(attackKey);
+
+    if (attackDown && !attackKeyHeld
+        && attackCooldown == 0
+        && !attacking) {
+
+    attack();
+    attackCooldown = ATTACK_COOLDOWN;
+}
+
+    attackKeyHeld = attackDown;
+}
+private void attack()
+{
+    if (!(getWorld() instanceof BossLevel)) {
+        return;
+    }
+    attacking = true;
+    attackFrame = 0;
+    attackFrameDelay = 0;
+    int direction = facingRight ? 1 : -1;
+
+    int attackOffset =
+        direction * (getImage().getWidth() / 2 + 20);
+
+    BossShield shield = (BossShield)
+        getOneObjectAtOffset(attackOffset,0,BossShield.class);
+
+    if (shield != null) {
+        shield.takeDamage(ATTACK_DAMAGE);
+        return;
+    }
+
+    Boss boss = (Boss)
+        getOneObjectAtOffset(
+            attackOffset,
+            0,
+            Boss.class
+        );
+
+    if (boss != null) {
+        boss.takeDamage(ATTACK_DAMAGE);
+    }
+}
+    private void animateAttack()
+{
+    GreenfootImage[] frames =
+        facingRight ? attackRight : attackLeft;
+
+    setImage(frames[attackFrame]);
+
+    attackFrameDelay++;
+
+    if (attackFrameDelay >= ATTACK_FRAME_DELAY) {
+        attackFrameDelay = 0;
+        attackFrame++;
+
+        if (attackFrame >= frames.length) {
+            attacking = false;
+            attackFrame = 0;
+        }
+    }
+}
              
 }

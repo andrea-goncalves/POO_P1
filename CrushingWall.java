@@ -86,8 +86,7 @@ public class CrushingWall extends Solid
     }
 
     private void checkCollision() {
-        for (Character player :
-             getIntersectingObjects(Character.class)) {
+        for (Character player : getIntersectingObjects(Character.class)) {
             player.takeDamage();
         }
     }
