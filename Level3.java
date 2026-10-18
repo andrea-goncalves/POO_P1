@@ -33,7 +33,7 @@ public class Level3 extends Level
         //addObject(plataform3,385,366);
         
         addObject(new Computador(new Door[]{door1},new MovingPlatform[]{plataform1}), 642, 40);
-        addObject(new Computador(new Door[]{door1},new MovingPlatform[]{plataform1}), 585, 455);
+        addObject(new Computador(new Door[]{door1},new MovingPlatform[]{plataform2}), 585, 455);
         //traps
         addObject(new CrushingWall(2),320,35);
         addObject(new CrushingWall(1),832,207);
