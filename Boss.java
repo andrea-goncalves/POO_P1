@@ -1,8 +1,8 @@
-
 import greenfoot.*;
 
 public class Boss extends Enemy {
     private static final int STUN_DURATION = 180;
+    private static final int STUN_FRAME_DELAY = 8;
     private static final int SHOOT_INTERVAL = 90;
     private static final int SHOOT_FRAME_DELAY = 5;
     private static final int MAX_HEALTH = 300;
@@ -21,16 +21,21 @@ public class Boss extends Enemy {
 
     private GreenfootImage idleImage;
     private GreenfootImage[] shootFrames;
+    private GreenfootImage[] stunFrames;
 
     private boolean shooting = false;
     private int shootFrame = 0;
     private int shootFrameDelay = 0;
+
+    private int stunFrame = 0;
+    private int stunFrameDelay = 0;
 
     public Boss(){
         super(MAX_HEALTH, 0);
 
         idleImage = new GreenfootImage("general_walk1.png");
         shootFrames = loadFrames("general_attack", 8);
+        stunFrames = loadFrames("general_stum", 7);
 
         setImage(idleImage);
         setDirection(-1);
@@ -43,10 +48,10 @@ public class Boss extends Enemy {
 
     @Override
     public void act(){
-        checkFall();
         updateShieldPosition();
 
         if (stunned) {
+            animateStun();
             stunTimer--;
 
             if (stunTimer <= 0) {
@@ -98,9 +103,26 @@ public class Boss extends Enemy {
         shootFrame = 0;
         shootFrameDelay = 0;
 
+        stunFrame = 0;
+        stunFrameDelay = 0;
+
         shield = null;
-        setImage(idleImage);
+        setImage(stunFrames[0]);
     }
+
+    private void animateStun(){
+    setImage(stunFrames[stunFrame]);
+
+    if (stunFrame < stunFrames.length - 1) {
+        stunFrameDelay++;
+
+        if (stunFrameDelay >= STUN_FRAME_DELAY) {
+            stunFrameDelay = 0;
+            stunFrame++;
+            setImage(stunFrames[stunFrame]);
+        }
+    }
+}
 
     @Override
     public void takeDamage(int damage){
@@ -117,6 +139,10 @@ public class Boss extends Enemy {
         pushPlayers();
 
         stunned = false;
+        stunTimer = 0;
+        stunFrame = 0;
+        stunFrameDelay = 0;
+
         shootTimer = SHOOT_INTERVAL;
 
         setImage(idleImage);
@@ -129,7 +155,10 @@ public class Boss extends Enemy {
             int newX = player.getX() + direction * 100;
             int halfWidth = player.getImage().getWidth() / 2;
 
-            newX = Math.max(halfWidth,Math.min(getWorld().getWidth() - halfWidth, newX));
+            newX = Math.max(
+                halfWidth,
+                Math.min(getWorld().getWidth() - halfWidth, newX)
+            );
 
             player.setLocation(newX, player.getY());
         }
@@ -210,3 +239,4 @@ public class Boss extends Enemy {
         return stunned;
     }
 }
+

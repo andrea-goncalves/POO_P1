@@ -14,7 +14,7 @@ public class BossLevel extends Level
         addObject(
             new Agent(5, 6, 16,"left", "right", "up", "down", "zag"),160, 223);
         
-        addObject(new Boss(), 750, 223);
+        addObject(new Boss(), 920, 223);
     }
 
     public void bossDefeated()
@@ -32,7 +32,7 @@ public class BossLevel extends Level
     @Override
     public int getUnlockScore()
     {
-        return 40;
+        return 80;
     }
 
     @Override

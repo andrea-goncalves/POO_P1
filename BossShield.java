@@ -13,10 +13,7 @@ public class BossShield extends Solid {
         super(SHIELD_WIDTH, SHIELD_HEIGHT);
         this.boss = boss;
 
-        GreenfootImage image = new GreenfootImage(
-            SHIELD_WIDTH,
-            SHIELD_HEIGHT
-        );
+        GreenfootImage image = new GreenfootImage(SHIELD_WIDTH,SHIELD_HEIGHT);
 
         image.clear();
         setImage(image);

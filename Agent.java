@@ -126,8 +126,7 @@ public class Agent extends Character
         }
         jumpKeyHeld = jumpDown;
     }
-        private void driftInAir()
-    {
+        private void driftInAir(){
         if (airDrift == 0) {
             return;
         }
@@ -147,8 +146,7 @@ public class Agent extends Character
             powerCooldown = POWER_COOLDOWN;
         }
     }
-    private void animate(boolean moving)
-{
+    private void animate(boolean moving){
     if (attacking) {
         animateAttack();
         return;
@@ -174,14 +172,12 @@ public class Agent extends Character
 
     setImage(facingRight ? walkRight[frame] : walkLeft[frame]);
 }
-    private int jumpFrameIndex()
-    {
+    private int jumpFrameIndex(){
         int last = jumpRight.length - 1;
         int index = (getVerticalSpeed() + jumpStrength) * last / (2 * jumpStrength);
         return Math.max(0, Math.min(last, index));
     }
-    private void checkAttack()
-{
+    private void checkAttack(){
     if (attackCooldown > 0) {
         attackCooldown--;
     }
@@ -198,8 +194,7 @@ public class Agent extends Character
 
     attackKeyHeld = attackDown;
 }
-private void attack()
-{
+private void attack(){
     if (!(getWorld() instanceof BossLevel)) {
         return;
     }
@@ -219,21 +214,14 @@ private void attack()
         return;
     }
 
-    Boss boss = (Boss)
-        getOneObjectAtOffset(
-            attackOffset,
-            0,
-            Boss.class
-        );
+    Boss boss = (Boss)getOneObjectAtOffset(attackOffset,0,Boss.class);
 
     if (boss != null) {
         boss.takeDamage(ATTACK_DAMAGE);
     }
 }
-    private void animateAttack()
-{
-    GreenfootImage[] frames =
-        facingRight ? attackRight : attackLeft;
+    private void animateAttack(){
+    GreenfootImage[] frames =facingRight ? attackRight : attackLeft;
 
     setImage(frames[attackFrame]);
 
