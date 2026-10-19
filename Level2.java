@@ -32,7 +32,7 @@ public class Level2 extends Level {
         addObject(new Dog(), 920, 100);
         
         addObject(new Clue(20),31,300);
-        addObject(new Clue(20),750,100);
+        addObject(new Clue(20),700,100);
         
         addObject(new ExitPoint(), 950, 100);
     }
