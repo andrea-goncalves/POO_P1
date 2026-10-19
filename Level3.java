@@ -43,6 +43,7 @@ public class Level3 extends Level {
         addObject(new Soldier(), 900, 50);
         
         addObject(new Clue(20),930,50);
+        addObject(new ExitPoint(),870,450);
     }
 
     public void fall(){
