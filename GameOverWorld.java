@@ -1,0 +1,37 @@
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
+public class GameOverWorld extends ScreenWorld
+{
+    private Level failedLevel;
+    private int inputDelay = 40;     
+
+    public GameOverWorld(Level failedLevel)
+    {
+        this.failedLevel = failedLevel;
+
+        GreenfootImage bg = createBackground();
+
+        drawCentered(bg, "GAME OVER", 56, Color.RED, 120);
+        drawCentered(bg, "Um agente morreu", 24, Color.LIGHT_GRAY, 200);
+        drawCentered(bg, "Score: " + failedLevel.getScore(), 24, Color.WHITE, 240);
+
+        drawCentered(bg, "R  -  recomeçar o nível", 28, Color.WHITE, 320);
+        drawCentered(bg, "B  -  recomeçar do início", 28, Color.WHITE, 370);
+
+        setBackground(bg);
+    }
+
+    public void act()
+    {
+        if (inputDelay > 0) {
+            inputDelay--;
+            return;
+        }
+        if (Greenfoot.isKeyDown("r")) {
+            Greenfoot.setWorld(failedLevel.createNew());     
+        }
+        else if (Greenfoot.isKeyDown("b")) {
+            Greenfoot.setWorld(new Level1());
+        }
+    }
+}

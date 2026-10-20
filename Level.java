@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.util.List;
+
 
 public abstract class Level extends World
 {
@@ -7,75 +7,80 @@ public abstract class Level extends World
     public static final int TILE_SIZE = 32;
     private int score = 0;
     private boolean powerUnlocked = false;
-    private static final int PLATFORM_THICKNESS = 16;
-    
-    public Level(int width, int height)
+    //private static final int PLATFORM_THICKNESS = 16;
+    private boolean pauseKeyHeld = true;
+    public abstract int getLevelNumber();
+    Level(int width, int height)
     {    
-        super(width, height, 1, false); 
-        
-        
-        setPaintOrder(
-            HUD.class, 
-            DarknessOverlay.class, 
-            Agent.class, 
-            Enemy.class, 
-            Bullet.class, 
-            Clue.class, 
-            Scenery.class
-            
-        );
-        
+        super(width, height, 1);
+        setPaintOrder(HUD.class, DarknessOverlay.class, Agent.class, Enemy.class,Bullet.class, Clue.class, Scenery.class);
         addObject(new HUD(width), width / 2, 15);
     }
-
-    @Override
     public void act(){
+        checkPause();
         checkPowerUnlock();
         checkRestart();
+        
     }
-
-
     protected abstract Level createNew();
-
+    private void checkPause()
+    {
+        boolean pauseDown = Greenfoot.isKeyDown("p");
+        if (pauseDown && !pauseKeyHeld) {
+            Greenfoot.setWorld(new PauseWorld(this));
+        }
+        pauseKeyHeld = pauseDown;
+    }
     private void checkRestart()
     {
         for (Agent agent : getObjects(Agent.class)) {
             if (agent.getLives() <= 0) {
-                Greenfoot.setWorld(createNew());
+                Greenfoot.setWorld(new GameOverWorld(this));
                 return;
             }
         }
     }
-
     public void advanceLevel() {
         Level next = nextLevel();
-
+    
         if (next != null) {
             Greenfoot.setWorld(next);
         }
     }
-
+    /*
+    protected void addWall(int x, int y, int w, int h)
+    {
+        addObject(new Wall(w, h), x + w / 2, y + h / 2);
+    }
+    
+    protected void addGround(int x, int y, int w, int h)
+    {
+        addObject(new Ground(w, h), x + w / 2, y + h / 2);
+    }
+    
+   
+    protected void addPlatform(int x, int y, int w){
+        //addObject(new Ceiling(w, PLATFORM_THICKNESS), x + w / 2, y + PLATFORM_THICKNESS / 2);
+        addGround(x, y, w, PLATFORM_THICKNESS);
+    }
+    */
     public void addScore(int points){
         score += points;
     }
-
     public int getScore(){
         return score;
     }
-
     private void checkPowerUnlock(){
         if (!powerUnlocked && score >= getUnlockScore()) {
             powerUnlocked = true;
         }
     }
-
     public boolean isPowerUnlocked(){
         return powerUnlocked;
     }
-
     protected void carregarColisoes(String caminhoCSV){
         int[][] mapa = CSVReader.carregarMatriz(caminhoCSV);
-
+    
         for (int linha = 0; linha < mapa.length; linha++) {
             for (int coluna = 0; coluna < mapa[linha].length; coluna++) {
                 if (mapa[linha][coluna] == 1) {
@@ -91,8 +96,11 @@ public abstract class Level extends World
             }
         }
     }
-
     public abstract int getUnlockScore();
     public abstract String getPowerName();
     public abstract void usePower(Agent user);
+    public boolean allowsAttack()
+    {
+        return false;
+    }
 }

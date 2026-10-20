@@ -11,6 +11,9 @@ public abstract class Character extends Actor
     private static final double GLIDE_FACTOR=0.25;
     private static final double GLIDE_MAX_SPEED=3;
     
+    private static final double MAX_FALL_SPEED = 15;
+    private static final int MAX_PUSH = 40;
+    
     private int lives;
     protected int invulnerableTimer = 0;  
     private static final int INVULNERABLE_TIME = 60;
@@ -81,25 +84,31 @@ public abstract class Character extends Actor
         }else {
             vSpeed += ACCELARATION;
         }
-        
+        if (vSpeed > MAX_FALL_SPEED) {
+            vSpeed = MAX_FALL_SPEED;
+        }
     }
     protected void checkFall(){
-    if (vSpeed < 0 && hitHead()) {
-        while (hitHead()) {
-            setLocation(getX(), getY() + 1);
+        if (vSpeed < 0 && hitHead()) {
+            int attempts = 0;
+            while (hitHead() && attempts < MAX_PUSH) {
+                setLocation(getX(), getY() + 1);
+                attempts++;
+            }
+            vSpeed = 0;
         }
-        vSpeed = 0;
-    }
-
-    if (onGround() && vSpeed >= 0){
-        while (getOneObjectAtOffset(0, getImage().getHeight()/2, Solid.class) != null){
-            setLocation(getX(), getY() - 1);
+    
+        if (onGround() && vSpeed >= 0){
+            int attempts = 0;
+            while (getOneObjectAtOffset(0, getImage().getHeight()/2, Solid.class) != null && attempts < MAX_PUSH){
+                setLocation(getX(), getY() - 1);
+                attempts++;
+            }
+            vSpeed = 0;
         }
-        vSpeed = 0;
-    }
-    else {
-        fall();
-        }
+        else {
+            fall();
+            }
     }
 
     protected int getVerticalSpeed()

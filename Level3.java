@@ -108,4 +108,9 @@ public class Level3 extends Level {
     protected Level nextLevel(){
         return new BossLevel();
     }
+    @Override
+    public int getLevelNumber()
+    {
+        return 3;
+    }
 }

@@ -50,4 +50,15 @@ public class BossLevel extends Level
     {
     return null;
     }
+    
+    @Override
+    public boolean allowsAttack()
+    {
+        return true;
+    }
+    @Override
+    public int getLevelNumber()
+    {
+        return 4;
+    }
 }
