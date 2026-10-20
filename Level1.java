@@ -16,16 +16,17 @@ public class Level1 extends Level
         Door door2 = new Door(0);
     
         MovingPlatform plataform1 = new MovingPlatform(0 , -5 * TILE_SIZE);
+        
 
         addObject(plataform1, 770, 335);
     
         addObject(door1, 155, 190);
         addObject(door2, 910, 475);
-        addObject(plataform1, 785, 335);
+        
     
-        addObject(new Computador(door1), 600, 484);
-        addObject(new Computador(new Door[]{door1},new MovingPlatform[]{plataform1}), 50, 190);
-        addObject(new Computador(new Door[]{door2},new MovingPlatform[]{plataform1}), 500, 100);
+        addObject(new Computer(door1), 600, 484);
+        addObject(new Computer(new Door[]{door1},new MovingPlatform[]{plataform1}), 50, 190);
+        addObject(new Computer(new Door[]{door2},new MovingPlatform[]{plataform1}), 500, 100);
         
         addObject(new Clue(20),160,20);
         addObject(new Clue(20),650,100);

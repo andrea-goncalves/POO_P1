@@ -4,43 +4,39 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Agent extends Character
 {
    
-    private String leftKey, rightKey, jumpKey;
-    private int speed;
-    private int jumpStrength;
-    private boolean jumpKeyReleased = false;
-    private boolean jumpKeyHeld = false;
-    private int airDrift=0;
+    private String leftKey, rightKey, jumpKey, powerKey, attackKey;
+    private int speed, jumpStrength;
+    private boolean jumpKeyReleased,jumpKeyHeld, moving, facingRight ;
+    private int airDrift;
+    private int powerCooldown;
+    private int frame, frameDelay;   
+    private boolean attackKeyHeld, attacking;
+    private int attackCooldown, attackFrame, attackFrameDelay;
+    private GreenfootImage[] walkRight, walkLeft, jumpRight, jumpLeft, attackRight, attackLeft;
+
     private static final int DRIFT_SPEED=3;
-    private boolean moving = false;  
-    
-    private String powerKey;
-    private int powerCooldown = 0;
     private static final int POWER_COOLDOWN = 240;
-    
-    private GreenfootImage[] walkRight, walkLeft;
-    private GreenfootImage[] jumpRight, jumpLeft;
-    
-    private int frame = 0;
-    private int frameDelay = 0;        
-    private boolean facingRight = true;
-    
-    private String attackKey;
-
-    private int attackCooldown = 0;
     private static final int ATTACK_COOLDOWN = 20;
-    private static final int ATTACK_DAMAGE = 10;
-    
-    private boolean attackKeyHeld = false;
-    private GreenfootImage[] attackRight, attackLeft;
-
-    private boolean attacking = false;
-    private int attackFrame = 0;
-    private int attackFrameDelay = 0;
-    
+    private static final int ATTACK_DAMAGE = 10;    
     private static final int ATTACK_FRAME_DELAY = 4;
     
     public Agent (int lives, int speed, int jumpStrength, String leftKey, String rightKey, String jumpKey, String powerKey, String prefix){
         super(lives);
+        
+        jumpKeyReleased = false;
+        jumpKeyHeld = false;
+        moving = false;
+        facingRight = true;
+        airDrift = 0;
+        powerCooldown = 0;
+        frame = 0;
+        frameDelay = 0;
+        attackKeyHeld = false;
+        attacking = false;
+        attackCooldown = 0;
+        attackFrame = 0;
+        attackFrameDelay = 0;
+        
         this.speed = speed;
         this.jumpStrength = jumpStrength;
         this.leftKey = leftKey;
@@ -64,14 +60,6 @@ public class Agent extends Character
         attackLeft = mirrorAll(attackRight);
         
         setImage(walkRight[0]);
-        /*
-        for (GreenfootImage img : walkRight) {
-            System.out.println("walk: " + img.getWidth() + "x" + img.getHeight());
-        }
-        for (GreenfootImage img : jumpRight) {
-            System.out.println("jump: " + img.getWidth() + "x" + img.getHeight());
-        }
-        */
         
     }
     

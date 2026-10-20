@@ -30,10 +30,11 @@ public class StoryWorld extends ScreenWorld
 
     private GreenfootImage text;
     private double offsetY;                
-    private int inputDelay = 20;
+    private int inputDelay;
 
     public StoryWorld()
     {        
+        inputDelay = 20;
         stars = createStars();
         text = createText();
         offsetY = getHeight();

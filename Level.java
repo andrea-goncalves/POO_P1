@@ -1,19 +1,22 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.util.List;
+
 
 public abstract class Level extends World
 {
     protected abstract Level nextLevel();
     public static final int TILE_SIZE = 32;
-    private int score = 0;
-    private boolean powerUnlocked = false;
-    //private static final int PLATFORM_THICKNESS = 16;
-    private boolean pauseKeyHeld = true;
-    public abstract int getLevelNumber();
+    
+    private int score;
+    private boolean powerUnlocked;
+    private boolean pauseKeyHeld;
+    
     Level(int width, int height)
     {    
         super(width, height, 1, false); 
-        setPaintOrder(HUD.class, DarknessOverlay.class, Agent.class, Enemy.class,Bullet.class, Clue.class, Scenery.class);
+        score = 0;
+        powerUnlocked = false;
+        pauseKeyHeld = true;
+        setPaintOrder(HUD.class, DarknessOverlay.class, Agent.class, Enemy.class,Bullet.class, Clue.class, Solid.class);
         addObject(new HUD(width), width / 2, 15);
     }
     public void act(){
@@ -22,6 +25,7 @@ public abstract class Level extends World
         checkRestart();
         
     }
+    public abstract int getLevelNumber();
     protected abstract Level createNew();
     private void checkPause()
     {
@@ -47,23 +51,6 @@ public abstract class Level extends World
             Greenfoot.setWorld(next);
         }
     }
-    /*
-    protected void addWall(int x, int y, int w, int h)
-    {
-        addObject(new Wall(w, h), x + w / 2, y + h / 2);
-    }
-    
-    protected void addGround(int x, int y, int w, int h)
-    {
-        addObject(new Ground(w, h), x + w / 2, y + h / 2);
-    }
-    
-   
-    protected void addPlatform(int x, int y, int w){
-        //addObject(new Ceiling(w, PLATFORM_THICKNESS), x + w / 2, y + PLATFORM_THICKNESS / 2);
-        addGround(x, y, w, PLATFORM_THICKNESS);
-    }
-    */
     public void addScore(int points){
         score += points;
     }

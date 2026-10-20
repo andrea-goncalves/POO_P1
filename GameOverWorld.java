@@ -3,10 +3,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class GameOverWorld extends ScreenWorld
 {
     private Level failedLevel;
-    private int inputDelay = 40;     
+    private int inputDelay;     
 
     public GameOverWorld(Level failedLevel)
     {
+        inputDelay = 40;
         this.failedLevel = failedLevel;
 
         GreenfootImage bg = createBackground();

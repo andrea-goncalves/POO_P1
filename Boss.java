@@ -6,33 +6,38 @@ public class Boss extends Enemy {
     private static final int SHOOT_INTERVAL = 90;
     private static final int SHOOT_FRAME_DELAY = 5;
     private static final int MAX_HEALTH = 300;
-
     private static final int SHIELD_DISTANCE = 42;
     private static final int SHIELD_HEIGHT = 220;
     private static final int SHIELD_WIDTH = 32;
     private static final int GROUND_Y = 235;
 
-    private boolean stunned = false;
-    private int stunTimer = 0;
-    private int shootTimer = SHOOT_INTERVAL;
-
-    private int health = MAX_HEALTH;
+    private boolean stunned;
+    private int stunTimer;
+    private int shootTimer;
+    private int health;
     private BossShield shield;
 
     private GreenfootImage idleImage;
     private GreenfootImage[] shootFrames;
     private GreenfootImage[] stunFrames;
 
-    private boolean shooting = false;
-    private int shootFrame = 0;
-    private int shootFrameDelay = 0;
-
-    private int stunFrame = 0;
-    private int stunFrameDelay = 0;
+    private boolean shooting;
+    private int shootFrame;
+    private int shootFrameDelay;
+    private int stunFrame;
+    private int stunFrameDelay;
 
     public Boss(){
         super(MAX_HEALTH, 0);
-
+        stunned = false;
+        stunTimer = 0; 
+        shootTimer = SHOOT_INTERVAL; 
+        health = MAX_HEALTH; 
+        shield = null; 
+        shooting = false; 
+        shootFrame = 0; 
+        shootFrameDelay = 0;
+        
         idleImage = new GreenfootImage("general_walk1.png");
         shootFrames = loadFrames("general_attack", 8);
         stunFrames = loadFrames("general_stum", 7);
@@ -111,18 +116,18 @@ public class Boss extends Enemy {
     }
 
     private void animateStun(){
-    setImage(stunFrames[stunFrame]);
+        setImage(stunFrames[stunFrame]);
 
-    if (stunFrame < stunFrames.length - 1) {
-        stunFrameDelay++;
+        if (stunFrame < stunFrames.length - 1) {
+            stunFrameDelay++;
 
-        if (stunFrameDelay >= STUN_FRAME_DELAY) {
-            stunFrameDelay = 0;
-            stunFrame++;
-            setImage(stunFrames[stunFrame]);
+            if (stunFrameDelay >= STUN_FRAME_DELAY) {
+                stunFrameDelay = 0;
+                stunFrame++;
+                setImage(stunFrames[stunFrame]);
+            }
         }
     }
-}
 
     @Override
     public void takeDamage(int damage){
@@ -221,7 +226,7 @@ public class Boss extends Enemy {
         }
 
         getWorld().addObject(
-            new BossProjectile(direction),
+            new Bullet(direction, 7, 20),
             spawnX,
             spawnY
         );

@@ -4,24 +4,24 @@ public class CrushingWall extends Solid
 {
     private static final int DOWN_SPEED = 8;
     private static final int UP_SPEED = 2;
-
     private static final int WAIT_TIME = 60;
     private static final int REST_TIME = 120;
 
     private int distance;
     private int startY;
-    private int moved = 0;
-    private int timer = REST_TIME;
-
-    private boolean descending = true;
-
+    private int moved;
+    private int timer;
+    private boolean descending;
     private GreenfootImage topo;
     private GreenfootImage meio;
     private GreenfootImage baixo;
 
     public CrushingWall(int distance) {
         super(64, 64);
-    
+        moved = 0; 
+        timer = REST_TIME; 
+        descending = true; 
+        startY = 0;
         this.distance = Math.abs(distance) * Level.TILE_SIZE;
     
         topo = loadImage("crushWallTopo.png");

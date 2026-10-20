@@ -4,23 +4,24 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public abstract class Character extends Actor
 {
    
+    private double vSpeed;
+    private boolean gliding;
+    private int lives;
+    protected int invulnerableTimer;  
     
-    private double vSpeed=0;
-    private final double ACCELARATION = 1;
-    private boolean gliding=false;
+    private final double ACCELERATION = 1;
     private static final double GLIDE_FACTOR=0.25;
     private static final double GLIDE_MAX_SPEED=3;
-    
     private static final double MAX_FALL_SPEED = 15;
     private static final int MAX_PUSH = 40;
-    
-    private int lives;
-    protected int invulnerableTimer = 0;  
     private static final int INVULNERABLE_TIME = 60;
     
     public Character(int lives)
     {
         this.lives = lives;
+        vSpeed = 0;
+        gliding = false;
+        invulnerableTimer = 0;
     }
     
     public void act(){}
@@ -77,12 +78,12 @@ public abstract class Character extends Actor
     protected void fall(){
         setLocation(getX(), getY()+ (int) vSpeed);
         if (gliding && vSpeed>0){
-            vSpeed +=ACCELARATION* GLIDE_FACTOR;
+            vSpeed +=ACCELERATION* GLIDE_FACTOR;
             if (vSpeed>GLIDE_MAX_SPEED){
                 vSpeed= GLIDE_MAX_SPEED;
             }
         }else {
-            vSpeed += ACCELARATION;
+            vSpeed += ACCELERATION;
         }
         if (vSpeed > MAX_FALL_SPEED) {
             vSpeed = MAX_FALL_SPEED;

@@ -1,16 +1,18 @@
-
 import greenfoot.*;
 
 public class Level3 extends Level {
     private static final int LIGHTS_OFF_TIME = 300;
     private static final int SHORT_SIGHT = 100;
 
-    private int lightsOffTimer = 0;
+    private int lightsOffTimer;
     private DarknessOverlay overlay;
 
     public Level3(){
         super(960, 540);
-
+        
+        lightsOffTimer = 0;
+        overlay = null;
+        
         carregarColisoes("Colisao_fase3.csv");
         setBackground("fase3.png");
 
@@ -27,8 +29,8 @@ public class Level3 extends Level {
         addObject(plataform1, 350, 490);
         addObject(plataform2, 448, 302);
 
-        addObject(new Computador(new Door[]{door1}, new MovingPlatform[]{plataform1}), 642, 40);
-        addObject(new Computador(new Door[]{door1}, new MovingPlatform[]{plataform2}), 585, 455);
+        addObject(new Computer(new Door[]{door1}, new MovingPlatform[]{plataform1}), 642, 40);
+        addObject(new Computer(new Door[]{door1}, new MovingPlatform[]{plataform2}), 585, 455);
 
         addObject(new CrushingWall(2), 320, 35);
         addObject(new CrushingWall(1), 832, 207);
@@ -45,10 +47,6 @@ public class Level3 extends Level {
         addObject(new Clue(20),930,50);
         addObject(new ExitPoint(),870,450);
     }
-
-    public void fall(){
-    }
-
     @Override
     public void usePower(Agent user){
         //Greenfoot.playSound("switch.wav");

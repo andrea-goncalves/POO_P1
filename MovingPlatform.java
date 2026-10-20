@@ -7,14 +7,17 @@ public class MovingPlatform extends Solid
 
     private int moveX, moveY;
     private int startX, startY;
-    private int timer = 0;
-
-    private boolean moving = false;
-    private boolean returning = false;
+    private int timer;
+    private boolean moving;
+    private boolean returning;
 
     public MovingPlatform(int moveX, int moveY) {
         super();
-
+        startX = 0; 
+        startY = 0; 
+        timer = 0; 
+        moving = false; 
+        returning = false;
         this.moveX = moveX;
         this.moveY = moveY;
         setImage("plataforma.png");

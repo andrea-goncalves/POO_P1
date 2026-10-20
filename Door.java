@@ -2,15 +2,18 @@
 import greenfoot.*;
 
 public class Door extends Actor {
-    private boolean isOpen = false;
+    private boolean isOpen;
     private int openDurationFrames;
-    private int timer = 0;
+    private int timer;
 
     private Solid collision;
 
     public Door(double openTimeSeconds) {
         openDurationFrames = (int) (openTimeSeconds * 60);
         setImage("door.png");
+        isOpen = false;
+        timer = 0; 
+        collision = null;
     }
 
     protected void addedToWorld(World world) {

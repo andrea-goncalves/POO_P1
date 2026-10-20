@@ -2,14 +2,15 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class MenuWorld extends ScreenWorld
 {
-    private int inputDelay = 20;      
+    private int inputDelay;      
 
     public MenuWorld()
     {
         GreenfootImage bg = createBackground();
+        inputDelay = 20;
 
         drawCentered(bg, "AGENTES ZIG & ZAG", 48, Color.RED, 25);
-        drawCentered(bg, "Recolhe as pistas para imperdir o ataque ao Zanarkin", 20, Color.LIGHT_GRAY, 90);
+        drawCentered(bg, "Recolhe as pistas para impedir o ataque ao Zanarkin", 20, Color.LIGHT_GRAY, 90);
 
         // Zig 
         drawText(bg, "ZIG", 30, Color.RED, 130, 150);
@@ -29,7 +30,7 @@ public class MenuWorld extends ScreenWorld
         drawCentered(bg, "E  -  ativar portas e plataformas", 20, Color.YELLOW, 350);
         drawCentered(bg, "Clica duas vezes no salto e deixa pressionado para flutuar", 20, Color.WHITE, 385);
         drawCentered(bg, "Os dois agentes devem chegar à saída para passar o nível", 20, Color.WHITE, 420);
-        drawCentered(bg, "P  -  pausa (continuar, guardar or voltar ao menu)", 20, Color.YELLOW, 450);
+        drawCentered(bg, "P  -  pausa (continuar, guardar ou voltar ao menu)", 20, Color.YELLOW, 450);
         
         
         if (SaveGame.hasSave()) {

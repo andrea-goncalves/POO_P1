@@ -1,20 +1,23 @@
 import greenfoot.*;
 public class Soldier extends Enemy 
 {
-    private static final int NORMAL_SIGHT = 300;
-    private int sightRange = NORMAL_SIGHT;
-    
+    private static final int NORMAL_SIGHT = 300;   
     private static final int SIGHT_HEIGHT = 60;     
     private static final int AIM_TIME = 30;         
     private static final int RELOAD_TIME = 90;
-    
-    private GreenfootImage[] shootRight, shootLeft;
-    private boolean aiming = false;
-    private int shootAnimTimer = 0;
     private static final int SHOOT_ANIM_TIME = 15;
-    private int aimTimer = AIM_TIME;
+    
+    private int sightRange;
+    private GreenfootImage[] shootRight, shootLeft;
+    private boolean aiming;
+    private int shootAnimTimer;
+    private int aimTimer;
     public Soldier(){
-        super(1, 2);                               
+        super(1, 2);  
+        sightRange = NORMAL_SIGHT; 
+        aiming = false; 
+        shootAnimTimer = 0; 
+        aimTimer = AIM_TIME;
         setWalkFrames("soldier_walk", 4);           
         shootRight = loadFrames("soldier_attack", 9);            
         shootLeft = mirrorAll(shootRight);

@@ -1,13 +1,14 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/** Pause screen: resume, save the progress, or go back to the main menu. */
+
 public class PauseWorld extends ScreenWorld
 {
     private Level pausedLevel;
-    private int inputDelay = 20;      
+    private int inputDelay;      
 
     public PauseWorld(Level pausedLevel)
     {
+        inputDelay = 20;
         this.pausedLevel = pausedLevel;
         drawScreen("");
     }

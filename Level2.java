@@ -23,10 +23,10 @@ public class Level2 extends Level {
         addObject(plataform3, 512, 142);
         addObject(door1, 450, 475);
 
-        addObject(new Computador(new Door[]{}, new MovingPlatform[]{plataform1}), 200, 482);
-        addObject(new Computador(door1), 420, 100);
-        addObject(new Computador(new Door[]{}, new MovingPlatform[]{plataform2}), 700, 482);
-        addObject(new Computador(new Door[]{}, new MovingPlatform[]{plataform3}), 580, 295);
+        addObject(new Computer(new Door[]{}, new MovingPlatform[]{plataform1}), 200, 482);
+        addObject(new Computer(door1), 420, 100);
+        addObject(new Computer(new Door[]{}, new MovingPlatform[]{plataform2}), 700, 482);
+        addObject(new Computer(new Door[]{}, new MovingPlatform[]{plataform3}), 580, 295);
 
         addObject(new Dog(), 512, 295);
         addObject(new Dog(), 920, 100);

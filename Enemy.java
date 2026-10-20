@@ -4,19 +4,26 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public abstract class Enemy extends Character
 {
     private GreenfootImage[] walkRight, walkLeft;
-    private int frame = 0;
-    private int frameDelay = 0;
+    private int frame;
+    private int frameDelay;
+    private int speed;
+    private int direction;
+    private int sleepTimer;
+    private boolean moving;
+    
     private static final int ANIMATION_DELAY = 6; 
     
-    private int speed;
-    private int direction = 1;
-    private int sleepTimer = 0;
-    
-    private boolean moving = false;
     public Enemy(int lives, int speed)
     {
         super(lives);              
         this.speed = speed;
+        walkRight = null;
+        walkLeft = null;
+        frame = 0;
+        frameDelay = 0;
+        direction = 1;
+        sleepTimer = 0;
+        moving = false;
     }
     public void act()
     {
@@ -81,10 +88,6 @@ public abstract class Enemy extends Character
     }
     protected void onWake(){}
     public abstract void neutralize();
-    public boolean isInvulnerable(){
-        return invulnerableTimer > 0;
-    }
-    
     protected int getDirection(){
         return direction;
     }
