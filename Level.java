@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import java.util.List;
 
 public abstract class Level extends World
 {
@@ -12,7 +12,7 @@ public abstract class Level extends World
     public abstract int getLevelNumber();
     Level(int width, int height)
     {    
-        super(width, height, 1);
+        super(width, height, 1, false); 
         setPaintOrder(HUD.class, DarknessOverlay.class, Agent.class, Enemy.class,Bullet.class, Clue.class, Scenery.class);
         addObject(new HUD(width), width / 2, 15);
     }
