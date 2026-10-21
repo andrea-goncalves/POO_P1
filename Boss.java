@@ -230,6 +230,7 @@ public class Boss extends Enemy {
             spawnX,
             spawnY
         );
+        Greenfoot.playSound("blast.wav");
     }
 
     @Override

@@ -2,12 +2,19 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class MenuWorld extends ScreenWorld
 {
-    private int inputDelay;      
-
+    private int inputDelay;     
+    private GreenfootSound music;
+    private boolean musicStarted;
+    private boolean musicPaused;
     public MenuWorld()
     {
         GreenfootImage bg = createBackground();
         inputDelay = 20;
+        musicStarted = false;
+        musicPaused = false; 
+        music = new GreenfootSound("spy.wav");
+        music.setVolume(50);
+        
 
         drawCentered(bg, "AGENTES ZIG & ZAG", 48, Color.RED, 25);
         drawCentered(bg, "Recolhe as pistas para impedir o ataque ao Zanarkin", 20, Color.LIGHT_GRAY, 90);
@@ -31,33 +38,57 @@ public class MenuWorld extends ScreenWorld
         drawCentered(bg, "Clica duas vezes no salto e deixa pressionado para flutuar", 20, Color.WHITE, 385);
         drawCentered(bg, "Os dois agentes devem chegar à saída para passar o nível", 20, Color.WHITE, 420);
         drawCentered(bg, "P  -  pausa (continuar, guardar ou voltar ao menu)", 20, Color.YELLOW, 450);
-        
-        
+
         if (SaveGame.hasSave()) {
             drawCentered(bg, "SPACE  -  novo jogo      C  -  continar (nivel "+ SaveGame.load() + ")      T  -  historia", 24, Color.YELLOW, 470);
         } else {
             drawCentered(bg, "SPACE  -  novo jogo      T  -  historia", 24, Color.YELLOW, 470);
         }
-        
+
         setBackground(bg);
     }
 
     public void act()
     {
+        if (!musicStarted) {
+            music.play();                   
+            musicStarted = true;
+        }
         if (inputDelay > 0) {
             inputDelay--;
             return;
         }
         if (Greenfoot.isKeyDown("space")) {
-            Greenfoot.setWorld(new Level1());
+            goTo(new Level1());
         }
         else if (Greenfoot.isKeyDown("c") && SaveGame.hasSave()) {
             Level saved = SaveGame.createLevel(SaveGame.load());
             saved.setStartingScore(SaveGame.loadScore());
-            Greenfoot.setWorld(saved);
+            goTo(saved);
         }
         else if (Greenfoot.isKeyDown("t")) {
-            Greenfoot.setWorld(new StoryWorld());
+            goTo(new StoryWorld());
+        }
+    }
+
+    private void goTo(World next)
+    {
+        music.stop();
+        Greenfoot.setWorld(next);
+    }
+
+    public void stopped()
+    {
+        if (music.isPlaying()) {
+            music.pause();
+            musicPaused = true; 
+        }   
+    }
+    public void started()
+    {
+        if (musicPaused) {
+            music.play();
+            musicPaused = false;
         }
     }
 }
