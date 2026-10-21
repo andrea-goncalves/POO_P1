@@ -6,9 +6,9 @@ public class Boss extends Enemy {
     private static final int SHOOT_INTERVAL = 90;
     private static final int SHOOT_FRAME_DELAY = 5;
     private static final int MAX_HEALTH = 300;
-    private static final int SHIELD_DISTANCE = 42;
-    private static final int SHIELD_HEIGHT = 220;
-    private static final int SHIELD_WIDTH = 32;
+    private static final int SHIELD_DISTANCE = 9;//9
+    private static final int SHIELD_HEIGHT = 160;//160
+    private static final int SHIELD_WIDTH = 8;//8
     private static final int GROUND_Y = 235;
 
     private boolean stunned;
@@ -141,7 +141,7 @@ public class Boss extends Enemy {
     }
 
     private void recover(){
-        pushPlayers();
+        //pushPlayers();
 
         stunned = false;
         stunTimer = 0;
@@ -153,7 +153,7 @@ public class Boss extends Enemy {
         setImage(idleImage);
         createShield();
     }
-
+    /*
     private void pushPlayers(){
         for (Agent player : getWorld().getObjects(Agent.class)) {
             int direction = player.getX() < getX() ? -1 : 1;
@@ -168,6 +168,10 @@ public class Boss extends Enemy {
             player.setLocation(newX, player.getY());
         }
     }
+    */
+   public int getMaxHealth(){
+    return MAX_HEALTH;
+}
 
     private void startShooting(){
         shooting = true;
