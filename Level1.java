@@ -5,7 +5,7 @@ public class Level1 extends Level
 {
      public Level1(){
         super(960, 544);
-
+        dialogue();
         loadCollisions("Colisao_fase1.csv");
         setBackground("fase1.png");
     
@@ -57,5 +57,15 @@ public class Level1 extends Level
     public int getLevelNumber()
     {
         return 1;
+    }
+    public void dialogue(){
+        String[] names = {"ZAG", "ZIG"};
+
+        String[] texts = {
+            "O Projeto Cronos funcionou! Voltamos dois dias no tempo.",
+            "Temos de subir a montanha e impedir o lançamento da bomba!"
+        };
+
+        addObject(new Dialogue(names, texts), 480, 450);
     }
 }

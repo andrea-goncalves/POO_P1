@@ -53,6 +53,9 @@ public class Boss extends Enemy {
 
     @Override
     public void act(){
+        if (!getWorld().getObjects(Dialogue.class).isEmpty()) {
+            return;
+        }
         updateShieldPosition();
 
         if (stunned) {

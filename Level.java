@@ -17,7 +17,8 @@ public abstract class Level extends World
         startScore = 0;
         powerUnlocked = false;
         pauseKeyHeld = true;
-        setPaintOrder(HUD.class, DarknessOverlay.class, Agent.class, Enemy.class,Bullet.class, Clue.class, Solid.class);
+        setPaintOrder(Dialogue.class,HUD.class,
+        DarknessOverlay.class, Agent.class, Enemy.class,Bullet.class, Clue.class, Solid.class);
         addObject(new HUD(width), width / 2, 15);
     }
 

@@ -323,6 +323,9 @@ public class Agent extends Character {
         return shielding;
     }
     private boolean canMove(){
+        if (!getWorld().getObjects(Dialogue.class).isEmpty()) {
+            return false;
+        }
         if (getWorld() instanceof BossLevel && Greenfoot.isKeyDown(powerKey)) {
             airDrift = 0;
             setGliding(false);

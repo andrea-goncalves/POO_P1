@@ -3,7 +3,8 @@ import greenfoot.*;
 public class BossLevel extends Level {
     public BossLevel(){
         super(960, 540);
-
+        
+        dialogue();
         loadCollisions("Colisao_boss.csv");
         setBackground("faseBoss.png");
 
@@ -16,9 +17,9 @@ public class BossLevel extends Level {
     }
 
     public void bossDefeated(){
+        dialogue2();
         addScore(10);
-        showText("BOSS DERROTADO! Score final: " + getScore(), 480, 250);
-        Greenfoot.stop();
+        //showText("BOSS DERROTADO! Score final: " + getScore(), 480, 250);
     }
 
     @Override
@@ -53,5 +54,29 @@ public class BossLevel extends Level {
     @Override
     public int getLevelNumber(){
         return 4;
+    }
+    public void dialogue(){
+        String[] names = {"GENERAL VON KROSS", "ZAG", "ZIG"};
+
+        String[] texts = {
+            "Ratos de Zanarkin! Chegaram tarde demais!",
+            "A tua bomba não vai tocar em Zanarkin!",
+            "Rende-te, Von Kross! A fortaleza não vai a lado nenhum!"
+        };
+        
+        addObject(new Dialogue(names, texts), 480, 450);
+    }
+    public void dialogue2(){
+        String[] names = {"GENERAL VON KROSS", "ZAG", "ZIG", "ZAG"};
+
+        String[] texts = {
+            "Vocês destruíram os controles e a bomba ativou; ninguém sai vivo daqui!",
+            "(No painel em chamas) Não dá pra pousar nem desarmar! É o fim, Zig!",
+            "(Puxando o manche) Mas dá pra guiar essa nave pro oceano e salvar Zanarkin.",
+            "(Segurando o manche junto) Missão cumprida, parceiro. Foi uma honra.",
+        };
+        
+        addObject(new Dialogue(names, texts), 480, 450);
+        //Greenfoot.stop();
     }
 }

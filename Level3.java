@@ -3,12 +3,14 @@ import greenfoot.*;
 public class Level3 extends Level {
     private static final int LIGHTS_OFF_TIME = 300;
     private static final int SHORT_SIGHT = 100;
+    private boolean dialogueShown = false;
 
     private int lightsOffTimer;
     private DarknessOverlay overlay;
 
     public Level3(){
         super(960, 540);
+        dialogue();
 
         lightsOffTimer = 0;
         overlay = null;
@@ -129,5 +131,15 @@ public class Level3 extends Level {
             }
         }
         return false;
+    }
+    public void dialogue(){
+        String[] names = {"ZAG", "ZIG"};
+
+        String[] texts = {
+            "Zig, O General embarcou na Fortaleza Voadora com a bomba!",
+            "Vamos para o elevador! Temos de impedir que o avião descole!"
+        };
+
+        addObject(new Dialogue(names, texts), 480, 450);
     }
 }
