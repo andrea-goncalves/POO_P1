@@ -45,9 +45,7 @@ public abstract class Character extends Actor
             onNoLives();
        }
     }
-    protected void onNoLives(){
-        //alterar quando tenha os niveis
-    }
+    protected void onNoLives(){ }
     public boolean isInvulnerable(){
         return invulnerableTimer > 0;
     }

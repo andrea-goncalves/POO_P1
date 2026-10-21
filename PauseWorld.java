@@ -42,7 +42,7 @@ public class PauseWorld extends ScreenWorld
             Greenfoot.setWorld(pausedLevel);                
         }
         else if (Greenfoot.isKeyDown("s")) {
-            SaveGame.save(pausedLevel.getLevelNumber());
+            SaveGame.save(pausedLevel.getLevelNumber(), pausedLevel.getStartScore());
             drawScreen("Jogo Guardado");
         }
         else if (Greenfoot.isKeyDown("m")) {

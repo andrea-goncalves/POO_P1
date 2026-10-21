@@ -33,7 +33,7 @@ public class Soldier extends Enemy
             return;
         }
         aiming = true;
-        setDirection(target.getX() > getX() ? 1 : -1);   // face the agent
+        setDirection(target.getX() > getX() ? 1 : -1);  
 
         if (aimTimer > 0) {
             aimTimer--;
@@ -69,7 +69,7 @@ public class Soldier extends Enemy
         int dir = getDirection();
         int startX = getX() + dir * (getImage().getWidth() / 2 + 10);
         getWorld().addObject(new Bullet(dir), startX, getY());
-        // Greenfoot.playSound("shot.wav");
+        Greenfoot.playSound("blast.wav");
     }
     @Override
     public void neutralize(){

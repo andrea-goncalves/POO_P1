@@ -34,8 +34,7 @@ public class MenuWorld extends ScreenWorld
         
         
         if (SaveGame.hasSave()) {
-            drawCentered(bg, "SPACE  -  novo jogo      C  -  continar (nivel "
-                             + SaveGame.load() + ")      T  -  historia", 24, Color.YELLOW, 470);
+            drawCentered(bg, "SPACE  -  novo jogo      C  -  continar (nivel "+ SaveGame.load() + ")      T  -  historia", 24, Color.YELLOW, 470);
         } else {
             drawCentered(bg, "SPACE  -  novo jogo      T  -  historia", 24, Color.YELLOW, 470);
         }
@@ -53,7 +52,9 @@ public class MenuWorld extends ScreenWorld
             Greenfoot.setWorld(new Level1());
         }
         else if (Greenfoot.isKeyDown("c") && SaveGame.hasSave()) {
-            Greenfoot.setWorld(SaveGame.createLevel(SaveGame.load()));
+            Level saved = SaveGame.createLevel(SaveGame.load());
+            saved.setStartingScore(SaveGame.loadScore());
+            Greenfoot.setWorld(saved);
         }
         else if (Greenfoot.isKeyDown("t")) {
             Greenfoot.setWorld(new StoryWorld());

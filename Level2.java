@@ -7,7 +7,7 @@ public class Level2 extends Level {
     public Level2(){
         super(960, 540);
 
-        carregarColisoes("Colisao_fase2.csv");
+        loadCollisions("Colisao_fase2.csv");
         setBackground("fase2.png");
 
         addObject(new Agent(5, 6, 16, "a", "d", "w", "s", "zig"), 25, 484);
@@ -32,8 +32,6 @@ public class Level2 extends Level {
         addObject(new Dog(), 920, 100);
         
         addObject(new Clue(20),31,300);
-        addObject(new Clue(20),700,100);
-        
         addObject(new ExitPoint(), 950, 100);
     }
 

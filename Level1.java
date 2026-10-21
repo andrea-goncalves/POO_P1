@@ -1,4 +1,4 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*; 
 
 public class Level1 extends Level
     
@@ -6,7 +6,7 @@ public class Level1 extends Level
      public Level1(){
         super(960, 544);
 
-        carregarColisoes("Colisao_fase1.csv");
+        loadCollisions("Colisao_fase1.csv");
         setBackground("fase1.png");
     
         addObject(new Agent(5, 6, 16, "a", "d", "w", "s", "zig"), 25, 484);
@@ -28,7 +28,7 @@ public class Level1 extends Level
         addObject(new Computer(new Door[]{door1},new MovingPlatform[]{plataform1}), 50, 190);
         addObject(new Computer(new Door[]{door2},new MovingPlatform[]{plataform1}), 500, 100);
         
-        addObject(new Clue(20),160,20);
+        addObject(new Clue(20),160,400);
         addObject(new Clue(20),650,100);
         
         addObject(new ExitPoint(),955,490);

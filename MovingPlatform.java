@@ -52,12 +52,9 @@ public class MovingPlatform extends Solid
         int targetY = startY + moveY;
 
         if (!returning) {
-
-            // Primeiro move no eixo X
             if (getX() != targetX) {
                 moveTowards(targetX, getY());
             }
-            // Depois move no eixo Y
             else if (getY() != targetY) {
                 moveTowards(getX(), targetY);
             }
@@ -67,13 +64,9 @@ public class MovingPlatform extends Solid
             }
 
         } else {
-
-            // volta pra posição original
-            //eixo Y
             if (getY() != startY) {
                 moveTowards(getX(), startY);
             }
-            //eixo X
             else if (getX() != startX) {
                 moveTowards(startX, getY());
             }

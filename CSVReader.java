@@ -3,24 +3,26 @@ import java.util.*;
 
 public class CSVReader
 {
-    public static int[][] carregarMatriz(String caminho)
-    {
-        List<int[]> linhas = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
-            String linha;
-            while ((linha = br.readLine()) != null) {
-                String[] partes = linha.split(",");
-                int[] valores = new int[partes.length];
-                for (int i = 0; i < partes.length; i++) {
-                    valores[i] = Integer.parseInt(partes[i].trim());
+    public static int[][] matrix(String path)
+    {
+        List<int[]> rows = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                int[] values = new int[parts.length];
+                for (int i = 0; i < parts.length; i++) {
+                    values[i] = Integer.parseInt(parts[i].trim());
                 }
-                linhas.add(valores);
+                rows.add(values);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return linhas.toArray(new int[0][]);
+        return rows.toArray(new int[0][]);
     }
+
 }

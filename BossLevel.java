@@ -5,7 +5,7 @@ public class BossLevel extends Level
     public BossLevel()
     {
         super(960, 540);
-        carregarColisoes("Colisao_boss.csv");
+        loadCollisions("Colisao_boss.csv");
         setBackground("faseBoss.png");
 
         addObject(
@@ -19,7 +19,8 @@ public class BossLevel extends Level
 
     public void bossDefeated()
     {
-        showText("BOSS DERROTADO!", 480, 250);
+        addScore(10);
+        showText("BOSS DERROTADO! Score final: " + getScore(), 480, 250);
         Greenfoot.stop();
     }
 

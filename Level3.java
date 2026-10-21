@@ -9,11 +9,11 @@ public class Level3 extends Level {
 
     public Level3(){
         super(960, 540);
-        
+
         lightsOffTimer = 0;
         overlay = null;
-        
-        carregarColisoes("Colisao_fase3.csv");
+
+        loadCollisions("Colisao_fase3.csv");
         setBackground("fase3.png");
 
         addObject(new Agent(5, 6, 16, "a", "d", "w", "s", "zig"), 25, 135);
@@ -43,13 +43,15 @@ public class Level3 extends Level {
 
         addObject(new Soldier(), 455, 135);
         addObject(new Soldier(), 900, 50);
-        
+
         addObject(new Clue(20),930,50);
+        addObject(new Clue(20),500,250);
         addObject(new ExitPoint(),870,450);
     }
+
     @Override
     public void usePower(Agent user){
-        //Greenfoot.playSound("switch.wav");
+        Greenfoot.playSound("lights.wav");
 
         lightsOffTimer = LIGHTS_OFF_TIME;
 
@@ -65,6 +67,10 @@ public class Level3 extends Level {
 
     @Override
     public void act(){
+        if (checkFallenAgents()) {
+            return;                    
+        }
+
         super.act();
 
         if (lightsOffTimer > 0) {
@@ -106,9 +112,22 @@ public class Level3 extends Level {
     protected Level nextLevel(){
         return new BossLevel();
     }
+
     @Override
     public int getLevelNumber()
     {
         return 3;
+    }
+
+    private boolean checkFallenAgents()
+    {
+        for (Agent agent : getObjects(Agent.class)) {
+            int feet = agent.getY() + agent.getImage().getHeight() / 2;
+            if (feet >= getHeight() - 1) {
+                Greenfoot.setWorld(new GameOverWorld(this));
+                return true;
+            }
+        }
+        return false;
     }
 }

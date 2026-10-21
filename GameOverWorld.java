@@ -29,7 +29,9 @@ public class GameOverWorld extends ScreenWorld
             return;
         }
         if (Greenfoot.isKeyDown("r")) {
-            Greenfoot.setWorld(failedLevel.createNew());     
+            Level retry = failedLevel.createNew();
+            retry.setStartingScore(failedLevel.getStartScore());
+            Greenfoot.setWorld(retry);   
         }
         else if (Greenfoot.isKeyDown("b")) {
             Greenfoot.setWorld(new Level1());

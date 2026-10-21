@@ -23,14 +23,14 @@ public class CrushingWall extends Solid
         descending = true; 
         startY = 0;
         this.distance = Math.abs(distance) * Level.TILE_SIZE;
-    
+
         topo = loadImage("crushWallTopo.png");
         //meio = loadImage("crusher_meio.png");
         meio=topo;
         baixo = loadImage("crusherWall_down.png");
-    
+
         setImage(topo);
-}
+    }
 
     private GreenfootImage loadImage(String filename) {
         GreenfootImage img = new GreenfootImage(filename);
