@@ -18,7 +18,7 @@ public class HUD extends Actor
         for (Agent agent : getWorld().getObjects(Agent.class)) {
             text += "Lives: " + agent.getLives() + "     ";
         }
-        text += "Score: " + ((Level) getWorld()).getScore() + "     ";
+        text += "Score: " + level.getScore() + "     ";
 
         if (level.isPowerUnlocked()) {
             text += level.getPowerName() + ": READY";

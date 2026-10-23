@@ -9,10 +9,9 @@ public class Level2 extends Level {
 
         loadCollisions("Colisao_fase2.csv");
         setBackground("fase2.png");
-
-        addObject(new Agent(5, 6, 16, "a", "d", "w", "s", "zig"), 25, 484);
-        addObject(new Agent(5, 6, 16, "left", "right", "up", "down", "zag"), 30, 484);
-
+        
+        addAgents(25, 30, 484);
+        
         MovingPlatform plataform1 = new MovingPlatform(0, -6 * TILE_SIZE);
         MovingPlatform plataform2 = new MovingPlatform(0, 5 * TILE_SIZE);
         MovingPlatform plataform3 = new MovingPlatform(0, 5 * TILE_SIZE);
@@ -22,11 +21,15 @@ public class Level2 extends Level {
         addObject(plataform2, 928, 333);
         addObject(plataform3, 512, 142);
         addObject(door1, 450, 475);
-
-        addObject(new Computer(new Door[]{}, new MovingPlatform[]{plataform1}), 200, 482);
+        
         addObject(new Computer(door1), 420, 100);
-        addObject(new Computer(new Door[]{}, new MovingPlatform[]{plataform2}), 700, 482);
-        addObject(new Computer(new Door[]{}, new MovingPlatform[]{plataform3}), 580, 295);
+        addObject(new Computer( plataform1), 200, 482);
+        addObject(new Computer(plataform2), 700, 482);
+        addObject(new Computer(plataform3), 580, 295);
+        //addObject(new Computer(new Door[]{}, new MovingPlatform[]{plataform1}), 200, 482);
+        
+        //addObject(new Computer(new Door[]{}, new MovingPlatform[]{plataform2}), 700, 482);
+        //addObject(new Computer(new Door[]{}, new MovingPlatform[]{plataform3}), 580, 295);
 
         addObject(new Dog(), 512, 295);
         addObject(new Dog(), 920, 100);

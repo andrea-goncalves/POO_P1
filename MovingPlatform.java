@@ -1,6 +1,6 @@
 import greenfoot.*;
 
-public class MovingPlatform extends Solid
+public class MovingPlatform extends Solid implements Activatable
 {
     private static final int SPEED = 2;
     private static final int WAIT_TIME = 180;

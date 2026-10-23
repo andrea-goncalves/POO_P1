@@ -1,7 +1,7 @@
 
 import greenfoot.*;
 
-public class Door extends Actor {
+public class Door extends Actor implements Activatable{
     private boolean isOpen;
     private int openDurationFrames;
     private int timer;
@@ -59,5 +59,11 @@ public class Door extends Actor {
             getWorld().addObject(collision, getX(), getY());
             getImage().setTransparency(255);
         }
+    }
+    
+    @Override
+    public void activate()
+    {
+        openDoor();
     }
 }

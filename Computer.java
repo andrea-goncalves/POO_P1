@@ -3,44 +3,51 @@ import greenfoot.*;
 
 public class Computer extends Actor
 {
-    private Door[] portasAssociadas;
-    private MovingPlatform[] plataformasAssociadas;
-    private boolean teclaPressionada;
+    private Door[] associatedDoors;
+    private MovingPlatform[] associatedPlatforms;
+    private boolean keyPressed;
+    private Activatable[] targets;
+    private boolean keyHeld;
 
-    public Computer(Door[] portas, MovingPlatform[] plataformas) {
-        portasAssociadas = portas;
-        plataformasAssociadas = plataformas;
-        teclaPressionada = false;
+    public Computer(Activatable... targets)
+    {
+        this.targets = targets;
+        keyHeld = false;
         setImage("computer.png");
     }
-    public Computer(Door... portas) {
-    this(portas, new MovingPlatform[]{});
-    }
 
-    public void act() {
-        checkInteraction();
-    }
+    public void act()
+    {
+        //checkInteraction();
+        boolean eDown = Greenfoot.isKeyDown("e");
 
+        if (isTouching(Agent.class) && eDown && !keyHeld) {
+            for (Activatable target : targets) {
+                target.activate();
+            }
+        }
+        keyHeld = eDown;
+    }
     private void checkInteraction() {
         Agent character = (Agent) getOneIntersectingObject(Agent.class);
 
-        boolean teclaE = Greenfoot.isKeyDown("e");
+        boolean eKey = Greenfoot.isKeyDown("e");
 
-       if (character != null && teclaE && !teclaPressionada) {
+        if (character != null && eKey && !keyPressed) {
 
-            for (Door porta : portasAssociadas) {
-                if (porta != null) {
-                    porta.openDoor();
+            for (Door door : associatedDoors) {
+                if (door != null) {
+                    door.openDoor();
                 }
             }
 
-            for (MovingPlatform plataforma : plataformasAssociadas) {
-                if (plataforma != null) {
-                    plataforma.activate();
+            for (MovingPlatform platform : associatedPlatforms) {
+                if (platform != null) {
+                    platform.activate();
                 }
             }
         }
 
-        teclaPressionada = teclaE;
+        keyPressed = eKey;
     }
 }

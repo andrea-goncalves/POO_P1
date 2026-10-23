@@ -9,8 +9,7 @@ public class Level1 extends Level
         loadCollisions("Colisao_fase1.csv");
         setBackground("fase1.png");
     
-        addObject(new Agent(5, 6, 16, "a", "d", "w", "s", "zig"), 25, 484);
-        addObject(new Agent(5, 6, 16, "left", "right", "up", "down", "zag"), 30, 484);
+        addAgents(25, 30, 484);
     
         Door door1 = new Door(2);
         Door door2 = new Door(0);
@@ -25,8 +24,9 @@ public class Level1 extends Level
         
     
         addObject(new Computer(door1), 600, 484);
-        addObject(new Computer(new Door[]{door1},new MovingPlatform[]{plataform1}), 50, 190);
-        addObject(new Computer(new Door[]{door2},new MovingPlatform[]{plataform1}), 500, 100);
+        addObject(new Computer(plataform1), 50, 190);
+        addObject(new Computer(door1,door2), 500, 100);
+        
         
         addObject(new Clue(20),160,400);
         addObject(new Clue(20),650,100);

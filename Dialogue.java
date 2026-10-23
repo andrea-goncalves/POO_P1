@@ -4,12 +4,14 @@ import greenfoot.*;
 public class Dialogue extends Actor {
     private String[] names;
     private String[] texts;
-    private int index = 0;
-    private boolean enterHeld = true;
+    private int index;
+    private boolean enterHeld;
 
     public Dialogue(String[] names, String[] texts){
         this.names = names;
         this.texts = texts;
+        index = 0;
+        enterHeld = true;
         showDialogue();
     }
 

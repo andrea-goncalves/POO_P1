@@ -17,22 +17,23 @@ public class Level3 extends Level {
 
         loadCollisions("Colisao_fase3.csv");
         setBackground("fase3.png");
-
-        addObject(new Agent(5, 6, 16, "a", "d", "w", "s", "zig"), 25, 135);
-        addObject(new Agent(5, 6, 16, "left", "right", "up", "down", "zag"), 30, 135);
-
+        
+        addAgents(25, 30, 135);
+        
         MovingPlatform plataform1 = new MovingPlatform(0, -4 * TILE_SIZE);
         MovingPlatform plataform2 = new MovingPlatform(0, 3 * TILE_SIZE);
 
         Door door1 = new Door(5);
 
         addObject(door1, 800, 30);
-
+        addObject(new Computer(door1),  642, 40);
+        addObject(new Computer(plataform2), 585, 455);
         addObject(plataform1, 350, 490);
         addObject(plataform2, 448, 302);
-
-        addObject(new Computer(new Door[]{door1}, new MovingPlatform[]{plataform1}), 642, 40);
-        addObject(new Computer(new Door[]{door1}, new MovingPlatform[]{plataform2}), 585, 455);
+        
+        
+        //addObject(new Computer(new Door[]{door1}, new MovingPlatform[]{plataform1}), 642, 40);
+        //addObject(new Computer(new Door[]{door1}, new MovingPlatform[]{plataform2}), 585, 455);
 
         addObject(new CrushingWall(2), 320, 35);
         addObject(new CrushingWall(1), 832, 207);

@@ -9,14 +9,10 @@ public class BossShield extends Solid {
     private int health;
     private Boss boss;
 
-    public BossShield(Boss boss){
-        super(SHIELD_WIDTH, SHIELD_HEIGHT);
+    public BossShield(Boss boss, int width, int height){
+        super(width, height);
         this.boss = boss;
         health = MAX_HEALTH;
-        GreenfootImage image = new GreenfootImage(SHIELD_WIDTH,SHIELD_HEIGHT);
-
-        image.clear();
-        setImage(image);
     }
 
     public void takeDamage(int damage){

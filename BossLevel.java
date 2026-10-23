@@ -7,12 +7,11 @@ public class BossLevel extends Level {
         dialogue();
         loadCollisions("Colisao_boss.csv");
         setBackground("faseBoss.png");
-
-        addObject(new Agent(5, 6, 16, "a", "d", "w", "s", "zig"), 100, 223);
-        addObject(new Agent(5, 6, 16, "left", "right", "up", "down", "zag"), 160, 223);
-
+        
+        addAgents(100, 160, 223);
+        
         Boss boss = new Boss();
-        addObject(boss, 894, 223);//895 223
+        addObject(boss, 894, 223);
         addObject(new BossHealthBar(boss), 480, 510);
     }
 

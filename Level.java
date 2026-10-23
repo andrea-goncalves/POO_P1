@@ -3,6 +3,9 @@ import greenfoot.*;
 public abstract class Level extends World
 {
     protected abstract Level nextLevel();
+    private static final int AGENT_LIVES = 5;
+    private static final int AGENT_SPEED = 6;
+    private static final int AGENT_JUMP = 16;
     public static final int TILE_SIZE = 32;
     private static final int LEVEL_COMPLETE_BONUS = 10;
     private int score;
@@ -28,7 +31,12 @@ public abstract class Level extends World
         checkRestart();
 
     }
-
+    protected void addAgents(int zigX, int zagX, int y)
+    {
+        addObject(new Agent(AGENT_LIVES, AGENT_SPEED, AGENT_JUMP, "a", "d", "w", "s", "zig"), zigX, y);
+        addObject(new Agent(AGENT_LIVES, AGENT_SPEED, AGENT_JUMP, "left", "right", "up", "down", "zag"), zagX, y);
+    }
+    
     public abstract int getLevelNumber();
 
     protected abstract Level createNew();

@@ -6,9 +6,9 @@ public class Boss extends Enemy {
     private static final int SHOOT_INTERVAL = 90;
     private static final int SHOOT_FRAME_DELAY = 5;
     private static final int MAX_HEALTH = 300;
-    private static final int SHIELD_DISTANCE = 9;//9
-    private static final int SHIELD_HEIGHT = 160;//160
-    private static final int SHIELD_WIDTH = 8;//8
+    private static final int SHIELD_DISTANCE = 9;
+    private static final int SHIELD_HEIGHT = 160;
+    private static final int SHIELD_WIDTH = 8;
     private static final int GROUND_Y = 235;
 
     private boolean stunned;
@@ -93,7 +93,7 @@ public class Boss extends Enemy {
     private void createShield(){
         if (getWorld() == null) return;
 
-        shield = new BossShield(this);
+        shield = new BossShield(this, SHIELD_WIDTH, SHIELD_HEIGHT);
         getWorld().addObject(shield, getShieldX(), getShieldY());
     }
 

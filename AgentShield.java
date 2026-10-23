@@ -7,12 +7,5 @@ public class AgentShield extends Solid {
     public AgentShield(){
         super(SHIELD_WIDTH, SHIELD_HEIGHT);
 
-        GreenfootImage image = new GreenfootImage(
-            SHIELD_WIDTH,
-            SHIELD_HEIGHT
-        );
-
-        image.clear();
-        setImage(image);
     }
 }
