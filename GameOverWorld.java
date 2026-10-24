@@ -21,7 +21,7 @@ public class GameOverWorld extends ScreenWorld
 
         setBackground(bg);
     }
-
+    @Override
     public void act()
     {
         if (inputDelay > 0) {

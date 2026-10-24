@@ -67,7 +67,7 @@ public class StoryWorld extends ScreenWorld
         }
         return img;
     }
-
+    @Override
     public void act()
     {
         offsetY -= SCROLL_SPEED;

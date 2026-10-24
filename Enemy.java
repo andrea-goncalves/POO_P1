@@ -25,6 +25,7 @@ public abstract class Enemy extends Character
         sleepTimer = 0;
         moving = false;
     }
+    @Override
     public void act()
     {
         updateInvulnerability();

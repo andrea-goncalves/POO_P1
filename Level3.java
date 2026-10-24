@@ -3,23 +3,24 @@ import greenfoot.*;
 public class Level3 extends Level {
     private static final int LIGHTS_OFF_TIME = 300;
     private static final int SHORT_SIGHT = 100;
-   
+    private static final int GAME_OVER_DELAY = 60;
 
     private int lightsOffTimer;
+    private int fallTimer;
     private DarknessOverlay overlay;
 
     public Level3(){
         super(960, 540);
         dialogue();
-
+        fallTimer = -1;
         lightsOffTimer = 0;
         overlay = null;
 
         loadCollisions("Colisao_fase3.csv");
         setBackground("fase3.png");
-        
+
         addAgents(25, 30, 135);
-        
+
         MovingPlatform platform1 = new MovingPlatform( -4 * TILE_SIZE);
         MovingPlatform platform2 = new MovingPlatform( 3 * TILE_SIZE);
 
@@ -30,8 +31,7 @@ public class Level3 extends Level {
         addObject(new Computer(platform2), 585, 455);
         addObject(platform1, 350, 490);
         addObject(platform2, 448, 302);
-        
-        
+
         addObject(new CrushingWall(2), 320, 35);
         addObject(new CrushingWall(1), 832, 207);
         addObject(new CrushingWall(1), 704, 207);
@@ -121,22 +121,32 @@ public class Level3 extends Level {
 
     private boolean checkFallenAgents()
     {
-        for (Agent agent : getObjects(Agent.class)) {
-            int feet = agent.getY() + agent.getImage().getHeight() / 2;
-            if (feet >= getHeight() - 1) {
-                Greenfoot.setWorld(new GameOverWorld(this));
-                return true;
+        if (fallTimer < 0) {
+            for (Agent agent : getObjects(Agent.class)) {
+                int feet = agent.getY() + agent.getImage().getHeight() / 2;
+                if (feet >= getHeight() - 1) {
+                    fallTimer = GAME_OVER_DELAY;
+                    break;
+                }
             }
+            return false;
+        }
+
+        fallTimer--;
+        if (fallTimer <= 0) {
+            Greenfoot.setWorld(new GameOverWorld(this));
+            return true;
         }
         return false;
     }
+
     public void dialogue(){
         String[] names = {"ZAG", "ZIG"};
 
         String[] texts = {
-            "Zig, O General embarcou na Fortaleza Voadora com a bomba!",
-            "Vamos para o elevador! Temos de impedir que o avião descole!"
-        };
+                "O General embarcou na Fortaleza Voadora com a bomba!",
+                "Vamos para o elevador! Temos que impedir que o avião descole!"
+            };
 
         addObject(new Dialogue(names, texts), 480, 450);
     }

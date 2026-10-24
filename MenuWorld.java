@@ -47,7 +47,7 @@ public class MenuWorld extends ScreenWorld
 
         setBackground(bg);
     }
-
+    @Override
     public void act()
     {
         if (!musicStarted) {

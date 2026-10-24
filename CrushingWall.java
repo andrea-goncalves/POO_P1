@@ -40,7 +40,7 @@ public class CrushingWall extends Solid
     protected void addedToWorld(World world) {
         startY = getY();
     }
-
+    @Override
     public void act() {
         moveWall();
         animate();

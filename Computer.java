@@ -12,7 +12,7 @@ public class Computer extends Actor
         keyHeld = false;
         setImage("computer.png");
     }
-
+    @Override
     public void act()
     {
         boolean eDown = Greenfoot.isKeyDown("e");

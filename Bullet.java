@@ -23,7 +23,7 @@ public class Bullet extends Actor {
         img.fillOval(0, 0, diameter, diameter);
         setImage(img);
     }
-
+    @Override
     public void act(){
         setLocation(getX() + direction * speed, getY());
 

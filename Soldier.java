@@ -55,8 +55,7 @@ public class Soldier extends Enemy
         Agent closest = null;
         double closestDistance = Double.MAX_VALUE;
 
-        for (Object obj : getObjectsInRange(sightRange, Agent.class)) {
-            Agent agent = (Agent) obj;
+        for (Agent agent: getObjectsInRange(sightRange, Agent.class)) {
             double distance = Math.abs(agent.getX() - getX());
             if (Math.abs(agent.getY() - getY()) <= SIGHT_HEIGHT && distance < closestDistance) {
                 closest = agent;

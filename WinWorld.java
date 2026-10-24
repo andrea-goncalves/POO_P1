@@ -15,6 +15,7 @@ public class WinWorld extends ScreenWorld
         drawCentered(bg, "SPACE  -  voltar ao menu", 24, Color.WHITE, 350);
         setBackground(bg);
     }
+    @Override
     public void act()
     {
         if (inputDelay > 0) {

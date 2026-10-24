@@ -28,7 +28,7 @@ public class Boss extends Enemy {
     private int stunFrameDelay;
 
     public Boss(){
-        super(MAX_HEALTH, 0);
+        super(1, 0);
         stunned = false;
         stunTimer = 0; 
         shootTimer = SHOOT_INTERVAL; 

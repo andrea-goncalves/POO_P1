@@ -3,20 +3,26 @@ import greenfoot.*;
 public class BossHealthBar extends Actor {
     private static final int WIDTH = 300;
     private static final int HEIGHT = 20;
-
     private Boss boss;
+    private int lastHealth;
 
     public BossHealthBar(Boss boss){
         this.boss = boss;
+        lastHealth = -1; 
         updateBar();
     }
 
+    @Override
     public void act(){
-        updateBar();
+
+        if (boss.getHealth() != lastHealth) {
+            updateBar();
+        }
     }
 
     private void updateBar(){
         int health = boss.getHealth();
+        lastHealth = health;
         int maxHealth = boss.getMaxHealth();
 
         double percentage = (double) health / maxHealth;

@@ -59,7 +59,10 @@ public class BossLevel extends Level {
     public boolean allowsAttack(){
         return true;
     }
-
+    @Override
+    public boolean usesShield(){
+        return true;
+    }
     @Override
     public int getLevelNumber(){
         return 4;
@@ -68,24 +71,23 @@ public class BossLevel extends Level {
         String[] names = {"GENERAL VON KROSS", "ZAG", "ZIG"};
 
         String[] texts = {
-            "Ratos de Zanarkin! Chegaram tarde demais!",
-            "A tua bomba não vai tocar em Zanarkin!",
-            "Rende-te, Von Kross! A fortaleza não vai a lado nenhum!"
+            "Ratos de Zanarkin! Chegaram demasiado tarde!",
+            "Essa bomba não vai destruir em Zanarkin!",
+            "Rende-te, Von Kross! O teu palno fracassou!"
         };
         
         addObject(new Dialogue(names, texts), 480, 450);
     }
     private void victoryDialogue(){
-        String[] names = {"GENERAL VON KROSS", "ZAG", "ZIG", "ZAG"};
+        String[] names = {"GENERAL VON KROSS", "ZIG", "ZAG", "ZIG"};
 
         String[] texts = {
-            "Vocês destruíram os controles e a bomba ativou; ninguém sai vivo daqui!",
-            "(No painel em chamas) Não dá pra pousar nem desarmar! É o fim, Zig!",
-            "(Puxando o manche) Mas dá pra guiar essa nave pro oceano e salvar Zanarkin.",
-            "(Segurando o manche junto) Missão cumprida, parceiro. Foi uma honra.",
+            "Vocês destruíram os controlos e a bomba ativou, ninguém sai vivo daqui!",
+            "Não podemos desativar a bomba",
+            "Mas podemos afastar esta nave de Zanarkin.",
+            "Missão cumprida, parceiro. Foi uma honra.",
         };
         
         addObject(new Dialogue(names, texts), 480, 450);
-        //Greenfoot.stop();
     }
 }

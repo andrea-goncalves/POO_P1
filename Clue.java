@@ -20,6 +20,7 @@ public class Clue extends Actor
         img.drawOval(0, 0, 23, 23);
         setImage(img);
     }
+    @Override
     public void act()
     {
         if (isTouching(Agent.class)) {

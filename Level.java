@@ -24,7 +24,7 @@ public abstract class Level extends World
         DarknessOverlay.class, Agent.class, Enemy.class,Bullet.class, Clue.class, Solid.class);
         addObject(new HUD(width), width / 2, 15);
     }
-
+    @Override
     public void act(){
         checkPause();
         checkPowerUnlock();
@@ -33,8 +33,8 @@ public abstract class Level extends World
     }
     protected void addAgents(int zigX, int zagX, int y)
     {
-        addObject(new Agent(AGENT_LIVES, AGENT_SPEED, AGENT_JUMP, "a", "d", "w", "s", "zig"), zigX, y);
-        addObject(new Agent(AGENT_LIVES, AGENT_SPEED, AGENT_JUMP, "left", "right", "up", "down", "zag"), zagX, y);
+        addObject(new Agent(AGENT_LIVES, AGENT_SPEED, AGENT_JUMP, "a", "d", "w", "s", "f", 3, "zig"), zigX, y);
+        addObject(new Agent(AGENT_LIVES, AGENT_SPEED, AGENT_JUMP, "left", "right", "up", "down", "0", 7, "zag"), zagX, y);
     }
     
     public abstract int getLevelNumber();
@@ -93,14 +93,13 @@ public abstract class Level extends World
 
         for (int row = 0; row < map.length; row++) {
             for (int column = 0; column < map[row].length; column++) {
+                int x = column * TILE_SIZE + TILE_SIZE / 2;
+                int y = row * TILE_SIZE + TILE_SIZE / 2;
+                
                 if (map[row][column] == 1) {
-                    int x = column * TILE_SIZE + TILE_SIZE / 2;
-                    int y = row * TILE_SIZE + TILE_SIZE / 2;
                     addObject(new Solid(), x, y);
                 }
-                if (map[row][column] == 2) {
-                    int x = column * TILE_SIZE + TILE_SIZE / 2;
-                    int y = row * TILE_SIZE + TILE_SIZE / 2;
+                else if (map[row][column] == 2) {
                     addObject(new Trap(), x, y);
                 }
             }
@@ -117,7 +116,11 @@ public abstract class Level extends World
     {
         return false;
     }
-
+    public boolean usesShield()
+    {
+        return false;
+    }
+        
     public void setStartingScore(int points)
     {
         score = points;

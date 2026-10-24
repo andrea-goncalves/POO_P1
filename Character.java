@@ -24,7 +24,6 @@ public abstract class Character extends Actor
         invulnerableTimer = 0;
     }
     
-    public void act(){}
     public int getLives()
     {
         return lives;
@@ -37,15 +36,10 @@ public abstract class Character extends Actor
            return; 
        } 
     
-        lives -= amount;
-        invulnerableTimer = INVULNERABLE_TIME;
+       lives = Math.max(0, lives - amount);
+       invulnerableTimer = INVULNERABLE_TIME;
     
-       if (lives <= 0) {
-            lives = 0;
-            onNoLives();
-       }
     }
-    protected void onNoLives(){ }
     public boolean isInvulnerable(){
         return invulnerableTimer > 0;
     }
@@ -73,7 +67,7 @@ public abstract class Character extends Actor
      protected void setGliding(boolean gliding) { 
          this.gliding = gliding; 
     }
-    protected void fall(){
+    private void fall(){
         setLocation(getX(), getY()+ (int) vSpeed);
         if (gliding && vSpeed>0){
             vSpeed +=ACCELERATION* GLIDE_FACTOR;
@@ -117,7 +111,7 @@ public abstract class Character extends Actor
     protected boolean onGround(){
     return getOneObjectAtOffset(0, getImage().getHeight() / 2 + 1, Solid.class) != null;
     }
-    protected boolean hitHead(){
+    private boolean hitHead(){
     return getOneObjectAtOffset(0, -getImage().getHeight() / 2, Solid.class) != null;
     }
     protected boolean touchingWall(int dx){

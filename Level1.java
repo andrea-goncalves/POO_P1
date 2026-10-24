@@ -63,7 +63,7 @@ public class Level1 extends Level
 
         String[] texts = {
             "O Projeto Cronos funcionou! Voltamos dois dias no tempo.",
-            "Temos de subir a montanha e impedir o lançamento da bomba!"
+            "Temos que subir a montanha e impedir o lançamento da bomba!"
         };
 
         addObject(new Dialogue(names, texts), 480, 450);

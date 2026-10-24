@@ -9,7 +9,7 @@ public class Trap extends Solid
     public Trap(int width, int height) {
         super(width, height);
     }
-
+    @Override
     public void act() {
         damageAgentsOnTop();
     }

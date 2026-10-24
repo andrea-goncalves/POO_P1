@@ -25,7 +25,7 @@ public class MovingPlatform extends Solid implements Activatable
     protected void addedToWorld(World world) {
         startY = getY();
     }
-
+    @Override
     public void act() {
         movePlatform();
     }

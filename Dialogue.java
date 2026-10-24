@@ -2,6 +2,12 @@
 import greenfoot.*;
 
 public class Dialogue extends Actor {
+    private static final int WIDTH = 900;
+    private static final int HEIGHT = 130;
+    private static final Font NAME_FONT = new Font(22);
+    private static final Font TEXT_FONT = new Font(17);
+    private static final String HINT = "ENTER para continuar";
+        
     private String[] names;
     private String[] texts;
     private int index;
@@ -14,7 +20,7 @@ public class Dialogue extends Actor {
         enterHeld = true;
         showDialogue();
     }
-
+    @Override
     public void act(){
         boolean enter = Greenfoot.isKeyDown("enter");
 
@@ -39,14 +45,14 @@ public class Dialogue extends Actor {
         image.fill();
 
         image.setColor(Color.YELLOW);
-        image.setFont(new Font(22));
+        image.setFont(NAME_FONT);
         image.drawString(names[index], 20, 30);
 
         image.setColor(Color.WHITE);
-        image.setFont(new Font(17));
+        image.setFont(TEXT_FONT);
         image.drawString(texts[index], 20, 75);
 
-        image.drawString("ENTER para continuar", 680, 115);
+        image.drawString(HINT, 680, 115);
 
         setImage(image);
     }

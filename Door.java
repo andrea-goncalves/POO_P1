@@ -24,7 +24,7 @@ public class Door extends Actor implements Activatable{
 
         world.addObject(collision, getX(), getY());
     }
-
+    @Override
     public void act() {
         if (isOpen && openDurationFrames > 0) {
             timer--;

@@ -8,7 +8,7 @@ public class Agent extends Character {
     private int powerCooldown;
     private int frame, frameDelay;
     private boolean attackKeyHeld, attacking;
-    private int attackCooldown, attackFrame, attackFrameDelay;
+    private int attackCooldown, attackFrame, attackFrameDelay, attackFrameCount;
 
     private GreenfootImage[] walkRight, walkLeft;
     private GreenfootImage[] jumpRight, jumpLeft;
@@ -25,7 +25,7 @@ public class Agent extends Character {
     private static final int ATTACK_FRAME_DELAY = 4;
     private static final int SHIELD_DISTANCE = 45;
 
-    public Agent(int lives, int speed, int jumpStrength, String leftKey, String rightKey, String jumpKey, String powerKey, String prefix){
+    public Agent(int lives, int speed, int jumpStrength, String leftKey, String rightKey, String jumpKey, String powerKey,String attackKey, int attackFrameCount, String prefix){
         super(lives);
 
         jumpKeyReleased = false;
@@ -42,28 +42,22 @@ public class Agent extends Character {
         attackFrame = 0;
         attackFrameDelay = 0;
         shielding = false;
-
+        shield = null;
+        
         this.speed = speed;
         this.jumpStrength = jumpStrength;
         this.leftKey = leftKey;
         this.rightKey = rightKey;
         this.jumpKey = jumpKey;
         this.powerKey = powerKey;
-
-        if (prefix.equals("zig")) {
-            attackKey = "f";
-        }
-        else {
-            attackKey = "0";
-        }
+        this.attackKey = attackKey;
+        
 
         walkRight = loadFrames(prefix + "_walk", 4);
         walkLeft = mirrorAll(walkRight);
 
         jumpRight = loadFrames(prefix + "_jump", 7);
         jumpLeft = mirrorAll(jumpRight);
-
-        int attackFrameCount = prefix.equals("zig") ? 3 : 7;
 
         attackRight = loadFrames(prefix + "_attack", attackFrameCount);
         attackLeft = mirrorAll(attackRight);
@@ -74,13 +68,12 @@ public class Agent extends Character {
 
         setImage(walkRight[0]);
     }
-
+    @Override
     public void act(){
         updateMovement();
-        //checkKeys();
         checkFall();
         checkPower();
-        animate(moving);
+        animate();
         keepInsideWorld();
         updateShieldPosition();
         updateInvulnerability();
@@ -146,7 +139,7 @@ public class Agent extends Character {
     private void checkPower(){
         Level level = (Level) getWorld();
 
-        if (level instanceof BossLevel) {
+        if (level.usesShield()) {
             boolean powerDown = Greenfoot.isKeyDown(powerKey);
 
             if (powerDown && !attacking) {
@@ -214,7 +207,7 @@ public class Agent extends Character {
         );
     }
 
-    private void animate(boolean moving){
+    private void animate(){
         if (shielding) {
             setImage(facingRight ? shieldRight : shieldLeft);
             return;
@@ -328,7 +321,7 @@ public class Agent extends Character {
         if (!getWorld().getObjects(Dialogue.class).isEmpty()) {
             return false;
         }
-        if (getWorld() instanceof BossLevel && Greenfoot.isKeyDown(powerKey)) {
+        if (((Level) getWorld()).usesShield() && Greenfoot.isKeyDown(powerKey)) {
             airDrift = 0;
             setGliding(false);
             return false;

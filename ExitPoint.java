@@ -3,6 +3,7 @@ import java.util.List;
 
 public class ExitPoint extends Actor
 {
+    @Override
     public void act()
     {
         checkExit();
