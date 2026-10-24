@@ -5,7 +5,7 @@ public class Boss extends Enemy {
     private static final int STUN_FRAME_DELAY = 8;
     private static final int SHOOT_INTERVAL = 90;
     private static final int SHOOT_FRAME_DELAY = 5;
-    private static final int MAX_HEALTH = 300;
+    private static final int MAX_HEALTH = 200;
     private static final int SHIELD_DISTANCE = 9;
     private static final int SHIELD_HEIGHT = 160;
     private static final int SHIELD_WIDTH = 8;
@@ -37,22 +37,22 @@ public class Boss extends Enemy {
         shooting = false; 
         shootFrame = 0; 
         shootFrameDelay = 0;
-        
+
         idleImage = new GreenfootImage("general_walk1.png");
-        shootFrames = loadFrames("general_attack", 8);
-        stunFrames = loadFrames("general_stum", 7);
+        shootFrames = Frames.load("general_attack", 8);
+        stunFrames = Frames.load("general_stum", 7);
 
         setImage(idleImage);
         setDirection(-1);
     }
-
+    ///é da documentação do greenfoot 
     @Override
-    protected void addedToWorld(World world){
+    public void addedToWorld(World world){
         createShield();
     }
 
     @Override
-    public void act(){
+    public void update(){
         if (!getWorld().getObjects(Dialogue.class).isEmpty()) {
             return;
         }
@@ -144,7 +144,6 @@ public class Boss extends Enemy {
     }
 
     private void recover(){
-        //pushPlayers();
 
         stunned = false;
         stunTimer = 0;
@@ -156,10 +155,10 @@ public class Boss extends Enemy {
         setImage(idleImage);
         createShield();
     }
-    
-   public int getMaxHealth(){
-    return MAX_HEALTH;
-}
+
+    public int getMaxHealth(){
+        return MAX_HEALTH;
+    }
 
     private void startShooting(){
         shooting = true;

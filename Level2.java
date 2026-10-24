@@ -51,7 +51,7 @@ public class Level2 extends Level {
     }
 
     @Override
-    protected Level createNew(){
+    public Level createNew(){
         return new Level2();
     }
 
@@ -66,7 +66,7 @@ public class Level2 extends Level {
     }
 
     @Override
-    protected Level nextLevel(){
+    public Level nextLevel(){
         return new Level3();
     }
     

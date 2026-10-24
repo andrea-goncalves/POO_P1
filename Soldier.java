@@ -19,11 +19,11 @@ public class Soldier extends Enemy
         shootAnimTimer = 0; 
         aimTimer = AIM_TIME;
         setWalkFrames("soldier_walk", 4);           
-        shootRight = loadFrames("soldier_attack", 9);            
-        shootLeft = mirrorAll(shootRight);
+        shootRight = Frames.load("soldier_attack", 9);            
+        shootLeft = Frames.mirror(shootRight);
     }
     @Override
-    protected void patrol(){
+    public void patrol(){
         Agent target = findTarget();
 
         if (target == null) {
@@ -75,7 +75,7 @@ public class Soldier extends Enemy
         sleep(300);                                
     }
     @Override
-    protected void animate()
+    public void animate()
     {
         if (!aiming) {
             super.animate();

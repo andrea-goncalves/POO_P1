@@ -34,7 +34,7 @@ public class Level1 extends Level
         addObject(new ExitPoint(),955,490);
     }        
     @Override
-    protected Level createNew()
+    public Level createNew()
     {
         return new Level1();
     }
@@ -50,7 +50,7 @@ public class Level1 extends Level
     @Override
     public void usePower(Agent user){    }
     @Override
-    protected Level nextLevel() {
+    public Level nextLevel() {
     return new Level2();
     }
     @Override

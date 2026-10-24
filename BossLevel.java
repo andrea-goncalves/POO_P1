@@ -4,7 +4,7 @@ public class BossLevel extends Level {
     private boolean bossDead;
     public BossLevel(){
         super(960, 540);
-        
+        bossDead = false;
         introDialogue();
                
         loadCollisions("Colisao_boss.csv");
@@ -32,7 +32,7 @@ public class BossLevel extends Level {
     }   
     
     @Override
-    protected Level createNew(){
+    public Level createNew(){
         return new BossLevel();
     }
 
@@ -51,7 +51,7 @@ public class BossLevel extends Level {
     }
 
     @Override
-    protected Level nextLevel(){
+    public Level nextLevel(){
         return null;
     }
 

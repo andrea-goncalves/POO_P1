@@ -18,13 +18,15 @@ public class MovingPlatform extends Solid implements Activatable
         timer = 0; 
         moving = false; 
         returning = false;
-        
+
         setImage("plataforma.png");
     }
 
-    protected void addedToWorld(World world) {
+    @Override
+    public void addedToWorld(World world) {
         startY = getY();
     }
+
     @Override
     public void act() {
         movePlatform();
@@ -63,5 +65,4 @@ public class MovingPlatform extends Solid implements Activatable
         }
     }
 }
-
 

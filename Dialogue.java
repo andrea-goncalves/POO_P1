@@ -39,7 +39,7 @@ public class Dialogue extends Actor {
     }
 
     private void showDialogue(){
-        GreenfootImage image = new GreenfootImage(900, 130);
+        GreenfootImage image = new GreenfootImage(WIDTH, HEIGHT);
 
         image.setColor(Color.BLACK);
         image.fill();

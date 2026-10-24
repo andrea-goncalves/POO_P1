@@ -53,14 +53,14 @@ public class Agent extends Character {
         this.attackKey = attackKey;
         
 
-        walkRight = loadFrames(prefix + "_walk", 4);
-        walkLeft = mirrorAll(walkRight);
+        walkRight = Frames.load(prefix + "_walk", 4);
+        walkLeft = Frames.mirror(walkRight);
 
-        jumpRight = loadFrames(prefix + "_jump", 7);
-        jumpLeft = mirrorAll(jumpRight);
+        jumpRight = Frames.load(prefix + "_jump", 7);
+        jumpLeft = Frames.mirror(jumpRight);
 
-        attackRight = loadFrames(prefix + "_attack", attackFrameCount);
-        attackLeft = mirrorAll(attackRight);
+        attackRight = Frames.load(prefix + "_attack", attackFrameCount);
+        attackLeft = Frames.mirror(attackRight);
 
         shieldRight = new GreenfootImage(prefix + "_shield.png");
         shieldLeft = new GreenfootImage(shieldRight);
@@ -69,15 +69,13 @@ public class Agent extends Character {
         setImage(walkRight[0]);
     }
     @Override
-    public void act(){
+    public void update(){
         updateMovement();
         checkFall();
         checkPower();
         animate();
         keepInsideWorld();
         updateShieldPosition();
-        updateInvulnerability();
-        applyBlink();
         checkAttack();
     }
 

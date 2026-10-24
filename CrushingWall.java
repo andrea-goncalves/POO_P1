@@ -37,9 +37,11 @@ public class CrushingWall extends Solid
         return img;
     }
 
-    protected void addedToWorld(World world) {
+    @Override
+    public void addedToWorld(World world) {
         startY = getY();
     }
+
     @Override
     public void act() {
         moveWall();

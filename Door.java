@@ -16,7 +16,8 @@ public class Door extends Actor implements Activatable{
         collision = null;
     }
 
-    protected void addedToWorld(World world) {
+    @Override
+    public void addedToWorld(World world) {
         collision = new Solid(
             getImage().getWidth(),
             getImage().getHeight()
@@ -24,6 +25,7 @@ public class Door extends Actor implements Activatable{
 
         world.addObject(collision, getX(), getY());
     }
+
     @Override
     public void act() {
         if (isOpen && openDurationFrames > 0) {
@@ -60,7 +62,7 @@ public class Door extends Actor implements Activatable{
             getImage().setTransparency(255);
         }
     }
-    
+
     @Override
     public void activate()
     {

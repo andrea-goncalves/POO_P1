@@ -94,7 +94,7 @@ public class Level3 extends Level {
     }
 
     @Override
-    protected Level createNew(){
+    public Level createNew(){
         return new Level3();
     }
 
@@ -109,7 +109,7 @@ public class Level3 extends Level {
     }
 
     @Override
-    protected Level nextLevel(){
+    public Level nextLevel(){
         return new BossLevel();
     }
 

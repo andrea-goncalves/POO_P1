@@ -26,9 +26,8 @@ public abstract class Enemy extends Character
         moving = false;
     }
     @Override
-    public void act()
+    public void update()
     {
-        updateInvulnerability();
         if (sleepTimer > 0) {
             sleepTimer--;
             checkFall();      
@@ -43,12 +42,12 @@ public abstract class Enemy extends Character
         checkFall();
         damageAgentOnContact();
     }
-    protected void setWalkFrames(String prefix, int count){
-        walkRight = loadFrames(prefix, count);
-        walkLeft = mirrorAll(walkRight);
+    public void setWalkFrames(String prefix, int count){
+        walkRight = Frames.load(prefix, count);
+        walkLeft = Frames.mirror(walkRight);
         setImage(walkRight[0]);
     }
-    protected void animate(){
+    public void animate(){
         if (walkRight == null) {
             return;                         
         }
@@ -65,7 +64,7 @@ public abstract class Enemy extends Character
         }
         setImage(direction > 0 ? walkRight[frame] : walkLeft[frame]);
     }
-    protected void patrol()
+    public void patrol()
     {
         if (touchingWall(direction * (getImage().getWidth()/2 + speed))) {
             direction = -direction;
@@ -83,16 +82,16 @@ public abstract class Enemy extends Character
             onHitAgent();
         }
     }
-    protected void onHitAgent(){}
-    protected void sleep(int acts){
+    public void onHitAgent(){}
+    public void sleep(int acts){
         sleepTimer = acts;
     }
-    protected void onWake(){}
+    public void onWake(){}
     public abstract void neutralize();
-    protected int getDirection(){
+    public int getDirection(){
         return direction;
     }
-    protected void setDirection(int direction){
+    public void setDirection(int direction){
         this.direction = direction;
     }
 }

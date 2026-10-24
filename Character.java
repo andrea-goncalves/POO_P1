@@ -23,7 +23,15 @@ public abstract class Character extends Actor
         gliding = false;
         invulnerableTimer = 0;
     }
+    @Override
+    public final void act()
+    {
+        updateInvulnerability();     
+        update();                   
+        applyBlink();                
+    }
     
+    public abstract void update();
     public int getLives()
     {
         return lives;
@@ -43,12 +51,12 @@ public abstract class Character extends Actor
     public boolean isInvulnerable(){
         return invulnerableTimer > 0;
     }
-    protected void updateInvulnerability()
+    private void updateInvulnerability()
     {
         if (invulnerableTimer > 0) 
             invulnerableTimer--;
     }
-    protected void applyBlink(){
+    private void applyBlink(){
         if (!isInvulnerable()) {
             return;
         }
@@ -60,11 +68,11 @@ public abstract class Character extends Actor
         copy.setTransparency(transparency);
         setImage(copy);
     }
-    protected void jump(int strength)
+    public void jump(int strength)
     {
         vSpeed = -strength;
     }
-     protected void setGliding(boolean gliding) { 
+    public void setGliding(boolean gliding) { 
          this.gliding = gliding; 
     }
     private void fall(){
@@ -81,7 +89,7 @@ public abstract class Character extends Actor
             vSpeed = MAX_FALL_SPEED;
         }
     }
-    protected void checkFall(){
+    public void checkFall(){
         if (vSpeed < 0 && hitHead()) {
             int attempts = 0;
             while (hitHead() && attempts < MAX_PUSH) {
@@ -104,20 +112,20 @@ public abstract class Character extends Actor
             }
     }
 
-    protected int getVerticalSpeed()
+    public int getVerticalSpeed()
     {
         return (int)vSpeed;
     }
-    protected boolean onGround(){
+    public boolean onGround(){
     return getOneObjectAtOffset(0, getImage().getHeight() / 2 + 1, Solid.class) != null;
     }
     private boolean hitHead(){
     return getOneObjectAtOffset(0, -getImage().getHeight() / 2, Solid.class) != null;
     }
-    protected boolean touchingWall(int dx){
+    public boolean touchingWall(int dx){
     return getOneObjectAtOffset(dx, 0, Solid.class) != null;
     }
-    protected boolean keepInsideWorld(){
+    public boolean keepInsideWorld(){
         int halfWidth = getImage().getWidth() / 2;
         int minX = halfWidth;
         int maxX = getWorld().getWidth() - halfWidth;
@@ -129,21 +137,7 @@ public abstract class Character extends Actor
         }
         return false;
     }
-    protected GreenfootImage[] loadFrames(String prefix, int count) {
-        GreenfootImage[] frames = new GreenfootImage[count];
-        for (int i = 0; i < count; i++) {
-            frames[i] = new GreenfootImage(prefix + (i + 1) + ".png");
-        }
-        return frames;
-    }
-    protected GreenfootImage[] mirrorAll(GreenfootImage[] frames) {
-        GreenfootImage[] flipped = new GreenfootImage[frames.length];
-        for (int i = 0; i < frames.length; i++) {
-            flipped[i] = new GreenfootImage(frames[i]);   
-            flipped[i].mirrorHorizontally();
-        }
-        return flipped;
-    }
+    
     
 }
 

@@ -15,12 +15,12 @@ public class Dog extends Enemy
         getImage().setTransparency(100);  
     }
     @Override
-    protected void onWake()
+    public void onWake()
     {
         getImage().setTransparency(255);
     }
     @Override
-    protected void onHitAgent(){
+    public void onHitAgent(){
         Greenfoot.playSound("bark.wav");
     }
 }
