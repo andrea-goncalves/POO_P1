@@ -1,9 +1,5 @@
 import greenfoot.Color;
 
-/**
- * All fixed values of the game in one place: sizes, speeds, times,
- * keys, file names and fonts. Change a value here and it changes everywhere.
- */
 public class Settings
 {
     //Directions
@@ -228,6 +224,178 @@ public class Settings
     public static final String LEVEL2_BACKGROUND = "fase2.png";
     public static final String LEVEL3_BACKGROUND = "fase3.png";
     public static final String BOSS_BACKGROUND = "faseBoss.png";
+
+
+    // World (extra) 
+    public static final int CELL_SIZE = 1;
+    public static final boolean WORLD_BOUNDED = false;
+    public static final Color SCREEN_BACKGROUND = new Color(20, 20, 30);
+    public static final Color TRANSPARENT = new Color(0, 0, 0, 0);
+    public static final int FALL_TIMER_OFF = -1;
+    public static final int FALL_EDGE_MARGIN = 1;
+
+    // HUD 
+    public static final int HUD_HEIGHT = 30;
+    public static final int HUD_TEXT_X = 10;
+    public static final int HUD_TEXT_Y = 22;
+    public static final String HUD_FONT_NAME = "Arial";
+    public static final boolean HUD_FONT_BOLD = true;
+    public static final boolean HUD_FONT_ITALIC = false;
+    public static final int HUD_FONT_SIZE = 18;
+    public static final String HUD_SEPARATOR = "     ";
+    public static final String HUD_LIVES_LABEL = "Lives: ";
+    public static final String HUD_SCORE_LABEL = "Score: ";
+    public static final String HUD_POWER_SEPARATOR = ": ";
+    public static final String HUD_READY = "READY";
+    public static final String HUD_PROGRESS_SEPARATOR = "/";
+
+    // Clue, darkness, shields, boss bar
+    public static final int CLUE_SIZE = 24;
+    public static final Color CLUE_FILL_COLOR = Color.YELLOW;
+    public static final Color CLUE_BORDER_COLOR = Color.ORANGE;
+    public static final Color DARKNESS_COLOR = new Color(0, 0, 0, 150);
+    public static final int BOSS_SHIELD_HEALTH = 100;
+    public static final int AGENT_SHIELD_WIDTH = 16;
+    public static final int AGENT_SHIELD_HEIGHT = 64;
+    public static final int BAR_WIDTH = 300;
+    public static final int BAR_HEIGHT = 20;
+    public static final int BAR_BORDER = 2;
+    public static final int BAR_UNSET = -1;
+    public static final Color BAR_BORDER_COLOR = Color.BLACK;
+    public static final Color BAR_BACK_COLOR = Color.DARK_GRAY;
+    public static final Color BAR_FILL_COLOR = Color.RED;
+
+    // Level 1 positions 
+    public static final int L1_ZIG_X = 25;
+    public static final int L1_ZAG_X = 30;
+    public static final int L1_AGENT_Y = 484;
+    public static final int L1_DOOR1_X = 155;
+    public static final int L1_DOOR1_Y = 190;
+    public static final int L1_DOOR1_SECONDS = 2;
+    public static final int L1_DOOR2_X = 910;
+    public static final int L1_DOOR2_Y = 475;
+    public static final int L1_DOOR2_SECONDS = 0;
+    public static final int L1_PLATFORM_X = 770;
+    public static final int L1_PLATFORM_Y = 335;
+    public static final int L1_PLATFORM_TILES = -5;
+    public static final int L1_COMPUTER_DOOR1_X = 600;
+    public static final int L1_COMPUTER_DOOR1_Y = 484;
+    public static final int L1_COMPUTER_PLATFORM_X = 50;
+    public static final int L1_COMPUTER_PLATFORM_Y = 190;
+    public static final int L1_COMPUTER_DOORS_X = 500;
+    public static final int L1_COMPUTER_DOORS_Y = 100;
+    public static final int L1_CLUE1_X = 160;
+    public static final int L1_CLUE1_Y = 400;
+    public static final int L1_CLUE2_X = 650;
+    public static final int L1_CLUE2_Y = 100;
+    public static final int L1_EXIT_X = 955;
+    public static final int L1_EXIT_Y = 490;
+
+    //Level 2 positions 
+    public static final int L2_ZIG_X = 25;
+    public static final int L2_ZAG_X = 30;
+    public static final int L2_AGENT_Y = 484;
+    public static final int L2_PLATFORM1_X = 31;
+    public static final int L2_PLATFORM1_Y = 333;
+    public static final int L2_PLATFORM1_TILES = -6;
+    public static final int L2_PLATFORM2_X = 928;
+    public static final int L2_PLATFORM2_Y = 333;
+    public static final int L2_PLATFORM2_TILES = 5;
+    public static final int L2_PLATFORM3_X = 512;
+    public static final int L2_PLATFORM3_Y = 142;
+    public static final int L2_PLATFORM3_TILES = 5;
+    public static final int L2_DOOR_X = 450;
+    public static final int L2_DOOR_Y = 475;
+    public static final int L2_DOOR_SECONDS = 0;
+    public static final int L2_COMPUTER_DOOR_X = 420;
+    public static final int L2_COMPUTER_DOOR_Y = 100;
+    public static final int L2_COMPUTER_PLATFORM1_X = 200;
+    public static final int L2_COMPUTER_PLATFORM1_Y = 482;
+    public static final int L2_COMPUTER_PLATFORM2_X = 700;
+    public static final int L2_COMPUTER_PLATFORM2_Y = 482;
+    public static final int L2_COMPUTER_PLATFORM3_X = 580;
+    public static final int L2_COMPUTER_PLATFORM3_Y = 295;
+    public static final int L2_DOG1_X = 512;
+    public static final int L2_DOG1_Y = 295;
+    public static final int L2_DOG2_X = 920;
+    public static final int L2_DOG2_Y = 100;
+    public static final int L2_CLUE_X = 31;
+    public static final int L2_CLUE_Y = 300;
+    public static final int L2_EXIT_X = 950;
+    public static final int L2_EXIT_Y = 100;
+
+    //Level 3 positions
+    public static final int L3_ZIG_X = 25;
+    public static final int L3_ZAG_X = 30;
+    public static final int L3_AGENT_Y = 135;
+    public static final int L3_DOOR_X = 800;
+    public static final int L3_DOOR_Y = 30;
+    public static final int L3_DOOR_SECONDS = 5;
+    public static final int L3_COMPUTER_DOOR_X = 642;
+    public static final int L3_COMPUTER_DOOR_Y = 40;
+    public static final int L3_COMPUTER_PLATFORM_X = 585;
+    public static final int L3_COMPUTER_PLATFORM_Y = 455;
+    public static final int L3_PLATFORM1_X = 350;
+    public static final int L3_PLATFORM1_Y = 490;
+    public static final int L3_PLATFORM1_TILES = -4;
+    public static final int L3_PLATFORM2_X = 448;
+    public static final int L3_PLATFORM2_Y = 302;
+    public static final int L3_PLATFORM2_TILES = 3;
+    public static final int L3_CRUSH_LONG_X = 320;
+    public static final int L3_CRUSH_LONG_Y = 35;
+    public static final int L3_CRUSH_LONG_TILES = 2;
+    public static final int L3_CRUSH_TILES = 1;
+    public static final int L3_CRUSH_UPPER_Y = 207;
+    public static final int L3_CRUSH_LOWER_Y = 357;
+    public static final int[] L3_CRUSH_UPPER_X = {832, 704, 576, 96};
+    public static final int[] L3_CRUSH_LOWER_X = {768, 640, 512};
+    public static final int L3_SOLDIER1_X = 455;
+    public static final int L3_SOLDIER1_Y = 135;
+    public static final int L3_SOLDIER2_X = 900;
+    public static final int L3_SOLDIER2_Y = 50;
+    public static final int L3_CLUE1_X = 420;
+    public static final int L3_CLUE1_Y = 80;
+    public static final int L3_CLUE2_X = 500;
+    public static final int L3_CLUE2_Y = 250;
+    public static final int L3_EXIT_X = 870;
+    public static final int L3_EXIT_Y = 450;
+
+    //Boss level positions 
+    public static final int BOSS_ZIG_X = 100;
+    public static final int BOSS_ZAG_X = 160;
+    public static final int BOSS_AGENT_Y = 223;
+    public static final int BOSS_START_X = 894;
+    public static final int BOSS_START_Y = 223;
+    public static final int BOSS_BAR_X = 480;
+    public static final int BOSS_BAR_Y = 510;
+
+    //Screen layouts 
+    public static final int MENU_TITLE_Y = 25;
+    public static final int MENU_SUBTITLE_Y = 90;
+    public static final int MENU_ZIG_X = 130;
+    public static final int MENU_ZAG_X = 560;
+    public static final int MENU_HEADER_Y = 150;
+    public static final int MENU_FIRST_LINE_Y = 200;
+    public static final int MENU_LINE_SPACING = 30;
+    public static final int MENU_HELP_INTERACT_Y = 350;
+    public static final int MENU_HELP_PAUSE_Y = 385;
+    public static final int MENU_HELP_EXIT_Y = 420;
+    public static final int MENU_HELP_GLIDE_Y = 450;
+    public static final int MENU_OPTIONS_Y = 470;
+    public static final int PAUSE_TITLE_Y = 90;
+    public static final int PAUSE_CONTINUE_Y = 200;
+    public static final int PAUSE_SAVE_Y = 250;
+    public static final int PAUSE_MENU_Y = 300;
+    public static final int PAUSE_MESSAGE_Y = 420;
+    public static final int GAME_OVER_TITLE_Y = 120;
+    public static final int GAME_OVER_TEXT_Y = 200;
+    public static final int GAME_OVER_SCORE_Y = 240;
+    public static final int GAME_OVER_RETRY_Y = 320;
+    public static final int GAME_OVER_RESTART_Y = 370;
+    public static final int WIN_TITLE_Y = 120;
+    public static final int WIN_TEXT_Y = 210;
+    public static final int WIN_SCORE_Y = 260;
+    public static final int WIN_HINT_Y = 350;  
 
     private Settings() { }
 }

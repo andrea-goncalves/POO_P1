@@ -7,28 +7,28 @@ public class Level2 extends Level {
         loadCollisions(Settings.LEVEL2_CSV);
         setBackground(Settings.LEVEL2_BACKGROUND);
 
-        addAgents(25, 30, 484);
+        addAgents(Settings.L2_ZIG_X, Settings.L2_ZAG_X, Settings.L2_AGENT_Y);
 
-        MovingPlatform platform1 = new MovingPlatform(-6 * Settings.TILE_SIZE);
-        MovingPlatform platform2 = new MovingPlatform(5 * Settings.TILE_SIZE);
-        MovingPlatform platform3 = new MovingPlatform(5 * Settings.TILE_SIZE);
-        Door door1 = new Door(0);
+        MovingPlatform platform1 = new MovingPlatform(Settings.L2_PLATFORM1_TILES * Settings.TILE_SIZE);
+        MovingPlatform platform2 = new MovingPlatform(Settings.L2_PLATFORM2_TILES * Settings.TILE_SIZE);
+        MovingPlatform platform3 = new MovingPlatform(Settings.L2_PLATFORM3_TILES * Settings.TILE_SIZE);
+        Door door1 = new Door(Settings.L2_DOOR_SECONDS);
 
-        addObject(platform1, 31, 333);
-        addObject(platform2, 928, 333);
-        addObject(platform3, 512, 142);
-        addObject(door1, 450, 475);
+        addObject(platform1, Settings.L2_PLATFORM1_X, Settings.L2_PLATFORM1_Y);
+        addObject(platform2, Settings.L2_PLATFORM2_X, Settings.L2_PLATFORM2_Y);
+        addObject(platform3, Settings.L2_PLATFORM3_X, Settings.L2_PLATFORM3_Y);
+        addObject(door1, Settings.L2_DOOR_X, Settings.L2_DOOR_Y);
 
-        addObject(new Computer(door1), 420, 100);
-        addObject(new Computer(platform1), 200, 482);
-        addObject(new Computer(platform2), 700, 482);
-        addObject(new Computer(platform3), 580, 295);
+        addObject(new Computer(door1), Settings.L2_COMPUTER_DOOR_X, Settings.L2_COMPUTER_DOOR_Y);
+        addObject(new Computer(platform1), Settings.L2_COMPUTER_PLATFORM1_X, Settings.L2_COMPUTER_PLATFORM1_Y);
+        addObject(new Computer(platform2), Settings.L2_COMPUTER_PLATFORM2_X, Settings.L2_COMPUTER_PLATFORM2_Y);
+        addObject(new Computer(platform3), Settings.L2_COMPUTER_PLATFORM3_X, Settings.L2_COMPUTER_PLATFORM3_Y);
 
-        addObject(new Dog(), 512, 295);
-        addObject(new Dog(), 920, 100);
+        addObject(new Dog(), Settings.L2_DOG1_X, Settings.L2_DOG1_Y);
+        addObject(new Dog(), Settings.L2_DOG2_X, Settings.L2_DOG2_Y);
 
-        addObject(new Clue(Settings.CLUE_POINTS), 31, 300);
-        addObject(new ExitPoint(), 950, 100);
+        addObject(new Clue(Settings.CLUE_POINTS), Settings.L2_CLUE_X, Settings.L2_CLUE_Y);
+        addObject(new ExitPoint(), Settings.L2_EXIT_X, Settings.L2_EXIT_Y);
     }
 
     @Override

@@ -9,13 +9,12 @@ public class WinWorld extends ScreenWorld
         inputDelay = Settings.WIN_INPUT_DELAY;
 
         GreenfootImage bg = createBackground();
-        drawCentered(bg, "MISSÃO CUMPRIDA", Settings.SIZE_TITLE, Color.GREEN, 120);
-        drawCentered(bg, "Zanarkin foi salva!", Settings.SIZE_LARGE, Color.WHITE, 210);
-        drawCentered(bg, "Score final: " + finalScore, Settings.SIZE_LARGE, Color.YELLOW, 260);
-        drawCentered(bg, "SPACE  -  voltar ao menu", Settings.SIZE_NORMAL, Color.WHITE, 350);
+        drawCentered(bg, "MISSÃO CUMPRIDA", Settings.SIZE_TITLE, Color.GREEN, Settings.WIN_TITLE_Y);
+        drawCentered(bg, "Zanarkin foi salva!", Settings.SIZE_LARGE, Color.WHITE, Settings.WIN_TEXT_Y);
+        drawCentered(bg, "Score final: " + finalScore, Settings.SIZE_LARGE, Color.YELLOW, Settings.WIN_SCORE_Y);
+        drawCentered(bg, "SPACE  -  voltar ao menu", Settings.SIZE_NORMAL, Color.WHITE, Settings.WIN_HINT_Y);
         setBackground(bg);
     }
-
 
     @Override
     public void act()

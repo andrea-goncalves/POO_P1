@@ -9,7 +9,7 @@ public abstract class Level extends World
 
     public Level(int width, int height)
     {    
-        super(width, height, 1, false); 
+        super(width, height, Settings.CELL_SIZE, Settings.WORLD_BOUNDED);
         score = 0;
         startScore = 0;
         powerUnlocked = false;

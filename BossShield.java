@@ -1,15 +1,13 @@
-
 import greenfoot.*;
 
 public class BossShield extends Solid {
-    private static final int MAX_HEALTH = 100;
     private int health;
     private Boss boss;
 
     public BossShield(Boss boss, int width, int height){
         super(width, height);
         this.boss = boss;
-        health = MAX_HEALTH;
+        health = Settings.BOSS_SHIELD_HEALTH;
     }
 
     public void takeDamage(int damage){

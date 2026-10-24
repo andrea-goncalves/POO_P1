@@ -1,28 +1,29 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
-public abstract class ScreenWorld extends World{
+public abstract class ScreenWorld extends World
+{
     public ScreenWorld()
     {
-        super(960, 540, 1);
+        super(Settings.WORLD_WIDTH, Settings.WORLD_HEIGHT, Settings.CELL_SIZE);
     }
 
     public GreenfootImage createBackground()
     {
         GreenfootImage img = new GreenfootImage(getWidth(), getHeight());
-        img.setColor(new Color(20, 20, 30));
+        img.setColor(Settings.SCREEN_BACKGROUND);
         img.fill();
         return img;
     }
 
     public void drawText(GreenfootImage target, String text, int size, Color color, int x, int y)
     {
-        GreenfootImage line = new GreenfootImage(text, size, color, new Color(0, 0, 0, 0));
+        GreenfootImage line = new GreenfootImage(text, size, color, Settings.TRANSPARENT);
         target.drawImage(line, x, y);
     }
 
     public void drawCentered(GreenfootImage target, String text, int size, Color color, int y)
     {
-        GreenfootImage line = new GreenfootImage(text, size, color, new Color(0, 0, 0, 0));
+        GreenfootImage line = new GreenfootImage(text, size, color, Settings.TRANSPARENT);
         target.drawImage(line, (target.getWidth() - line.getWidth()) / 2, y);
     }
 }

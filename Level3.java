@@ -8,41 +8,35 @@ public class Level3 extends Level {
     public Level3(){
         super(Settings.WORLD_WIDTH, Settings.WORLD_HEIGHT);
         dialogue();
-        fallTimer = -1;
+        fallTimer = Settings.FALL_TIMER_OFF;
         lightsOffTimer = 0;
         overlay = null;
 
         loadCollisions(Settings.LEVEL3_CSV);
         setBackground(Settings.LEVEL3_BACKGROUND);
 
-        addAgents(25, 30, 135);
+        addAgents(Settings.L3_ZIG_X, Settings.L3_ZAG_X, Settings.L3_AGENT_Y);
 
-        MovingPlatform platform1 = new MovingPlatform(-4 * Settings.TILE_SIZE);
-        MovingPlatform platform2 = new MovingPlatform(3 * Settings.TILE_SIZE);
+        MovingPlatform platform1 = new MovingPlatform(Settings.L3_PLATFORM1_TILES * Settings.TILE_SIZE);
+        MovingPlatform platform2 = new MovingPlatform(Settings.L3_PLATFORM2_TILES * Settings.TILE_SIZE);
+        Door door1 = new Door(Settings.L3_DOOR_SECONDS);
 
-        Door door1 = new Door(5);
+        addObject(door1, Settings.L3_DOOR_X, Settings.L3_DOOR_Y);
+        addObject(new Computer(door1), Settings.L3_COMPUTER_DOOR_X, Settings.L3_COMPUTER_DOOR_Y);
+        addObject(new Computer(platform2), Settings.L3_COMPUTER_PLATFORM_X, Settings.L3_COMPUTER_PLATFORM_Y);
+        addObject(platform1, Settings.L3_PLATFORM1_X, Settings.L3_PLATFORM1_Y);
+        addObject(platform2, Settings.L3_PLATFORM2_X, Settings.L3_PLATFORM2_Y);
 
-        addObject(door1, 800, 30);
-        addObject(new Computer(door1), 642, 40);
-        addObject(new Computer(platform2), 585, 455);
-        addObject(platform1, 350, 490);
-        addObject(platform2, 448, 302);
+        addObject(new CrushingWall(Settings.L3_CRUSH_LONG_TILES), Settings.L3_CRUSH_LONG_X, Settings.L3_CRUSH_LONG_Y);
+        addCrushingRow(Settings.L3_CRUSH_UPPER_X, Settings.L3_CRUSH_UPPER_Y);
+        addCrushingRow(Settings.L3_CRUSH_LOWER_X, Settings.L3_CRUSH_LOWER_Y);
 
-        addObject(new CrushingWall(2), 320, 35);
-        addObject(new CrushingWall(1), 832, 207);
-        addObject(new CrushingWall(1), 704, 207);
-        addObject(new CrushingWall(1), 576, 207);
-        addObject(new CrushingWall(1), 96, 207);
-        addObject(new CrushingWall(1), 768, 357);
-        addObject(new CrushingWall(1), 640, 357);
-        addObject(new CrushingWall(1), 512, 357);
+        addObject(new Soldier(), Settings.L3_SOLDIER1_X, Settings.L3_SOLDIER1_Y);
+        addObject(new Soldier(), Settings.L3_SOLDIER2_X, Settings.L3_SOLDIER2_Y);
 
-        addObject(new Soldier(), 455, 135);
-        addObject(new Soldier(), 900, 50);
-
-        addObject(new Clue(Settings.CLUE_POINTS), 420, 80);
-        addObject(new Clue(Settings.CLUE_POINTS), 500, 250);
-        addObject(new ExitPoint(), 870, 450);
+        addObject(new Clue(Settings.CLUE_POINTS), Settings.L3_CLUE1_X, Settings.L3_CLUE1_Y);
+        addObject(new Clue(Settings.CLUE_POINTS), Settings.L3_CLUE2_X, Settings.L3_CLUE2_Y);
+        addObject(new ExitPoint(), Settings.L3_EXIT_X, Settings.L3_EXIT_Y);
     }
 
     @Override
@@ -117,9 +111,9 @@ public class Level3 extends Level {
 
     private boolean checkFallenAgents()
     {
-        if (fallTimer < 0) {
+        if (fallTimer == Settings.FALL_TIMER_OFF) {
             for (Agent agent : getObjects(Agent.class)) {
-                if (agent.getFeetY() >= getHeight() - 1) {
+                if (agent.getFeetY() >= getHeight() - Settings.FALL_EDGE_MARGIN) {
                     fallTimer = Settings.FALL_GAME_OVER_DELAY;
                     break;
                 }
@@ -133,6 +127,12 @@ public class Level3 extends Level {
             return true;
         }
         return false;
+    }
+
+    private void addCrushingRow(int[] xPositions, int y){
+        for (int x : xPositions) {
+            addObject(new CrushingWall(Settings.L3_CRUSH_TILES), x, y);
+        }
     }
 
     private void dialogue(){

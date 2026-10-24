@@ -8,26 +8,25 @@ public class Level1 extends Level
         loadCollisions(Settings.LEVEL1_CSV);
         setBackground(Settings.LEVEL1_BACKGROUND);
 
-        addAgents(25, 30, 484);
+        addAgents(Settings.L1_ZIG_X, Settings.L1_ZAG_X, Settings.L1_AGENT_Y);
 
-        Door door1 = new Door(2);
-        Door door2 = new Door(0);
+        Door door1 = new Door(Settings.L1_DOOR1_SECONDS);
+        Door door2 = new Door(Settings.L1_DOOR2_SECONDS);
 
-        MovingPlatform platform1 = new MovingPlatform(-5 * Settings.TILE_SIZE);
+        MovingPlatform platform1 = new MovingPlatform(Settings.L1_PLATFORM_TILES * Settings.TILE_SIZE);
 
-        addObject(platform1, 770, 335);
+        addObject(platform1, Settings.L1_PLATFORM_X, Settings.L1_PLATFORM_Y);
+        addObject(door1, Settings.L1_DOOR1_X, Settings.L1_DOOR1_Y);
+        addObject(door2, Settings.L1_DOOR2_X, Settings.L1_DOOR2_Y);
 
-        addObject(door1, 155, 190);
-        addObject(door2, 910, 475);
+        addObject(new Computer(door1), Settings.L1_COMPUTER_DOOR1_X, Settings.L1_COMPUTER_DOOR1_Y);
+        addObject(new Computer(platform1), Settings.L1_COMPUTER_PLATFORM_X, Settings.L1_COMPUTER_PLATFORM_Y);
+        addObject(new Computer(door1, door2), Settings.L1_COMPUTER_DOORS_X, Settings.L1_COMPUTER_DOORS_Y);
 
-        addObject(new Computer(door1), 600, 484);
-        addObject(new Computer(platform1), 50, 190);
-        addObject(new Computer(door1, door2), 500, 100);
+        addObject(new Clue(Settings.CLUE_POINTS), Settings.L1_CLUE1_X, Settings.L1_CLUE1_Y);
+        addObject(new Clue(Settings.CLUE_POINTS), Settings.L1_CLUE2_X, Settings.L1_CLUE2_Y);
 
-        addObject(new Clue(Settings.CLUE_POINTS), 160, 400);
-        addObject(new Clue(Settings.CLUE_POINTS), 650, 100);
-
-        addObject(new ExitPoint(), 955, 490);
+        addObject(new ExitPoint(), Settings.L1_EXIT_X, Settings.L1_EXIT_Y);
     }
 
     @Override

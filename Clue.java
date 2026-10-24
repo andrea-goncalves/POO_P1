@@ -1,25 +1,26 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import greenfoot.*;
 
 public class Clue extends Actor
 {
     private int points;
-       
+
     public Clue()
     {
-        this(10);
+        this(Settings.CLUE_DEFAULT_POINTS);
     }
+
     public Clue(int points)
     {
         this.points = points;
 
-        GreenfootImage img = new GreenfootImage(24, 24);
-        img.setColor(Color.YELLOW);
-        img.fillOval(0, 0, 24, 24);
-        img.setColor(Color.ORANGE);
-        img.drawOval(0, 0, 23, 23);
+        GreenfootImage img = new GreenfootImage(Settings.CLUE_SIZE, Settings.CLUE_SIZE);
+        img.setColor(Settings.CLUE_FILL_COLOR);
+        img.fillOval(0, 0, Settings.CLUE_SIZE, Settings.CLUE_SIZE);
+        img.setColor(Settings.CLUE_BORDER_COLOR);
+        img.drawOval(0, 0, Settings.CLUE_SIZE - 1, Settings.CLUE_SIZE - 1);
         setImage(img);
     }
+
     @Override
     public void act()
     {

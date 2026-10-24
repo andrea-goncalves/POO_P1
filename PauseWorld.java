@@ -5,12 +5,14 @@ public class PauseWorld extends ScreenWorld
     private Level pausedLevel;
     private int inputDelay;
 
+
     public PauseWorld(Level pausedLevel)
     {
         inputDelay = Settings.PAUSE_INPUT_DELAY;
         this.pausedLevel = pausedLevel;
         drawScreen("");
     }
+
 
     @Override
     public void act()
@@ -31,17 +33,18 @@ public class PauseWorld extends ScreenWorld
         }
     }
 
+  
     private void drawScreen(String message)
     {
         GreenfootImage bg = createBackground();
 
-        drawCentered(bg, "PAUSA", Settings.SIZE_TITLE, Color.RED, 90);
-        drawCentered(bg, "C  -  continuar", Settings.SIZE_LARGE, Color.YELLOW, 200);
-        drawCentered(bg, "G  -  guardar", Settings.SIZE_LARGE, Color.YELLOW, 250);
-        drawCentered(bg, "M  -  menu", Settings.SIZE_LARGE, Color.YELLOW, 300);
+        drawCentered(bg, "PAUSA", Settings.SIZE_TITLE, Color.RED, Settings.PAUSE_TITLE_Y);
+        drawCentered(bg, "C  -  continuar", Settings.SIZE_LARGE, Color.YELLOW, Settings.PAUSE_CONTINUE_Y);
+        drawCentered(bg, "G  -  guardar", Settings.SIZE_LARGE, Color.YELLOW, Settings.PAUSE_SAVE_Y);
+        drawCentered(bg, "M  -  menu", Settings.SIZE_LARGE, Color.YELLOW, Settings.PAUSE_MENU_Y);
 
         if (!message.isEmpty()) {
-            drawCentered(bg, message, Settings.SIZE_MESSAGE, Color.GREEN, 420);
+            drawCentered(bg, message, Settings.SIZE_MESSAGE, Color.GREEN, Settings.PAUSE_MESSAGE_Y);
         }
         setBackground(bg);
     }

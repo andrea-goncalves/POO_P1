@@ -1,20 +1,17 @@
 import greenfoot.*;
 
 public class BossHealthBar extends Actor {
-    private static final int WIDTH = 300;
-    private static final int HEIGHT = 20;
     private Boss boss;
     private int lastHealth;
 
     public BossHealthBar(Boss boss){
         this.boss = boss;
-        lastHealth = -1; 
+        lastHealth = Settings.BAR_UNSET;
         updateBar();
     }
 
     @Override
     public void act(){
-
         if (boss.getHealth() != lastHealth) {
             updateBar();
         }
@@ -23,21 +20,22 @@ public class BossHealthBar extends Actor {
     private void updateBar(){
         int health = boss.getHealth();
         lastHealth = health;
-        int maxHealth = boss.getMaxHealth();
 
-        double percentage = (double) health / maxHealth;
-        int filledWidth = (int)(WIDTH * percentage);
+        double percentage = (double) health / boss.getMaxHealth();
+        int filledWidth = (int) (Settings.BAR_WIDTH * percentage);
+        int fullWidth = Settings.BAR_WIDTH + 2 * Settings.BAR_BORDER;
+        int fullHeight = Settings.BAR_HEIGHT + 2 * Settings.BAR_BORDER;
 
-        GreenfootImage image = new GreenfootImage(WIDTH + 4, HEIGHT + 4);
+        GreenfootImage image = new GreenfootImage(fullWidth, fullHeight);
 
-        image.setColor(Color.BLACK);
-        image.fillRect(0, 0, WIDTH + 4, HEIGHT + 4);
+        image.setColor(Settings.BAR_BORDER_COLOR);
+        image.fillRect(0, 0, fullWidth, fullHeight);
 
-        image.setColor(Color.DARK_GRAY);
-        image.fillRect(2, 2, WIDTH, HEIGHT);
+        image.setColor(Settings.BAR_BACK_COLOR);
+        image.fillRect(Settings.BAR_BORDER, Settings.BAR_BORDER, Settings.BAR_WIDTH, Settings.BAR_HEIGHT);
 
-        image.setColor(Color.RED);
-        image.fillRect(2, 2, filledWidth, HEIGHT);
+        image.setColor(Settings.BAR_FILL_COLOR);
+        image.fillRect(Settings.BAR_BORDER, Settings.BAR_BORDER, filledWidth, Settings.BAR_HEIGHT);
 
         setImage(image);
     }

@@ -12,12 +12,12 @@ public class GameOverWorld extends ScreenWorld
 
         GreenfootImage bg = createBackground();
 
-        drawCentered(bg, "GAME OVER", Settings.SIZE_TITLE, Color.RED, 120);
-        drawCentered(bg, "Um agente morreu", Settings.SIZE_NORMAL, Color.LIGHT_GRAY, 200);
-        drawCentered(bg, "Score: " + failedLevel.getScore(), Settings.SIZE_NORMAL, Color.WHITE, 240);
+        drawCentered(bg, "GAME OVER", Settings.SIZE_TITLE, Color.RED, Settings.GAME_OVER_TITLE_Y);
+        drawCentered(bg, "Um agente morreu", Settings.SIZE_NORMAL, Color.LIGHT_GRAY, Settings.GAME_OVER_TEXT_Y);
+        drawCentered(bg, "Score: " + failedLevel.getScore(), Settings.SIZE_NORMAL, Color.WHITE, Settings.GAME_OVER_SCORE_Y);
 
-        drawCentered(bg, "R  -  recomeçar o nível", Settings.SIZE_LARGE, Color.YELLOW, 320);
-        drawCentered(bg, "I  -  recomeçar do início", Settings.SIZE_LARGE, Color.YELLOW, 370);
+        drawCentered(bg, "R  -  recomeçar o nível", Settings.SIZE_LARGE, Color.YELLOW, Settings.GAME_OVER_RETRY_Y);
+        drawCentered(bg, "I  -  recomeçar do início", Settings.SIZE_LARGE, Color.YELLOW, Settings.GAME_OVER_RESTART_Y);
 
         setBackground(bg);
     }

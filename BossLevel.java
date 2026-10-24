@@ -1,10 +1,9 @@
 import greenfoot.*;
 
 public class BossLevel extends Level {
- 
+
     private boolean bossDead;
 
- 
     public BossLevel(){
         super(Settings.WORLD_WIDTH, Settings.WORLD_HEIGHT);
         bossDead = false;
@@ -13,11 +12,11 @@ public class BossLevel extends Level {
         loadCollisions(Settings.BOSS_CSV);
         setBackground(Settings.BOSS_BACKGROUND);
 
-        addAgents(100, 160, 223);
+        addAgents(Settings.BOSS_ZIG_X, Settings.BOSS_ZAG_X, Settings.BOSS_AGENT_Y);
 
         Boss boss = new Boss();
-        addObject(boss, 894, 223);
-        addObject(new BossHealthBar(boss), 480, 510);
+        addObject(boss, Settings.BOSS_START_X, Settings.BOSS_START_Y);
+        addObject(new BossHealthBar(boss), Settings.BOSS_BAR_X, Settings.BOSS_BAR_Y);
     }
 
     @Override
@@ -69,10 +68,10 @@ public class BossLevel extends Level {
         String[] names = {"GENERAL VON KROSS", "ZAG", "ZIG"};
 
         String[] texts = {
-            "Ratos de Zanarkin! Chegaram demasiado tarde!",
-            "Essa bomba não vai destruir em Zanarkin!",
-            "Rende-te, Von Kross! O teu plano fracassou!"
-        };
+                "Ratos de Zanarkin! Chegaram demasiado tarde!",
+                "Essa bomba não vai destruir em Zanarkin!",
+                "Rende-te, Von Kross! O teu plano fracassou!"
+            };
 
         addObject(new Dialogue(names, texts), Settings.DIALOGUE_X, Settings.DIALOGUE_Y);
     }
@@ -81,11 +80,11 @@ public class BossLevel extends Level {
         String[] names = {"GENERAL VON KROSS", "ZIG", "ZAG", "ZIG"};
 
         String[] texts = {
-            "Vocês destruíram os controlos e a bomba ativou, ninguém sai vivo daqui!",
-            "Não podemos desativar a bomba",
-            "Mas podemos afastar esta nave de Zanarkin.",
-            "Missão cumprida, parceiro. Foi uma honra."
-        };
+                "Vocês destruíram os controlos e a bomba ativou, ninguém sai vivo daqui!",
+                "Não podemos desativar a bomba",
+                "Mas podemos afastar esta nave de Zanarkin.",
+                "Missão cumprida, parceiro. Foi uma honra."
+            };
 
         addObject(new Dialogue(names, texts), Settings.DIALOGUE_X, Settings.DIALOGUE_Y);
     }
