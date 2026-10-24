@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 
-public abstract class Enemy extends Character
+public abstract class Enemy extends NCharacter
 {
     private GreenfootImage[] walkRight, walkLeft;
     private int frame;

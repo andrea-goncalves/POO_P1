@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 
-public abstract class Character extends Actor
+public abstract class NCharacter extends Actor
 {
    
     private double vSpeed;
@@ -16,7 +16,7 @@ public abstract class Character extends Actor
     private static final int MAX_PUSH = 40;
     private static final int INVULNERABLE_TIME = 60;
     
-    public Character(int lives)
+    public NCharacter(int lives)
     {
         this.lives = lives;
         vSpeed = 0;

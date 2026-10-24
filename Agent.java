@@ -1,6 +1,6 @@
 import greenfoot.*;
 
-public class Agent extends Character {
+public class Agent extends NCharacter {
     private String leftKey, rightKey, jumpKey, powerKey, attackKey;
     private int speed, jumpStrength;
     private boolean jumpKeyReleased, jumpKeyHeld, moving, facingRight;
