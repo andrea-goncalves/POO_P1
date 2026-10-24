@@ -18,13 +18,10 @@ public class PauseWorld extends ScreenWorld
     {
         GreenfootImage bg = createBackground();
 
-        drawCentered(bg, "PAUSED", 56, Color.WHITE, 90);
-        drawCentered(bg, "R  -  resume/continuar", 28, Color.WHITE, 200);
-        drawCentered(bg, "S  -  save game/guardar o jogo", 28, Color.WHITE, 250);
-        drawCentered(bg, "M  -  menu", 28, Color.WHITE, 300);
-
-        drawCentered(bg, "Guardar grava o inicio do nivel (nivel "
-                         + pausedLevel.getLevelNumber() + ")", 18, Color.LIGHT_GRAY, 370);
+        drawCentered(bg, "PAUSA", 56, Color.RED, 90);
+        drawCentered(bg, "C  -  continuar", 28, Color.YELLOW, 200);
+        drawCentered(bg, "G  -  guardar ", 28, Color.YELLOW, 250);
+        drawCentered(bg, "M  -  menu", 28, Color.YELLOW, 300);
 
         if (!message.isEmpty()) {
             drawCentered(bg, message, 26, Color.GREEN, 420);
@@ -38,10 +35,10 @@ public class PauseWorld extends ScreenWorld
             inputDelay--;
             return;
         }
-        if (Greenfoot.isKeyDown("r")) {
+        if (Greenfoot.isKeyDown("c")) {
             Greenfoot.setWorld(pausedLevel);                
         }
-        else if (Greenfoot.isKeyDown("s")) {
+        else if (Greenfoot.isKeyDown("g")) {
             SaveGame.save(pausedLevel.getLevelNumber(), pausedLevel.getStartScore());
             drawScreen("Jogo Guardado");
         }

@@ -9,21 +9,22 @@ public class StoryWorld extends ScreenWorld
     private GreenfootImage stars;
        
     private static final String[] STORY = {
-        "ZANARKIN foi atacada",
+        "ZANARKIN foi Destruída",
         "",
-        "O pais inimigo destroiu....",
+        "O pais inimigo, Midgar, lançou uma bomba",
         "",
-        "Os agentes Zig e Zag sobreviveram",
+        "que acabou com metade da população",
         
         "",
-        "Com a maquina do tempo",
-        "voltaram um dia antes",
-        "do ataque",
+        "Os agentes Zig e Zag devem",
+        "voltar aos dias antes do ataque,",
+        "com a ajuda da maquina do tempo",
+        
         "",
-        "a sua missão: impedir o ataque",
-        "encontrando pistas",
+        "para impedir o lançamento da bomba,",
+        "encontrando pistas,",
         "escondendo-se nas sombras",
-        "e desativando a bomba",
+        "e acabando com a ameaça",
         "",
     
     };
