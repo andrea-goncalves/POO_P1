@@ -10,19 +10,19 @@ public class Computer extends Actor
     {
         this.targets = targets;
         keyHeld = false;
-        setImage("computer.png");
+        setImage(Settings.COMPUTER_IMAGE);
     }
+
     @Override
     public void act()
     {
-        boolean eDown = Greenfoot.isKeyDown("e");
+        boolean interactDown = Greenfoot.isKeyDown(Settings.KEY_INTERACT);
 
-        if (isTouching(Agent.class) && eDown && !keyHeld) {
+        if (isTouching(Agent.class) && interactDown && !keyHeld) {
             for (Activatable target : targets) {
                 target.activate();
             }
         }
-        keyHeld = eDown;
+        keyHeld = interactDown;
     }
-
 }

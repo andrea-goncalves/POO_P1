@@ -1,20 +1,22 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import greenfoot.*;
 
 public class WinWorld extends ScreenWorld
 {
     private int inputDelay;
+
     public WinWorld(int finalScore)
     {
-        inputDelay = 60;
+        inputDelay = Settings.WIN_INPUT_DELAY;
 
         GreenfootImage bg = createBackground();
-        drawCentered(bg, "MISSÃO CUMPRIDA", 56, Color.GREEN, 120);
-        drawCentered(bg, "Zanarkin foi salva!", 28, Color.WHITE, 210);
-        drawCentered(bg, "Score final: " + finalScore, 28, Color.YELLOW, 260);
-        drawCentered(bg, "SPACE  -  voltar ao menu", 24, Color.WHITE, 350);
+        drawCentered(bg, "MISSÃO CUMPRIDA", Settings.SIZE_TITLE, Color.GREEN, 120);
+        drawCentered(bg, "Zanarkin foi salva!", Settings.SIZE_LARGE, Color.WHITE, 210);
+        drawCentered(bg, "Score final: " + finalScore, Settings.SIZE_LARGE, Color.YELLOW, 260);
+        drawCentered(bg, "SPACE  -  voltar ao menu", Settings.SIZE_NORMAL, Color.WHITE, 350);
         setBackground(bg);
     }
+
+
     @Override
     public void act()
     {
@@ -22,7 +24,7 @@ public class WinWorld extends ScreenWorld
             inputDelay--;
             return;
         }
-        if (Greenfoot.isKeyDown("space")) {
+        if (Greenfoot.isKeyDown(Settings.KEY_CONFIRM)) {
             Greenfoot.setWorld(new MenuWorld());
         }
     }

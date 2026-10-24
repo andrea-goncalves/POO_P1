@@ -6,9 +6,9 @@ public class Bullet extends Actor {
 
     public Bullet(int direction){
         this.direction = direction;
-        this.speed = 10;
+        this.speed = Settings.BULLET_SPEED;
 
-        GreenfootImage img = new GreenfootImage(14, 5);
+        GreenfootImage img = new GreenfootImage(Settings.BULLET_WIDTH, Settings.BULLET_HEIGHT);
         img.setColor(Color.RED);
         img.fill();
         setImage(img);
@@ -23,6 +23,7 @@ public class Bullet extends Actor {
         img.fillOval(0, 0, diameter, diameter);
         setImage(img);
     }
+
     @Override
     public void act(){
         setLocation(getX() + direction * speed, getY());

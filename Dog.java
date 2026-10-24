@@ -1,26 +1,28 @@
-import greenfoot.*;  
+import greenfoot.*;
 
-public class Dog extends Enemy 
+public class Dog extends Enemy implements Neutralizable
 {
+  
     public Dog(){
-        super(1, 3);
-        setWalkFrames("dog_walk", 4);
-        
-
+        super(Settings.DOG_LIVES, Settings.DOG_SPEED);
+        setWalkFrames(Settings.DOG_WALK_PREFIX, Settings.DOG_WALK_FRAMES);
     }
+
     @Override
     public void neutralize()
     {
-        sleep(300);                       
-        getImage().setTransparency(100);  
+        sleep(Settings.DOG_SLEEP_TIME);
+        getImage().setTransparency(Settings.TRANSPARENCY_FADED);
     }
+
     @Override
     public void onWake()
     {
-        getImage().setTransparency(255);
+        getImage().setTransparency(Settings.TRANSPARENCY_OPAQUE);
     }
+
     @Override
     public void onHitAgent(){
-        Greenfoot.playSound("bark.wav");
+        Greenfoot.playSound(Settings.SOUND_BARK);
     }
 }

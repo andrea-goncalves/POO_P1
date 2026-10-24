@@ -1,72 +1,73 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
 public class MenuWorld extends ScreenWorld
 {
-    private int inputDelay;     
+    // Variables
+    private int inputDelay;
     private GreenfootSound music;
     private boolean musicStarted;
     private boolean musicPaused;
+
+    // Constructor
     public MenuWorld()
     {
-        GreenfootImage bg = createBackground();
-        inputDelay = 20;
+        inputDelay = Settings.MENU_INPUT_DELAY;
         musicStarted = false;
-        musicPaused = false; 
-        music = new GreenfootSound("spy.wav");
-        music.setVolume(50);
-        
+        musicPaused = false;
+        music = new GreenfootSound(Settings.MUSIC_MENU);
+        music.setVolume(Settings.MUSIC_VOLUME);
 
-        drawCentered(bg, "AGENTES ZIG & ZAG", 48, Color.RED, 25);
-        drawCentered(bg, "Recolhe as pistas para impedir o ataque ao Zanarkin", 20, Color.LIGHT_GRAY, 90);
-
-        drawText(bg, "ZIG", 30, Color.RED, 130, 150);
-        drawText(bg, "A / D  -  andar", 20, Color.WHITE, 130, 200);
-        drawText(bg, "W  -  saltar", 20, Color.WHITE, 130, 230);
-        drawText(bg, "S  -  poderes", 20, Color.WHITE, 130, 260);
-        drawText(bg, "F  -  combate ", 20, Color.WHITE, 130, 290);
-
-        drawText(bg, "ZAG", 30, Color.RED, 560, 150);
-        drawText(bg, "Left / Right  -  andar", 20, Color.WHITE, 560, 200);
-        drawText(bg, "Up  -  saltar", 20, Color.WHITE, 560, 230);
-        drawText(bg, "Down  -  poderes", 20, Color.WHITE, 560, 260);
-        drawText(bg, "0  -  combate", 20, Color.WHITE, 560, 290);
-
-        drawCentered(bg, "E  -  ativar portas e plataformas", 20, Color.YELLOW, 350);
-        drawCentered(bg, "P  -  pausa ", 20, Color.YELLOW, 385);
-        
-        drawCentered(bg, "Clica duas vezes no salto e deixa pressionado para flutuar", 20, Color.WHITE, 450 );
-        drawCentered(bg, "Os dois agentes devem chegar à saída para passar o nível", 20, Color.WHITE, 420);
-        
-
-        if (SaveGame.hasSave()) {
-            drawCentered(bg, "SPACE  -  novo jogo      C  -  continar (nivel "+ SaveGame.load() + ")      T  -  historia", 24, Color.YELLOW, 470);
-        } else {
-            drawCentered(bg, "SPACE  -  novo jogo      T  -  historia", 24, Color.YELLOW, 470);
-        }
-
+        GreenfootImage bg = createBackground();
+        drawTitle(bg);
+        drawControls(bg, 130, "ZIG", new String[] {
+            "A / D  -  andar", "W  -  saltar", "S  -  poderes", "F  -  combate"
+        });
+        drawControls(bg, 560, "ZAG", new String[] {
+            "Left / Right  -  andar", "Up  -  saltar", "Down  -  poderes", "0  -  combate"
+        });
+        drawHelp(bg);
+        drawOptions(bg);
         setBackground(bg);
     }
+
+
     @Override
     public void act()
     {
         if (!musicStarted) {
-            music.play();                   
+            music.play();
             musicStarted = true;
         }
         if (inputDelay > 0) {
             inputDelay--;
             return;
         }
-        if (Greenfoot.isKeyDown("space")) {
+        if (Greenfoot.isKeyDown(Settings.KEY_CONFIRM)) {
             goTo(new Level1());
         }
-        else if (Greenfoot.isKeyDown("c") && SaveGame.hasSave()) {
+        else if (Greenfoot.isKeyDown(Settings.KEY_CONTINUE) && SaveGame.hasSave()) {
             Level saved = SaveGame.createLevel(SaveGame.load());
             saved.setStartingScore(SaveGame.loadScore());
             goTo(saved);
         }
-        else if (Greenfoot.isKeyDown("t")) {
+        else if (Greenfoot.isKeyDown(Settings.KEY_STORY)) {
             goTo(new StoryWorld());
+        }
+    }
+
+    public void stopped()
+    {
+        if (music.isPlaying()) {
+            music.pause();
+            musicPaused = true;
+        }
+    }
+
+    public void started()
+    {
+        if (musicPaused) {
+            music.play();
+            musicPaused = false;
         }
     }
 
@@ -76,18 +77,35 @@ public class MenuWorld extends ScreenWorld
         Greenfoot.setWorld(next);
     }
 
-    public void stopped()
+    private void drawTitle(GreenfootImage bg)
     {
-        if (music.isPlaying()) {
-            music.pause();
-            musicPaused = true; 
-        }   
+        drawCentered(bg, "AGENTES ZIG & ZAG", Settings.SIZE_MENU_TITLE, Color.RED, 25);
+        drawCentered(bg, "Recolhe as pistas para impedir o ataque ao Zanarkin", Settings.SIZE_SMALL, Color.LIGHT_GRAY, 90);
     }
-    public void started()
+
+    private void drawControls(GreenfootImage bg, int x, String name, String[] lines)
     {
-        if (musicPaused) {
-            music.play();
-            musicPaused = false;
+        drawText(bg, name, Settings.SIZE_SECTION, Color.RED, x, 150);
+        for (int i = 0; i < lines.length; i++) {
+            drawText(bg, lines[i], Settings.SIZE_SMALL, Color.WHITE, x, 200 + i * 30);
+        }
+    }
+
+    private void drawHelp(GreenfootImage bg)
+    {
+        drawCentered(bg, "E  -  ativar portas e plataformas", Settings.SIZE_SMALL, Color.YELLOW, 350);
+        drawCentered(bg, "P  -  pausa", Settings.SIZE_SMALL, Color.YELLOW, 385);
+        drawCentered(bg, "Os dois agentes devem chegar à saída para passar o nível", Settings.SIZE_SMALL, Color.WHITE, 420);
+        drawCentered(bg, "Clica duas vezes no salto e deixa pressionado para flutuar", Settings.SIZE_SMALL, Color.WHITE, 450);
+    }
+
+    private void drawOptions(GreenfootImage bg)
+    {
+        if (SaveGame.hasSave()) {
+            drawCentered(bg, "SPACE  -  novo jogo      C  -  continuar (nível " + SaveGame.load()
+                + ")      T  -  história", Settings.SIZE_NORMAL, Color.YELLOW, 470);
+        } else {
+            drawCentered(bg, "SPACE  -  novo jogo      T  -  história", Settings.SIZE_NORMAL, Color.YELLOW, 470);
         }
     }
 }

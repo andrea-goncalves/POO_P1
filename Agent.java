@@ -1,6 +1,6 @@
 import greenfoot.*;
 
-public class Agent extends NCharacter {
+public class Agent extends GameCharacter {
     private String leftKey, rightKey, jumpKey, powerKey, attackKey;
     private int speed, jumpStrength;
     private boolean jumpKeyReleased, jumpKeyHeld, moving, facingRight;
@@ -8,7 +8,7 @@ public class Agent extends NCharacter {
     private int powerCooldown;
     private int frame, frameDelay;
     private boolean attackKeyHeld, attacking;
-    private int attackCooldown, attackFrame, attackFrameDelay, attackFrameCount;
+    private int attackCooldown, attackFrame, attackFrameDelay;
 
     private GreenfootImage[] walkRight, walkLeft;
     private GreenfootImage[] jumpRight, jumpLeft;
@@ -18,14 +18,7 @@ public class Agent extends NCharacter {
     private AgentShield shield;
     private boolean shielding;
 
-    private static final int DRIFT_SPEED = 3;
-    private static final int POWER_COOLDOWN = 240;
-    private static final int ATTACK_COOLDOWN = 20;
-    private static final int ATTACK_DAMAGE = 10;
-    private static final int ATTACK_FRAME_DELAY = 4;
-    private static final int SHIELD_DISTANCE = 45;
-
-    public Agent(int lives, int speed, int jumpStrength, String leftKey, String rightKey, String jumpKey, String powerKey,String attackKey, int attackFrameCount, String prefix){
+    public Agent(int lives, int speed, int jumpStrength, String leftKey, String rightKey, String jumpKey, String powerKey, String attackKey, int attackFrameCount, String prefix){
         super(lives);
 
         jumpKeyReleased = false;
@@ -43,7 +36,7 @@ public class Agent extends NCharacter {
         attackFrameDelay = 0;
         shielding = false;
         shield = null;
-        
+
         this.speed = speed;
         this.jumpStrength = jumpStrength;
         this.leftKey = leftKey;
@@ -51,23 +44,23 @@ public class Agent extends NCharacter {
         this.jumpKey = jumpKey;
         this.powerKey = powerKey;
         this.attackKey = attackKey;
-        
 
-        walkRight = Frames.load(prefix + "_walk", 4);
+        walkRight = Frames.load(prefix + Settings.WALK_SUFFIX, Settings.WALK_FRAMES);
         walkLeft = Frames.mirror(walkRight);
 
-        jumpRight = Frames.load(prefix + "_jump", 7);
+        jumpRight = Frames.load(prefix + Settings.JUMP_SUFFIX, Settings.JUMP_FRAMES);
         jumpLeft = Frames.mirror(jumpRight);
 
-        attackRight = Frames.load(prefix + "_attack", attackFrameCount);
+        attackRight = Frames.load(prefix + Settings.ATTACK_SUFFIX, attackFrameCount);
         attackLeft = Frames.mirror(attackRight);
 
-        shieldRight = new GreenfootImage(prefix + "_shield.png");
+        shieldRight = new GreenfootImage(prefix + Settings.SHIELD_SUFFIX);
         shieldLeft = new GreenfootImage(shieldRight);
         shieldLeft.mirrorHorizontally();
 
         setImage(walkRight[0]);
     }
+
     @Override
     public void update(){
         updateMovement();
@@ -79,47 +72,97 @@ public class Agent extends NCharacter {
         checkAttack();
     }
 
-    private void checkKeys(){
-        moving = false;
+    public boolean isShielding(){
+        return shielding;
+    }
 
-        boolean jumpDown = Greenfoot.isKeyDown(jumpKey);
-        boolean grounded = onGround();
-
-        if (Greenfoot.isKeyDown(leftKey) && !touchingWall(-getImage().getWidth() / 2 - speed)) {
-            setLocation(getX() - speed, getY());
-            facingRight = false;
-            moving = true;
-        }
-
-        if (Greenfoot.isKeyDown(rightKey) && !touchingWall(getImage().getWidth() / 2 + speed)) {
-            setLocation(getX() + speed, getY());
-            facingRight = true;
-            moving = true;
-        }
-
-        if (grounded && jumpDown && !jumpKeyHeld) {
-            jump(jumpStrength);
-            airDrift = facingRight ? DRIFT_SPEED : -DRIFT_SPEED;
-            jumpKeyReleased = false;
-        }
-        else if (grounded) {
-            setGliding(false);
-            jumpKeyReleased = false;
-            airDrift = 0;
+    private void updateMovement(){
+        if (canMove()) {
+            checkKeys();
         }
         else {
-            if (!jumpDown) {
-                jumpKeyReleased = true;
-            }
+            moving = false;
+            jumpKeyHeld = Greenfoot.isKeyDown(jumpKey);
+        }
+    }
 
-            setGliding(jumpDown && jumpKeyReleased && getVerticalSpeed() > 0);
-
-            if (!moving) {
-                driftInAir();
-            }
+    private boolean canMove(){
+        Level level = (Level) getWorld();
+        if (level.isDialogueActive()) {
+            return false;
+        }
+        if (level.usesShield() && Greenfoot.isKeyDown(powerKey)) {
+            airDrift = 0;
+            setGliding(false);
+            return false;
         }
 
+        return true;
+    }
+
+    private void checkKeys(){
+        boolean grounded = onGround();
+        moving = false;
+
+        moveHorizontally();
+        handleJump(grounded);
+    }
+
+    private void moveHorizontally(){
+        if (Greenfoot.isKeyDown(leftKey)) {
+            walk(Settings.LEFT);
+        }
+        if (Greenfoot.isKeyDown(rightKey)) {
+            walk(Settings.RIGHT);
+        }
+    }
+
+    private void walk(int direction){
+        int edge = direction * (getHalfWidth() + speed);
+
+        if (!touchingWall(edge)) {
+            setLocation(getX() + direction * speed, getY());
+            facingRight = direction > 0;
+            moving = true;
+        }
+    }
+
+    private void handleJump(boolean grounded){
+        boolean jumpDown = Greenfoot.isKeyDown(jumpKey);
+
+        if (grounded && jumpDown && !jumpKeyHeld) {
+            startJump();
+        }
+        else if (grounded) {
+            landed();
+        }
+        else {
+            controlInAir(jumpDown);
+        }
         jumpKeyHeld = jumpDown;
+    }
+
+    private void startJump(){
+        jump(jumpStrength);
+        airDrift = facingRight ? Settings.DRIFT_SPEED : -Settings.DRIFT_SPEED;
+        jumpKeyReleased = false;
+    }
+
+    private void landed(){
+        setGliding(false);
+        jumpKeyReleased = false;
+        airDrift = 0;
+    }
+
+    private void controlInAir(boolean jumpDown){
+        if (!jumpDown) {
+            jumpKeyReleased = true;
+        }
+        setGliding(jumpDown && jumpKeyReleased && getVerticalSpeed() > 0);
+
+        if (!moving) {
+            driftInAir();
+        }
     }
 
     private void driftInAir(){
@@ -127,7 +170,7 @@ public class Agent extends NCharacter {
             return;
         }
 
-        int edge = (airDrift > 0 ? 1 : -1) * getImage().getWidth() / 2;
+        int edge = (airDrift > 0 ? Settings.RIGHT : Settings.LEFT) * getHalfWidth();
 
         if (!touchingWall(edge + airDrift)) {
             setLocation(getX() + airDrift, getY());
@@ -138,28 +181,29 @@ public class Agent extends NCharacter {
         Level level = (Level) getWorld();
 
         if (level.usesShield()) {
-            boolean powerDown = Greenfoot.isKeyDown(powerKey);
-
-            if (powerDown && !attacking) {
-                activateShield();
-            }
-            else {
-                deactivateShield();
-            }
-
+            updateShield();
             return;
         }
-
         deactivateShield();
+        usePowerIfReady(level);
+    }
 
+    private void updateShield(){
+        if (Greenfoot.isKeyDown(powerKey) && !attacking) {
+            activateShield();
+        } else {
+            deactivateShield();
+        }
+    }
+
+    private void usePowerIfReady(Level level){
         if (powerCooldown > 0) {
             powerCooldown--;
             return;
         }
-
         if (Greenfoot.isKeyDown(powerKey) && level.isPowerUnlocked()) {
             level.usePower(this);
-            powerCooldown = POWER_COOLDOWN;
+            powerCooldown = Settings.POWER_COOLDOWN;
         }
     }
 
@@ -171,13 +215,9 @@ public class Agent extends NCharacter {
         shielding = true;
         shield = new AgentShield();
 
-        int direction = facingRight ? 1 : -1;
+        int direction = facingRight ? Settings.RIGHT : Settings.LEFT;
 
-        getWorld().addObject(
-            shield,
-            getX() + direction * SHIELD_DISTANCE,
-            getY()
-        );
+        getWorld().addObject(shield,getX() + direction * Settings.SHIELD_DISTANCE,getY());
     }
 
     private void deactivateShield(){
@@ -197,10 +237,10 @@ public class Agent extends NCharacter {
             return;
         }
 
-        int direction = facingRight ? 1 : -1;
+        int direction = facingRight ? Settings.RIGHT : Settings.LEFT;
 
         shield.setLocation(
-            getX() + direction * SHIELD_DISTANCE,
+            getX() + direction * Settings.SHIELD_DISTANCE,
             getY()
         );
     }
@@ -229,7 +269,7 @@ public class Agent extends NCharacter {
 
         frameDelay++;
 
-        if (frameDelay >= 5) {
+        if (frameDelay >= Settings.WALK_FRAME_DELAY) {
             frameDelay = 0;
             frame = (frame + 1) % walkRight.length;
         }
@@ -242,35 +282,6 @@ public class Agent extends NCharacter {
         int index = (getVerticalSpeed() + jumpStrength) * last / (2 * jumpStrength);
 
         return Math.max(0, Math.min(last, index));
-    }
-
-    private void attack(){
-        attacking = true;
-        attackFrame = 0;
-        attackFrameDelay = 0;
-        hitTargets();
-    }
-
-    private void hitTargets(){
-        int direction = facingRight ? 1 : -1;
-        int attackOffset = direction * (getImage().getWidth() / 2 + 20);
-
-        BossShield bossShield = (BossShield) getOneObjectAtOffset(
-                attackOffset, 0, BossShield.class
-            );
-
-        if (bossShield != null) {
-            bossShield.takeDamage(ATTACK_DAMAGE);
-            return;
-        }
-
-        Boss boss = (Boss) getOneObjectAtOffset(
-                attackOffset, 0, Boss.class
-            );
-
-        if (boss != null) {
-            boss.takeDamage(ATTACK_DAMAGE);
-        }
     }
 
     private void checkAttack(){
@@ -287,10 +298,39 @@ public class Agent extends NCharacter {
         && ((Level) getWorld()).allowsAttack()) {
 
             attack();
-            attackCooldown = ATTACK_COOLDOWN;
+            attackCooldown = Settings.ATTACK_COOLDOWN;
         }
 
         attackKeyHeld = attackDown;
+    }
+
+    private void attack(){
+        attacking = true;
+        attackFrame = 0;
+        attackFrameDelay = 0;
+        hitTargets();
+    }
+
+    private void hitTargets(){
+        int direction = facingRight ? Settings.RIGHT : Settings.LEFT;
+        int attackOffset = direction * (getHalfWidth() + Settings.ATTACK_REACH);
+
+        BossShield bossShield = (BossShield) getOneObjectAtOffset(
+                attackOffset, 0, BossShield.class
+            );
+
+        if (bossShield != null) {
+            bossShield.takeDamage(Settings.ATTACK_DAMAGE);
+            return;
+        }
+
+        Boss boss = (Boss) getOneObjectAtOffset(
+                attackOffset, 0, Boss.class
+            );
+
+        if (boss != null) {
+            boss.takeDamage(Settings.ATTACK_DAMAGE);
+        }
     }
 
     private void animateAttack(){
@@ -300,7 +340,7 @@ public class Agent extends NCharacter {
 
         attackFrameDelay++;
 
-        if (attackFrameDelay >= ATTACK_FRAME_DELAY) {
+        if (attackFrameDelay >= Settings.ATTACK_FRAME_DELAY) {
             attackFrameDelay = 0;
             attackFrame++;
 
@@ -308,33 +348,6 @@ public class Agent extends NCharacter {
                 attacking = false;
                 attackFrame = 0;
             }
-        }
-    }
-
-    public boolean isShielding(){
-        return shielding;
-    }
-
-    private boolean canMove(){
-        if (!getWorld().getObjects(Dialogue.class).isEmpty()) {
-            return false;
-        }
-        if (((Level) getWorld()).usesShield() && Greenfoot.isKeyDown(powerKey)) {
-            airDrift = 0;
-            setGliding(false);
-            return false;
-        }
-
-        return true;
-    }
-
-    private void updateMovement(){
-        if (canMove()) {
-            checkKeys();
-        }
-        else {
-            moving = false;
-            jumpKeyHeld = Greenfoot.isKeyDown(jumpKey);
         }
     }
 }

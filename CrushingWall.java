@@ -2,10 +2,6 @@ import greenfoot.*;
 
 public class CrushingWall extends Solid
 {
-    private static final int DOWN_SPEED = 8;
-    private static final int UP_SPEED = 2;
-    private static final int WAIT_TIME = 60;
-    private static final int REST_TIME = 120;
 
     private int distance;
     private int startY;
@@ -16,24 +12,25 @@ public class CrushingWall extends Solid
     private GreenfootImage middleImage;
     private GreenfootImage bottomImage;
 
-    public CrushingWall(int distance) {
-        super(64, 64);
-        moved = 0; 
-        timer = REST_TIME; 
-        descending = true; 
-        startY = 0;
-        this.distance = Math.abs(distance) * Level.TILE_SIZE;
 
-        topImage = loadImage("crushWallTopo.png");
-        middleImage=topImage;
-        bottomImage = loadImage("crusherWall_down.png");
+    public CrushingWall(int distance) {
+        super(Settings.CRUSH_SIZE, Settings.CRUSH_SIZE);
+        moved = 0;
+        timer = Settings.CRUSH_REST_TIME;
+        descending = true;
+        startY = 0;
+        this.distance = Math.abs(distance) * Settings.TILE_SIZE;
+
+        topImage = loadImage(Settings.CRUSH_TOP_IMAGE);
+        middleImage = topImage;
+        bottomImage = loadImage(Settings.CRUSH_BOTTOM_IMAGE);
 
         setImage(topImage);
     }
 
-    private GreenfootImage loadImage(String filename) {
+    private static GreenfootImage loadImage(String filename) {
         GreenfootImage img = new GreenfootImage(filename);
-        img.scale(64, 64);
+        img.scale(Settings.CRUSH_SIZE, Settings.CRUSH_SIZE);
         return img;
     }
 
@@ -56,19 +53,19 @@ public class CrushingWall extends Solid
         }
 
         if (descending) {
-            moved += Math.min(DOWN_SPEED, distance - moved);
+            moved += Math.min(Settings.CRUSH_DOWN_SPEED, distance - moved);
 
             if (moved >= distance) {
                 descending = false;
-                timer = WAIT_TIME;
+                timer = Settings.CRUSH_WAIT_TIME;
             }
         }
         else {
-            moved -= Math.min(UP_SPEED, moved);
+            moved -= Math.min(Settings.CRUSH_UP_SPEED, moved);
 
             if (moved <= 0) {
                 descending = true;
-                timer = REST_TIME;
+                timer = Settings.CRUSH_REST_TIME;
             }
         }
 

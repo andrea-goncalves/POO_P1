@@ -1,15 +1,6 @@
 import greenfoot.*;
 
 public class Boss extends Enemy {
-    private static final int STUN_DURATION = 180;
-    private static final int STUN_FRAME_DELAY = 8;
-    private static final int SHOOT_INTERVAL = 90;
-    private static final int SHOOT_FRAME_DELAY = 5;
-    private static final int MAX_HEALTH = 200;
-    private static final int SHIELD_DISTANCE = 9;
-    private static final int SHIELD_HEIGHT = 160;
-    private static final int SHIELD_WIDTH = 8;
-    private static final int GROUND_Y = 235;
 
     private boolean stunned;
     private int stunTimer;
@@ -28,24 +19,26 @@ public class Boss extends Enemy {
     private int stunFrameDelay;
 
     public Boss(){
-        super(1, 0);
+        super(Settings.BOSS_LIVES, Settings.BOSS_SPEED);
         stunned = false;
-        stunTimer = 0; 
-        shootTimer = SHOOT_INTERVAL; 
-        health = MAX_HEALTH; 
-        shield = null; 
-        shooting = false; 
-        shootFrame = 0; 
+        stunTimer = 0;
+        shootTimer = Settings.BOSS_SHOOT_INTERVAL;
+        health = Settings.BOSS_MAX_HEALTH;
+        shield = null;
+        shooting = false;
+        shootFrame = 0;
         shootFrameDelay = 0;
+        stunFrame = 0;
+        stunFrameDelay = 0;
 
-        idleImage = new GreenfootImage("general_walk1.png");
-        shootFrames = Frames.load("general_attack", 8);
-        stunFrames = Frames.load("general_stum", 7);
+        idleImage = new GreenfootImage(Settings.BOSS_IDLE_IMAGE);
+        shootFrames = Frames.load(Settings.BOSS_ATTACK_PREFIX, Settings.BOSS_ATTACK_FRAMES);
+        stunFrames = Frames.load(Settings.BOSS_STUN_PREFIX, Settings.BOSS_STUN_FRAMES);
 
         setImage(idleImage);
-        setDirection(-1);
+        setDirection(Settings.LEFT);
     }
-    ///é da documentação do greenfoot 
+
     @Override
     public void addedToWorld(World world){
         createShield();
@@ -53,7 +46,7 @@ public class Boss extends Enemy {
 
     @Override
     public void update(){
-        if (!getWorld().getObjects(Dialogue.class).isEmpty()) {
+        if (((Level) getWorld()).isDialogueActive()) {
             return;
         }
         updateShieldPosition();
@@ -65,7 +58,6 @@ public class Boss extends Enemy {
             if (stunTimer <= 0) {
                 recover();
             }
-
             return;
         }
 
@@ -78,57 +70,7 @@ public class Boss extends Enemy {
         }
         else if (shootTimer <= 0) {
             startShooting();
-            shootTimer = SHOOT_INTERVAL;
-        }
-    }
-
-    private int getShieldY(){
-        return GROUND_Y - SHIELD_HEIGHT / 2;
-    }
-
-    private int getShieldX(){
-        return getX() - SHIELD_DISTANCE;
-    }
-
-    private void createShield(){
-        if (getWorld() == null) return;
-
-        shield = new BossShield(this, SHIELD_WIDTH, SHIELD_HEIGHT);
-        getWorld().addObject(shield, getShieldX(), getShieldY());
-    }
-
-    private void updateShieldPosition(){
-        if (shield != null && shield.getWorld() != null) {
-            shield.setLocation(getShieldX(), getShieldY());
-        }
-    }
-
-    public void breakShield(){
-        stunned = true;
-        stunTimer = STUN_DURATION;
-
-        shooting = false;
-        shootFrame = 0;
-        shootFrameDelay = 0;
-
-        stunFrame = 0;
-        stunFrameDelay = 0;
-
-        shield = null;
-        setImage(stunFrames[0]);
-    }
-
-    private void animateStun(){
-        setImage(stunFrames[stunFrame]);
-
-        if (stunFrame < stunFrames.length - 1) {
-            stunFrameDelay++;
-
-            if (stunFrameDelay >= STUN_FRAME_DELAY) {
-                stunFrameDelay = 0;
-                stunFrame++;
-                setImage(stunFrames[stunFrame]);
-            }
+            shootTimer = Settings.BOSS_SHOOT_INTERVAL;
         }
     }
 
@@ -143,21 +85,78 @@ public class Boss extends Enemy {
         }
     }
 
-    private void recover(){
+    public void breakShield(){
+        stunned = true;
+        stunTimer = Settings.BOSS_STUN_DURATION;
 
+        shooting = false;
+        shootFrame = 0;
+        shootFrameDelay = 0;
+
+        stunFrame = 0;
+        stunFrameDelay = 0;
+
+        shield = null;
+        setImage(stunFrames[0]);
+    }
+
+    public int getMaxHealth(){
+        return Settings.BOSS_MAX_HEALTH;
+    }
+
+    public int getHealth(){
+        return health;
+    }
+
+    public boolean isStunned(){
+        return stunned;
+    }
+
+    private int getShieldY(){
+        return Settings.BOSS_GROUND_Y - Settings.BOSS_SHIELD_HEIGHT / 2;
+    }
+
+    private int getShieldX(){
+        return getX() - Settings.BOSS_SHIELD_DISTANCE;
+    }
+
+    private void createShield(){
+        if (getWorld() == null) return;
+
+        shield = new BossShield(this, Settings.BOSS_SHIELD_WIDTH, Settings.BOSS_SHIELD_HEIGHT);
+        getWorld().addObject(shield, getShieldX(), getShieldY());
+    }
+
+    private void updateShieldPosition(){
+        if (shield != null && shield.getWorld() != null) {
+            shield.setLocation(getShieldX(), getShieldY());
+        }
+    }
+
+    private void animateStun(){
+        setImage(stunFrames[stunFrame]);
+
+        if (stunFrame < stunFrames.length - 1) {
+            stunFrameDelay++;
+
+            if (stunFrameDelay >= Settings.BOSS_STUN_FRAME_DELAY) {
+                stunFrameDelay = 0;
+                stunFrame++;
+                setImage(stunFrames[stunFrame]);
+            }
+        }
+    }
+
+    private void recover(){
         stunned = false;
         stunTimer = 0;
         stunFrame = 0;
         stunFrameDelay = 0;
 
-        shootTimer = SHOOT_INTERVAL;
+        shootTimer = Settings.BOSS_SHOOT_INTERVAL;
 
         setImage(idleImage);
         createShield();
-    }
-
-    public int getMaxHealth(){
-        return MAX_HEALTH;
     }
 
     private void startShooting(){
@@ -173,13 +172,13 @@ public class Boss extends Enemy {
 
         setImage(shootFrames[shootFrame]);
 
-        if (shootFrame == 4 && shootFrameDelay == 0) {
+        if (shootFrame == Settings.BOSS_SHOT_FRAME && shootFrameDelay == 0) {
             shoot();
         }
 
         shootFrameDelay++;
 
-        if (shootFrameDelay >= SHOOT_FRAME_DELAY) {
+        if (shootFrameDelay >= Settings.BOSS_SHOOT_FRAME_DELAY) {
             shootFrameDelay = 0;
             shootFrame++;
 
@@ -194,46 +193,22 @@ public class Boss extends Enemy {
     private void shoot(){
         if (getWorld() == null) return;
 
-        int direction = getDirection();
-        int bossHeight = idleImage.getHeight();
-        int projectileHeight = 20;
-
-        int bottomY = GROUND_Y - projectileHeight / 2;
-        int middleY = getY();
-        int topY = getY() - bossHeight / 2 + projectileHeight / 2;
-
-        int spawnX = getShieldX() - SHIELD_WIDTH / 2 - 20;
-        int choice = Greenfoot.getRandomNumber(3);
-        int spawnY;
-
-        if (choice == 0) {
-            spawnY = bottomY;
-        }
-        else if (choice == 1) {
-            spawnY = middleY;
-        }
-        else {
-            spawnY = topY;
-        }
-
+        int spawnX = getShieldX() - Settings.BOSS_SHIELD_WIDTH / 2 - Settings.BOSS_BULLET_OFFSET;
         getWorld().addObject(
-            new Bullet(direction, 7, 20),
+            new Bullet(getDirection(), Settings.BOSS_BULLET_SPEED, Settings.BOSS_PROJECTILE_SIZE),
             spawnX,
-            spawnY
+            randomShotHeight()
         );
-        Greenfoot.playSound("blast.wav");
+        Greenfoot.playSound(Settings.SOUND_BOSS_SHOT);
     }
 
-    @Override
-    public void neutralize(){
-    }
-
-    public int getHealth(){
-        return health;
-    }
-
-    public boolean isStunned(){
-        return stunned;
+    private int randomShotHeight(){
+        int half = Settings.BOSS_PROJECTILE_SIZE / 2;
+        int[] heights = {
+            Settings.BOSS_GROUND_Y - half,
+            getY(),
+            getY() - idleImage.getHeight() / 2 + half
+        };
+        return heights[Greenfoot.getRandomNumber(heights.length)];
     }
 }
-

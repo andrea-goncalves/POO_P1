@@ -1,8 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-
-    public abstract class ScreenWorld extends World
-{
+public abstract class ScreenWorld extends World{
     public ScreenWorld()
     {
         super(960, 540, 1);

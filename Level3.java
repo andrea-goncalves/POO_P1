@@ -1,33 +1,29 @@
 import greenfoot.*;
 
 public class Level3 extends Level {
-    private static final int LIGHTS_OFF_TIME = 300;
-    private static final int SHORT_SIGHT = 100;
-    private static final int GAME_OVER_DELAY = 60;
-
     private int lightsOffTimer;
     private int fallTimer;
     private DarknessOverlay overlay;
 
     public Level3(){
-        super(960, 540);
+        super(Settings.WORLD_WIDTH, Settings.WORLD_HEIGHT);
         dialogue();
         fallTimer = -1;
         lightsOffTimer = 0;
         overlay = null;
 
-        loadCollisions("Colisao_fase3.csv");
-        setBackground("fase3.png");
+        loadCollisions(Settings.LEVEL3_CSV);
+        setBackground(Settings.LEVEL3_BACKGROUND);
 
         addAgents(25, 30, 135);
 
-        MovingPlatform platform1 = new MovingPlatform( -4 * TILE_SIZE);
-        MovingPlatform platform2 = new MovingPlatform( 3 * TILE_SIZE);
+        MovingPlatform platform1 = new MovingPlatform(-4 * Settings.TILE_SIZE);
+        MovingPlatform platform2 = new MovingPlatform(3 * Settings.TILE_SIZE);
 
         Door door1 = new Door(5);
 
         addObject(door1, 800, 30);
-        addObject(new Computer(door1),  642, 40);
+        addObject(new Computer(door1), 642, 40);
         addObject(new Computer(platform2), 585, 455);
         addObject(platform1, 350, 490);
         addObject(platform2, 448, 302);
@@ -44,31 +40,15 @@ public class Level3 extends Level {
         addObject(new Soldier(), 455, 135);
         addObject(new Soldier(), 900, 50);
 
-        addObject(new Clue(20),420, 80);
-        addObject(new Clue(20),500,250);
-        addObject(new ExitPoint(),870,450);
-    }
-
-    @Override
-    public void usePower(Agent user){
-        Greenfoot.playSound("lights.wav");
-
-        lightsOffTimer = LIGHTS_OFF_TIME;
-
-        if (overlay == null) {
-            overlay = new DarknessOverlay(getWidth(), getHeight());
-            addObject(overlay, getWidth() / 2, getHeight() / 2);
-        }
-
-        for (Soldier soldier : getObjects(Soldier.class)) {
-            soldier.setSightRange(SHORT_SIGHT);
-        }
+        addObject(new Clue(Settings.CLUE_POINTS), 420, 80);
+        addObject(new Clue(Settings.CLUE_POINTS), 500, 250);
+        addObject(new ExitPoint(), 870, 450);
     }
 
     @Override
     public void act(){
         if (checkFallenAgents()) {
-            return;                    
+            return;
         }
 
         super.act();
@@ -82,6 +62,48 @@ public class Level3 extends Level {
         }
     }
 
+    @Override
+    public void usePower(Agent user){
+        Greenfoot.playSound(Settings.SOUND_LIGHTS);
+
+        lightsOffTimer = Settings.LIGHTS_OFF_TIME;
+
+        if (overlay == null) {
+            overlay = new DarknessOverlay(getWidth(), getHeight());
+            addObject(overlay, getWidth() / 2, getHeight() / 2);
+        }
+
+        for (Soldier soldier : getObjects(Soldier.class)) {
+            soldier.setSightRange(Settings.LIGHTS_SHORT_SIGHT);
+        }
+    }
+
+    @Override
+    public Level createNew(){
+        return new Level3();
+    }
+
+    @Override
+    public int getUnlockScore(){
+        return Settings.LIGHTS_UNLOCK_SCORE;
+    }
+
+    @Override
+    public String getPowerName(){
+        return Settings.POWER_LIGHTS;
+    }
+
+    @Override
+    public Level nextLevel(){
+        return new BossLevel();
+    }
+
+    @Override
+    public int getLevelNumber()
+    {
+        return Settings.LEVEL_3;
+    }
+
     private void lightsOn(){
         if (overlay != null) {
             removeObject(overlay);
@@ -93,39 +115,12 @@ public class Level3 extends Level {
         }
     }
 
-    @Override
-    public Level createNew(){
-        return new Level3();
-    }
-
-    @Override
-    public int getUnlockScore(){
-        return 80;
-    }
-
-    @Override
-    public String getPowerName(){
-        return "Lights Off";
-    }
-
-    @Override
-    public Level nextLevel(){
-        return new BossLevel();
-    }
-
-    @Override
-    public int getLevelNumber()
-    {
-        return 3;
-    }
-
     private boolean checkFallenAgents()
     {
         if (fallTimer < 0) {
             for (Agent agent : getObjects(Agent.class)) {
-                int feet = agent.getY() + agent.getImage().getHeight() / 2;
-                if (feet >= getHeight() - 1) {
-                    fallTimer = GAME_OVER_DELAY;
+                if (agent.getFeetY() >= getHeight() - 1) {
+                    fallTimer = Settings.FALL_GAME_OVER_DELAY;
                     break;
                 }
             }
@@ -140,7 +135,7 @@ public class Level3 extends Level {
         return false;
     }
 
-    public void dialogue(){
+    private void dialogue(){
         String[] names = {"ZAG", "ZIG"};
 
         String[] texts = {
@@ -148,6 +143,6 @@ public class Level3 extends Level {
                 "Vamos para o elevador! Temos que impedir que o avião descole!"
             };
 
-        addObject(new Dialogue(names, texts), 480, 450);
+        addObject(new Dialogue(names, texts), Settings.DIALOGUE_X, Settings.DIALOGUE_Y);
     }
 }

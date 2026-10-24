@@ -3,7 +3,7 @@ import greenfoot.*;
 public class Solid extends Actor
 {
     public Solid() {
-        this(Level.TILE_SIZE, Level.TILE_SIZE);
+        this(Settings.TILE_SIZE, Settings.TILE_SIZE);
     }
 
     public Solid(int width, int height) {

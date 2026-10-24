@@ -3,27 +3,28 @@ import greenfoot.*;
 public class Trap extends Solid
 {
     public Trap() {
-        super(Level.TILE_SIZE, Level.TILE_SIZE);
+        super(Settings.TILE_SIZE, Settings.TILE_SIZE);
     }
 
     public Trap(int width, int height) {
         super(width, height);
     }
+
     @Override
     public void act() {
         damageAgentsOnTop();
     }
 
-    private void damageAgentsOnTop()  {
+    private void damageAgentsOnTop() {
         if (getWorld() == null) return;
 
-        for (Agent player : getWorld().getObjects(Agent.class)) {
+        int trapTop = getY() - getImage().getHeight() / 2;
 
-            int playerBottom = player.getY() + player.getImage().getHeight() / 2;
-            int trapTop = getY() - getImage().getHeight() / 2;
+        for (Agent player : getWorld().getObjects(Agent.class)) {
             int horizontalDistance = Math.abs(player.getX() - getX());
-            int maxDistance =(player.getImage().getWidth() + getImage().getWidth()) / 2;
-            boolean touchingTop = Math.abs(playerBottom - trapTop) <= 5;
+            int maxDistance = (player.getImage().getWidth() + getImage().getWidth()) / 2;
+
+            boolean touchingTop = Math.abs(player.getFeetY() - trapTop) <= Settings.TRAP_TOP_TOLERANCE;
             boolean overlappingHorizontally = horizontalDistance < maxDistance;
 
             if (touchingTop && overlappingHorizontally) {

@@ -3,9 +3,6 @@ import greenfoot.*;
 
 public class BossShield extends Solid {
     private static final int MAX_HEALTH = 100;
-    private static final int SHIELD_WIDTH = 32;
-    private static final int SHIELD_HEIGHT = 220;
-
     private int health;
     private Boss boss;
 

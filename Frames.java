@@ -1,11 +1,12 @@
 import greenfoot.*;
-public class Frames  
+
+public class Frames
 {
     public static GreenfootImage[] load(String prefix, int count)
     {
         GreenfootImage[] frames = new GreenfootImage[count];
         for (int i = 0; i < count; i++) {
-            frames[i] = new GreenfootImage(prefix + (i + 1) + ".png");
+            frames[i] = new GreenfootImage(prefix + (i + 1) + Settings.IMAGE_EXTENSION);
         }
         return frames;
     }

@@ -1,25 +1,24 @@
 import greenfoot.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MovingPlatform extends Solid implements Activatable
 {
-    private static final int SPEED = 2;
-    private static final int WAIT_TIME = 180;
-
     private int moveY;
     private int startY;
     private int timer;
     private boolean moving;
     private boolean returning;
 
-    public MovingPlatform( int moveY) {
+    public MovingPlatform(int moveY) {
         super();
         this.moveY = moveY;
-        startY = 0; 
-        timer = 0; 
-        moving = false; 
+        startY = 0;
+        timer = 0;
+        moving = false;
         returning = false;
 
-        setImage("plataforma.png");
+        setImage(Settings.PLATFORM_IMAGE);
     }
 
     @Override
@@ -52,8 +51,7 @@ public class MovingPlatform extends Solid implements Activatable
         int targetY = returning ? startY : startY + moveY;
 
         if (getY() != targetY) {
-            int step = Math.max(-SPEED, Math.min(SPEED, targetY - getY()));
-            setLocation(getX(), getY() + step);
+            moveBy(Math.max(-Settings.PLATFORM_SPEED, Math.min(Settings.PLATFORM_SPEED, targetY - getY())));
         }
         else if (returning) {
             moving = false;
@@ -61,8 +59,34 @@ public class MovingPlatform extends Solid implements Activatable
         }
         else {
             returning = true;
-            timer = WAIT_TIME;
+            timer = Settings.PLATFORM_WAIT_TIME;
         }
+    }
+
+    private void moveBy(int step) {
+        List<GameCharacter> riders = findRiders();
+        setLocation(getX(), getY() + step);
+
+        for (GameCharacter rider : riders) {
+            rider.setLocation(rider.getX(), rider.getY() + step);
+        }
+    }
+
+    private List<GameCharacter> findRiders() {
+        List<GameCharacter> riders = new ArrayList<>();
+        int top = getY() - getImage().getHeight() / 2;
+
+        for (GameCharacter character : getWorld().getObjects(GameCharacter.class)) {
+            int reach = (character.getImage().getWidth() + getImage().getWidth()) / 2;
+
+            boolean onTop = Math.abs(character.getFeetY() - top) <= Settings.PLATFORM_RIDER_TOLERANCE;
+            boolean overlapping = Math.abs(character.getX() - getX()) < reach;
+
+            if (onTop && overlapping) {
+                riders.add(character);
+            }
+        }
+        return riders;
     }
 }
 

@@ -1,18 +1,16 @@
-
 import greenfoot.*;
 
-public class Door extends Actor implements Activatable{
+public class Door extends Actor implements Activatable {
     private boolean isOpen;
     private int openDurationFrames;
     private int timer;
-
     private Solid collision;
 
     public Door(double openTimeSeconds) {
-        openDurationFrames = (int) (openTimeSeconds * 60);
-        setImage("door.png");
+        openDurationFrames = (int) (openTimeSeconds * Settings.FRAMES_PER_SECOND);
+        setImage(Settings.DOOR_IMAGE);
         isOpen = false;
-        timer = 0; 
+        timer = 0;
         collision = null;
     }
 
@@ -31,10 +29,16 @@ public class Door extends Actor implements Activatable{
         if (isOpen && openDurationFrames > 0) {
             timer--;
 
-            if (timer <= 0 && getIntersectingObjects(Character.class).isEmpty()) {
+            if (timer <= 0 && getIntersectingObjects(GameCharacter.class).isEmpty()) {
                 closeDoor();
             }
         }
+    }
+
+    @Override
+    public void activate()
+    {
+        openDoor();
     }
 
     public boolean isOpen() {
@@ -50,7 +54,7 @@ public class Door extends Actor implements Activatable{
             }
 
             getWorld().removeObject(collision);
-            getImage().setTransparency(100);
+            getImage().setTransparency(Settings.TRANSPARENCY_FADED);
         }
     }
 
@@ -59,13 +63,7 @@ public class Door extends Actor implements Activatable{
             isOpen = false;
 
             getWorld().addObject(collision, getX(), getY());
-            getImage().setTransparency(255);
+            getImage().setTransparency(Settings.TRANSPARENCY_OPAQUE);
         }
-    }
-
-    @Override
-    public void activate()
-    {
-        openDoor();
     }
 }

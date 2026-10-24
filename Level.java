@@ -2,12 +2,6 @@ import greenfoot.*;
 
 public abstract class Level extends World
 {
-    public abstract Level nextLevel();
-    private static final int AGENT_LIVES = 5;
-    private static final int AGENT_SPEED = 6;
-    private static final int AGENT_JUMP = 16;
-    public static final int TILE_SIZE = 32;
-    private static final int LEVEL_COMPLETE_BONUS = 10;
     private int score;
     private int startScore; 
     private boolean powerUnlocked;
@@ -20,30 +14,119 @@ public abstract class Level extends World
         startScore = 0;
         powerUnlocked = false;
         pauseKeyHeld = true;
-        setPaintOrder(Dialogue.class,HUD.class,
-        DarknessOverlay.class, Agent.class, Enemy.class,Bullet.class, Clue.class, Solid.class);
-        addObject(new HUD(width), width / 2, 15);
+        setPaintOrder(Dialogue.class, HUD.class,
+            DarknessOverlay.class, Agent.class, Enemy.class, Bullet.class, Clue.class, Solid.class);
+        addObject(new HUD(width), width / 2, Settings.HUD_Y);
     }
+
     @Override
     public void act(){
         checkPause();
         checkPowerUnlock();
         checkRestart();
+    }
 
-    }
-    public void addAgents(int zigX, int zagX, int y)
-    {
-        addObject(new Agent(AGENT_LIVES, AGENT_SPEED, AGENT_JUMP, "a", "d", "w", "s", "f", 3, "zig"), zigX, y);
-        addObject(new Agent(AGENT_LIVES, AGENT_SPEED, AGENT_JUMP, "left", "right", "up", "down", "0", 7, "zag"), zagX, y);
-    }
-    
-    public abstract int getLevelNumber();
+    public abstract Level nextLevel();
 
     public abstract Level createNew();
 
+    public abstract int getLevelNumber();
+
+    public void addAgents(int zigX, int zagX, int y)
+    {
+        addObject(new Agent(Settings.AGENT_LIVES, Settings.AGENT_SPEED, Settings.AGENT_JUMP,
+                Settings.ZIG_LEFT, Settings.ZIG_RIGHT, Settings.ZIG_JUMP, Settings.ZIG_POWER,
+                Settings.ZIG_ATTACK, Settings.ZIG_ATTACK_FRAMES, Settings.ZIG_PREFIX), zigX, y);
+
+        addObject(new Agent(Settings.AGENT_LIVES, Settings.AGENT_SPEED, Settings.AGENT_JUMP,
+                Settings.ZAG_LEFT, Settings.ZAG_RIGHT, Settings.ZAG_JUMP, Settings.ZAG_POWER,
+                Settings.ZAG_ATTACK, Settings.ZAG_ATTACK_FRAMES, Settings.ZAG_PREFIX), zagX, y);
+    }
+
+    public void loadCollisions(String csvPath) {
+        int[][] map = CSVReader.matrix(csvPath);
+
+        for (int row = 0; row < map.length; row++) {
+            for (int column = 0; column < map[row].length; column++) {
+                int x = column * Settings.TILE_SIZE + Settings.TILE_SIZE / 2;
+                int y = row * Settings.TILE_SIZE + Settings.TILE_SIZE / 2;
+                int tile = map[row][column];
+
+                if (tile == Settings.TILE_SOLID) {
+                    addObject(new Solid(), x, y);
+                }
+                else if (tile == Settings.TILE_TRAP) {
+                    addObject(new Trap(), x, y);
+                }
+            }
+        }
+    }
+
+    public void advanceLevel() {
+        Level next = nextLevel();
+
+        if (next != null) {
+            addLevelBonus();
+            next.setStartingScore(score);
+            Greenfoot.setWorld(next);
+        }
+    }
+
+    public void addScore(int points){
+        score += points;
+    }
+
+    public int getScore(){
+        return score;
+    }
+
+    public void setStartingScore(int points)
+    {
+        score = points;
+        startScore = points;
+    }
+
+    public int getStartScore()
+    {
+        return startScore;
+    }
+
+    public int getLevelScore()
+    {
+        return score - startScore;
+    }
+
+    public void addLevelBonus(){
+        addScore(Settings.LEVEL_COMPLETE_BONUS);
+    }
+
+    public boolean isPowerUnlocked(){
+        return powerUnlocked;
+    }
+
+    public int getUnlockScore() { return Settings.DEFAULT_UNLOCK_SCORE; }
+
+    public String getPowerName() { return Settings.POWER_NONE; }
+
+    public void usePower(Agent user) { }
+
+    public boolean allowsAttack()
+    {
+        return false;
+    }
+
+    public boolean usesShield()
+    {
+        return false;
+    }
+
+    public boolean isDialogueActive(){
+        return !getObjects(Dialogue.class).isEmpty();
+    }
+
     private void checkPause()
     {
-        boolean pauseDown = Greenfoot.isKeyDown("p");
+        boolean pauseDown = Greenfoot.isKeyDown(Settings.KEY_PAUSE);
         if (pauseDown && !pauseKeyHeld) {
             Greenfoot.setWorld(new PauseWorld(this));
         }
@@ -60,88 +143,10 @@ public abstract class Level extends World
         }
     }
 
-    public void advanceLevel() {
-        Level next = nextLevel();
-
-        if (next != null) {
-            addScore(LEVEL_COMPLETE_BONUS);
-            next.setStartingScore(score);
-            Greenfoot.setWorld(next);
-        }
-    }
-
-    public void addScore(int points){
-        score += points;
-    }
-
-    public int getScore(){
-        return score;
-    }
-
     private void checkPowerUnlock(){
         if (!powerUnlocked && score >= getUnlockScore()) {
             powerUnlocked = true;
         }
     }
-
-    public boolean isPowerUnlocked(){
-        return powerUnlocked;
-    }
-
-    public void loadCollisions(String csvPath) {
-        int[][] map = CSVReader.matrix(csvPath);
-
-        for (int row = 0; row < map.length; row++) {
-            for (int column = 0; column < map[row].length; column++) {
-                int x = column * TILE_SIZE + TILE_SIZE / 2;
-                int y = row * TILE_SIZE + TILE_SIZE / 2;
-                
-                if (map[row][column] == 1) {
-                    addObject(new Solid(), x, y);
-                }
-                else if (map[row][column] == 2) {
-                    addObject(new Trap(), x, y);
-                }
-            }
-        }
-    }
-
-    public abstract int getUnlockScore();
-
-    public abstract String getPowerName();
-
-    public abstract void usePower(Agent user);
-
-    public boolean allowsAttack()
-    {
-        return false;
-    }
-    public boolean usesShield()
-    {
-        return false;
-    }
-        
-    public void setStartingScore(int points)
-    {
-        score = points;
-        startScore = points;
-    }
-
-    public int getStartScore()
-    {
-        return startScore;
-    }
-
-    public int getLevelScore()
-    {
-        return score - startScore;
-    }
-    
-    public void addLevelBonus(){
-        addScore(LEVEL_COMPLETE_BONUS);
-    }
-    
-    public boolean isDialogueActive(){
-        return !getObjects(Dialogue.class).isEmpty();
-    }
 }
+

@@ -1,33 +1,17 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import greenfoot.*;
 
 public class PauseWorld extends ScreenWorld
 {
     private Level pausedLevel;
-    private int inputDelay;      
+    private int inputDelay;
 
     public PauseWorld(Level pausedLevel)
     {
-        inputDelay = 20;
+        inputDelay = Settings.PAUSE_INPUT_DELAY;
         this.pausedLevel = pausedLevel;
         drawScreen("");
     }
 
-    
-    private void drawScreen(String message)
-    {
-        GreenfootImage bg = createBackground();
-
-        drawCentered(bg, "PAUSA", 56, Color.RED, 90);
-        drawCentered(bg, "C  -  continuar", 28, Color.YELLOW, 200);
-        drawCentered(bg, "G  -  guardar ", 28, Color.YELLOW, 250);
-        drawCentered(bg, "M  -  menu", 28, Color.YELLOW, 300);
-
-        if (!message.isEmpty()) {
-            drawCentered(bg, message, 26, Color.GREEN, 420);
-        }
-        setBackground(bg);
-    }
     @Override
     public void act()
     {
@@ -35,15 +19,30 @@ public class PauseWorld extends ScreenWorld
             inputDelay--;
             return;
         }
-        if (Greenfoot.isKeyDown("c")) {
-            Greenfoot.setWorld(pausedLevel);                
+        if (Greenfoot.isKeyDown(Settings.KEY_CONTINUE)) {
+            Greenfoot.setWorld(pausedLevel);
         }
-        else if (Greenfoot.isKeyDown("g")) {
+        else if (Greenfoot.isKeyDown(Settings.KEY_SAVE)) {
             SaveGame.save(pausedLevel.getLevelNumber(), pausedLevel.getStartScore());
             drawScreen("Jogo Guardado");
         }
-        else if (Greenfoot.isKeyDown("m")) {
+        else if (Greenfoot.isKeyDown(Settings.KEY_MENU)) {
             Greenfoot.setWorld(new MenuWorld());
         }
+    }
+
+    private void drawScreen(String message)
+    {
+        GreenfootImage bg = createBackground();
+
+        drawCentered(bg, "PAUSA", Settings.SIZE_TITLE, Color.RED, 90);
+        drawCentered(bg, "C  -  continuar", Settings.SIZE_LARGE, Color.YELLOW, 200);
+        drawCentered(bg, "G  -  guardar", Settings.SIZE_LARGE, Color.YELLOW, 250);
+        drawCentered(bg, "M  -  menu", Settings.SIZE_LARGE, Color.YELLOW, 300);
+
+        if (!message.isEmpty()) {
+            drawCentered(bg, message, Settings.SIZE_MESSAGE, Color.GREEN, 420);
+        }
+        setBackground(bg);
     }
 }

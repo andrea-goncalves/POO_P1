@@ -1,20 +1,31 @@
 import greenfoot.*;
 
 public class BossLevel extends Level {
+ 
     private boolean bossDead;
+
+ 
     public BossLevel(){
-        super(960, 540);
+        super(Settings.WORLD_WIDTH, Settings.WORLD_HEIGHT);
         bossDead = false;
         introDialogue();
-               
-        loadCollisions("Colisao_boss.csv");
-        setBackground("faseBoss.png");
-        
+
+        loadCollisions(Settings.BOSS_CSV);
+        setBackground(Settings.BOSS_BACKGROUND);
+
         addAgents(100, 160, 223);
-        
+
         Boss boss = new Boss();
         addObject(boss, 894, 223);
         addObject(new BossHealthBar(boss), 480, 510);
+    }
+
+    @Override
+    public void act(){
+        super.act();
+        if (bossDead && !isDialogueActive()) {
+            Greenfoot.setWorld(new WinWorld(getScore()));
+        }
     }
 
     public void bossDefeated(){
@@ -23,31 +34,15 @@ public class BossLevel extends Level {
         SaveGame.clear();
         victoryDialogue();
     }
-    @Override
-    public void act(){
-        super.act();
-        if (bossDead && !isDialogueActive()) {
-            Greenfoot.setWorld(new WinWorld(getScore()));
-        }
-    }   
-    
+
     @Override
     public Level createNew(){
         return new BossLevel();
     }
 
     @Override
-    public int getUnlockScore(){
-        return 0;
-    }
-
-    @Override
     public String getPowerName(){
-        return "Shield";
-    }
-
-    @Override
-    public void usePower(Agent user){
+        return Settings.POWER_SHIELD;
     }
 
     @Override
@@ -59,25 +54,29 @@ public class BossLevel extends Level {
     public boolean allowsAttack(){
         return true;
     }
+
     @Override
     public boolean usesShield(){
         return true;
     }
+
     @Override
     public int getLevelNumber(){
-        return 4;
+        return Settings.BOSS_LEVEL;
     }
+
     private void introDialogue(){
         String[] names = {"GENERAL VON KROSS", "ZAG", "ZIG"};
 
         String[] texts = {
             "Ratos de Zanarkin! Chegaram demasiado tarde!",
             "Essa bomba não vai destruir em Zanarkin!",
-            "Rende-te, Von Kross! O teu palno fracassou!"
+            "Rende-te, Von Kross! O teu plano fracassou!"
         };
-        
-        addObject(new Dialogue(names, texts), 480, 450);
+
+        addObject(new Dialogue(names, texts), Settings.DIALOGUE_X, Settings.DIALOGUE_Y);
     }
+
     private void victoryDialogue(){
         String[] names = {"GENERAL VON KROSS", "ZIG", "ZAG", "ZIG"};
 
@@ -85,9 +84,9 @@ public class BossLevel extends Level {
             "Vocês destruíram os controlos e a bomba ativou, ninguém sai vivo daqui!",
             "Não podemos desativar a bomba",
             "Mas podemos afastar esta nave de Zanarkin.",
-            "Missão cumprida, parceiro. Foi uma honra.",
+            "Missão cumprida, parceiro. Foi uma honra."
         };
-        
-        addObject(new Dialogue(names, texts), 480, 450);
+
+        addObject(new Dialogue(names, texts), Settings.DIALOGUE_X, Settings.DIALOGUE_Y);
     }
 }
