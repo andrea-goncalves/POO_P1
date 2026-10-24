@@ -10,15 +10,12 @@ public class ExitPoint extends Actor
 
     private void checkExit()
     {
-        List<Agent> players = getWorld().getObjects(Agent.class);
+        List<Agent> agents = getWorld().getObjects(Agent.class);
+        if (agents.isEmpty()) return;
 
-        if (players.size() != 2) return;
-
-        if (intersects(players.get(0)) &&
-            intersects(players.get(1))) {
-
-            Level level = (Level) getWorld();
-            level.advanceLevel();
+        for (Agent agent : agents) {
+            if (!intersects(agent)) return;      
         }
+        ((Level) getWorld()).advanceLevel();
     }
 }

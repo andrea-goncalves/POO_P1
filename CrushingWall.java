@@ -12,9 +12,9 @@ public class CrushingWall extends Solid
     private int moved;
     private int timer;
     private boolean descending;
-    private GreenfootImage topo;
-    private GreenfootImage meio;
-    private GreenfootImage baixo;
+    private GreenfootImage topImage;
+    private GreenfootImage middleImage;
+    private GreenfootImage bottomImage;
 
     public CrushingWall(int distance) {
         super(64, 64);
@@ -24,12 +24,11 @@ public class CrushingWall extends Solid
         startY = 0;
         this.distance = Math.abs(distance) * Level.TILE_SIZE;
 
-        topo = loadImage("crushWallTopo.png");
-        //meio = loadImage("crusher_meio.png");
-        meio=topo;
-        baixo = loadImage("crusherWall_down.png");
+        topImage = loadImage("crushWallTopo.png");
+        middleImage=topImage;
+        bottomImage = loadImage("crusherWall_down.png");
 
-        setImage(topo);
+        setImage(topImage);
     }
 
     private GreenfootImage loadImage(String filename) {
@@ -45,7 +44,7 @@ public class CrushingWall extends Solid
     public void act() {
         moveWall();
         animate();
-        checkCollision();
+        damageTouchingAgents();
     }
 
     private void moveWall() {
@@ -76,19 +75,19 @@ public class CrushingWall extends Solid
 
     private void animate() {
         if (moved <= 0) {
-            setImage(topo);
+            setImage(topImage);
         }
         else if (moved >= distance) {
-            setImage(baixo);
+            setImage(bottomImage);
         }
         else {
-            setImage(meio);
+            setImage(middleImage);
         }
     }
 
-    private void checkCollision() {
-        for (Character player : getIntersectingObjects(Character.class)) {
-            player.takeDamage();
+    private void damageTouchingAgents() {
+        for (Agent agent : getIntersectingObjects(Agent.class)) {
+            agent.takeDamage();
         }
     }
 }

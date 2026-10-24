@@ -3,9 +3,6 @@ import greenfoot.*;
 
 public class Computer extends Actor
 {
-    private Door[] associatedDoors;
-    private MovingPlatform[] associatedPlatforms;
-    private boolean keyPressed;
     private Activatable[] targets;
     private boolean keyHeld;
 
@@ -18,7 +15,6 @@ public class Computer extends Actor
 
     public void act()
     {
-        //checkInteraction();
         boolean eDown = Greenfoot.isKeyDown("e");
 
         if (isTouching(Agent.class) && eDown && !keyHeld) {
@@ -28,26 +24,5 @@ public class Computer extends Actor
         }
         keyHeld = eDown;
     }
-    private void checkInteraction() {
-        Agent character = (Agent) getOneIntersectingObject(Agent.class);
 
-        boolean eKey = Greenfoot.isKeyDown("e");
-
-        if (character != null && eKey && !keyPressed) {
-
-            for (Door door : associatedDoors) {
-                if (door != null) {
-                    door.openDoor();
-                }
-            }
-
-            for (MovingPlatform platform : associatedPlatforms) {
-                if (platform != null) {
-                    platform.activate();
-                }
-            }
-        }
-
-        keyPressed = eKey;
-    }
 }

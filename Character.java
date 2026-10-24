@@ -7,9 +7,9 @@ public abstract class Character extends Actor
     private double vSpeed;
     private boolean gliding;
     private int lives;
-    protected int invulnerableTimer;  
+    private int invulnerableTimer;  
     
-    private final double ACCELERATION = 1;
+    private static final double ACCELERATION = 1;
     private static final double GLIDE_FACTOR=0.25;
     private static final double GLIDE_MAX_SPEED=3;
     private static final double MAX_FALL_SPEED = 15;

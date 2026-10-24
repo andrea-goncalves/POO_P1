@@ -29,7 +29,7 @@ public class Door extends Actor implements Activatable{
         if (isOpen && openDurationFrames > 0) {
             timer--;
 
-            if (timer <= 0) {
+            if (timer <= 0 && getIntersectingObjects(Character.class).isEmpty()) {
                 closeDoor();
             }
         }

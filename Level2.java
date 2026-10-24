@@ -12,20 +12,20 @@ public class Level2 extends Level {
         
         addAgents(25, 30, 484);
         
-        MovingPlatform plataform1 = new MovingPlatform(0, -6 * TILE_SIZE);
-        MovingPlatform plataform2 = new MovingPlatform(0, 5 * TILE_SIZE);
-        MovingPlatform plataform3 = new MovingPlatform(0, 5 * TILE_SIZE);
+        MovingPlatform platform1 = new MovingPlatform( -6 * TILE_SIZE);
+        MovingPlatform platform2 = new MovingPlatform( 5 * TILE_SIZE);
+        MovingPlatform platform3 = new MovingPlatform( 5 * TILE_SIZE);
         Door door1 = new Door(0);
 
-        addObject(plataform1, 31, 333);
-        addObject(plataform2, 928, 333);
-        addObject(plataform3, 512, 142);
+        addObject(platform1, 31, 333);
+        addObject(platform2, 928, 333);
+        addObject(platform3, 512, 142);
         addObject(door1, 450, 475);
         
         addObject(new Computer(door1), 420, 100);
-        addObject(new Computer( plataform1), 200, 482);
-        addObject(new Computer(plataform2), 700, 482);
-        addObject(new Computer(plataform3), 580, 295);
+        addObject(new Computer( platform1), 200, 482);
+        addObject(new Computer(platform2), 700, 482);
+        addObject(new Computer(platform3), 580, 295);
         //addObject(new Computer(new Door[]{}, new MovingPlatform[]{plataform1}), 200, 482);
         
         //addObject(new Computer(new Door[]{}, new MovingPlatform[]{plataform2}), 700, 482);
@@ -61,7 +61,7 @@ public class Level2 extends Level {
 
     @Override
     public int getUnlockScore(){
-        return 40;
+        return 60;
     }
 
     @Override

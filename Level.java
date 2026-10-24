@@ -133,4 +133,12 @@ public abstract class Level extends World
     {
         return score - startScore;
     }
+    
+    public void addLevelBonus(){
+        addScore(LEVEL_COMPLETE_BONUS);
+    }
+    
+    public boolean isDialogueActive(){
+        return !getObjects(Dialogue.class).isEmpty();
+    }
 }

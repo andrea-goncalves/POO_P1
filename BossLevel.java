@@ -1,10 +1,12 @@
 import greenfoot.*;
 
 public class BossLevel extends Level {
+    private boolean bossDead;
     public BossLevel(){
         super(960, 540);
         
-        dialogue();
+        introDialogue();
+               
         loadCollisions("Colisao_boss.csv");
         setBackground("faseBoss.png");
         
@@ -16,11 +18,19 @@ public class BossLevel extends Level {
     }
 
     public void bossDefeated(){
-        dialogue2();
-        addScore(10);
-        //showText("BOSS DERROTADO! Score final: " + getScore(), 480, 250);
+        bossDead = true;
+        addLevelBonus();
+        SaveGame.clear();
+        victoryDialogue();
     }
-
+    @Override
+    public void act(){
+        super.act();
+        if (bossDead && !isDialogueActive()) {
+            Greenfoot.setWorld(new WinWorld(getScore()));
+        }
+    }   
+    
     @Override
     protected Level createNew(){
         return new BossLevel();
@@ -54,7 +64,7 @@ public class BossLevel extends Level {
     public int getLevelNumber(){
         return 4;
     }
-    public void dialogue(){
+    private void introDialogue(){
         String[] names = {"GENERAL VON KROSS", "ZAG", "ZIG"};
 
         String[] texts = {
@@ -65,7 +75,7 @@ public class BossLevel extends Level {
         
         addObject(new Dialogue(names, texts), 480, 450);
     }
-    public void dialogue2(){
+    private void victoryDialogue(){
         String[] names = {"GENERAL VON KROSS", "ZAG", "ZIG", "ZAG"};
 
         String[] texts = {

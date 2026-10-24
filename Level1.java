@@ -14,17 +14,17 @@ public class Level1 extends Level
         Door door1 = new Door(2);
         Door door2 = new Door(0);
     
-        MovingPlatform plataform1 = new MovingPlatform(0 , -5 * TILE_SIZE);
+        MovingPlatform platform1 = new MovingPlatform(-5 * TILE_SIZE);
         
 
-        addObject(plataform1, 770, 335);
+        addObject(platform1, 770, 335);
     
         addObject(door1, 155, 190);
         addObject(door2, 910, 475);
         
     
         addObject(new Computer(door1), 600, 484);
-        addObject(new Computer(plataform1), 50, 190);
+        addObject(new Computer(platform1), 50, 190);
         addObject(new Computer(door1,door2), 500, 100);
         
         

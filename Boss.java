@@ -156,22 +156,7 @@ public class Boss extends Enemy {
         setImage(idleImage);
         createShield();
     }
-    /*
-    private void pushPlayers(){
-        for (Agent player : getWorld().getObjects(Agent.class)) {
-            int direction = player.getX() < getX() ? -1 : 1;
-            int newX = player.getX() + direction * 100;
-            int halfWidth = player.getImage().getWidth() / 2;
-
-            newX = Math.max(
-                halfWidth,
-                Math.min(getWorld().getWidth() - halfWidth, newX)
-            );
-
-            player.setLocation(newX, player.getY());
-        }
-    }
-    */
+    
    public int getMaxHealth(){
     return MAX_HEALTH;
 }

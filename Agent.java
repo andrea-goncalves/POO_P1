@@ -16,7 +16,7 @@ public class Agent extends Character {
 
     private GreenfootImage shieldRight, shieldLeft;
     private AgentShield shield;
-    private boolean shielding = false;
+    private boolean shielding;
 
     private static final int DRIFT_SPEED = 3;
     private static final int POWER_COOLDOWN = 240;
@@ -41,6 +41,7 @@ public class Agent extends Character {
         attackCooldown = 0;
         attackFrame = 0;
         attackFrameDelay = 0;
+        shielding = false;
 
         this.speed = speed;
         this.jumpStrength = jumpStrength;
@@ -264,8 +265,8 @@ public class Agent extends Character {
         int attackOffset = direction * (getImage().getWidth() / 2 + 20);
 
         BossShield bossShield = (BossShield) getOneObjectAtOffset(
-            attackOffset, 0, BossShield.class
-        );
+                attackOffset, 0, BossShield.class
+            );
 
         if (bossShield != null) {
             bossShield.takeDamage(ATTACK_DAMAGE);
@@ -273,8 +274,8 @@ public class Agent extends Character {
         }
 
         Boss boss = (Boss) getOneObjectAtOffset(
-            attackOffset, 0, Boss.class
-        );
+                attackOffset, 0, Boss.class
+            );
 
         if (boss != null) {
             boss.takeDamage(ATTACK_DAMAGE);
@@ -289,10 +290,10 @@ public class Agent extends Character {
         boolean attackDown = Greenfoot.isKeyDown(attackKey);
 
         if (attackDown && !attackKeyHeld
-            && attackCooldown == 0
-            && !attacking
-            && !shielding
-            && ((Level) getWorld()).allowsAttack()) {
+        && attackCooldown == 0
+        && !attacking
+        && !shielding
+        && ((Level) getWorld()).allowsAttack()) {
 
             attack();
             attackCooldown = ATTACK_COOLDOWN;
@@ -322,6 +323,7 @@ public class Agent extends Character {
     public boolean isShielding(){
         return shielding;
     }
+
     private boolean canMove(){
         if (!getWorld().getObjects(Dialogue.class).isEmpty()) {
             return false;
@@ -331,9 +333,10 @@ public class Agent extends Character {
             setGliding(false);
             return false;
         }
-    
+
         return true;
-}
+    }
+
     private void updateMovement(){
         if (canMove()) {
             checkKeys();
@@ -342,5 +345,5 @@ public class Agent extends Character {
             moving = false;
             jumpKeyHeld = Greenfoot.isKeyDown(jumpKey);
         }
-}
+    }
 }

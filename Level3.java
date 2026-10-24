@@ -3,7 +3,7 @@ import greenfoot.*;
 public class Level3 extends Level {
     private static final int LIGHTS_OFF_TIME = 300;
     private static final int SHORT_SIGHT = 100;
-    private boolean dialogueShown = false;
+   
 
     private int lightsOffTimer;
     private DarknessOverlay overlay;
@@ -20,21 +20,18 @@ public class Level3 extends Level {
         
         addAgents(25, 30, 135);
         
-        MovingPlatform plataform1 = new MovingPlatform(0, -4 * TILE_SIZE);
-        MovingPlatform plataform2 = new MovingPlatform(0, 3 * TILE_SIZE);
+        MovingPlatform platform1 = new MovingPlatform( -4 * TILE_SIZE);
+        MovingPlatform platform2 = new MovingPlatform( 3 * TILE_SIZE);
 
         Door door1 = new Door(5);
 
         addObject(door1, 800, 30);
         addObject(new Computer(door1),  642, 40);
-        addObject(new Computer(plataform2), 585, 455);
-        addObject(plataform1, 350, 490);
-        addObject(plataform2, 448, 302);
+        addObject(new Computer(platform2), 585, 455);
+        addObject(platform1, 350, 490);
+        addObject(platform2, 448, 302);
         
         
-        //addObject(new Computer(new Door[]{door1}, new MovingPlatform[]{plataform1}), 642, 40);
-        //addObject(new Computer(new Door[]{door1}, new MovingPlatform[]{plataform2}), 585, 455);
-
         addObject(new CrushingWall(2), 320, 35);
         addObject(new CrushingWall(1), 832, 207);
         addObject(new CrushingWall(1), 704, 207);
@@ -47,7 +44,7 @@ public class Level3 extends Level {
         addObject(new Soldier(), 455, 135);
         addObject(new Soldier(), 900, 50);
 
-        addObject(new Clue(20),930,50);
+        addObject(new Clue(20),420, 80);
         addObject(new Clue(20),500,250);
         addObject(new ExitPoint(),870,450);
     }
@@ -103,7 +100,7 @@ public class Level3 extends Level {
 
     @Override
     public int getUnlockScore(){
-        return 60;
+        return 80;
     }
 
     @Override
