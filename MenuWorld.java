@@ -1,5 +1,8 @@
 import greenfoot.*;
-
+/**
+ * Ecrã inicial: mostra os controlos e permite começar um jogo novo,
+ * continuar um jogo guardado ou ver a história. Toca a música do menu.
+ */
 public class MenuWorld extends ScreenWorld
 {
     private int inputDelay;
@@ -27,7 +30,7 @@ public class MenuWorld extends ScreenWorld
         drawOptions(bg);
         setBackground(bg);
     }
-
+    //Inicia a música e trata das teclas: novo jogo, continuar ou história.
     @Override
     public void act()
     {
@@ -51,7 +54,7 @@ public class MenuWorld extends ScreenWorld
             goTo(new StoryWorld());
         }
     }
-
+    //Chamado pelo Greenfoot quando se carrega em Pause: pausa a música.
     public void stopped()
     {
         if (music.isPlaying()) {
@@ -59,7 +62,7 @@ public class MenuWorld extends ScreenWorld
             musicPaused = true;
         }
     }
-
+    //Chamado pelo Greenfoot quando se carrega em Run: retoma a música.
     public void started()
     {
         if (musicPaused) {
@@ -67,20 +70,20 @@ public class MenuWorld extends ScreenWorld
             musicPaused = false;
         }
     }
-
+    //Pára a música e muda para outro mundo.
     private void goTo(World next)
     {
         music.stop();
         Greenfoot.setWorld(next);
     }
-
+    //Desenha o título e o subtítulo.
     private void drawTitle(GreenfootImage bg)
     {
         drawCentered(bg, "AGENTES ZIG & ZAG", Settings.SIZE_MENU_TITLE, Color.RED, Settings.MENU_TITLE_Y);
         drawCentered(bg, "Recolhe as pistas para impedir o ataque ao Zanarkin",
             Settings.SIZE_SMALL, Color.LIGHT_GRAY, Settings.MENU_SUBTITLE_Y);
     }
-
+    //Desenha a coluna de controlos de um agente.
     private void drawControls(GreenfootImage bg, int x, String name, String[] lines)
     {
         drawText(bg, name, Settings.SIZE_SECTION, Color.RED, x, Settings.MENU_HEADER_Y);
@@ -89,7 +92,7 @@ public class MenuWorld extends ScreenWorld
                 Settings.MENU_FIRST_LINE_Y + i * Settings.MENU_LINE_SPACING);
         }
     }
-
+    //Desenha as dicas gerais do jogo
     private void drawHelp(GreenfootImage bg)
     {
         drawCentered(bg, "E  -  ativar portas e plataformas", Settings.SIZE_SMALL, Color.YELLOW, Settings.MENU_HELP_INTERACT_Y);
@@ -97,7 +100,7 @@ public class MenuWorld extends ScreenWorld
         drawCentered(bg, "Os dois agentes devem chegar à saída para passar o nível", Settings.SIZE_SMALL, Color.WHITE, Settings.MENU_HELP_EXIT_Y);
         drawCentered(bg, "Clica duas vezes no salto e deixa pressionado para flutuar", Settings.SIZE_SMALL, Color.WHITE, Settings.MENU_HELP_GLIDE_Y);
     }
-
+    //Desenha as opções; só mostra "continuar" se existir um jogo guardado.
     private void drawOptions(GreenfootImage bg)
     {
         if (SaveGame.hasSave()) {

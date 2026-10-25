@@ -1,5 +1,8 @@
 import greenfoot.*;
-
+/**
+ * Nível 2: tem cães como inimigos. O poder deste nível é o assobio,
+ * que faz os cães adormecerem.
+ */
 public class Level2 extends Level {
     public Level2(){
         super(Settings.WORLD_WIDTH, Settings.WORLD_HEIGHT);
@@ -30,7 +33,7 @@ public class Level2 extends Level {
         addObject(new Clue(Settings.CLUE_POINTS), Settings.L2_CLUE_X, Settings.L2_CLUE_Y);
         addObject(new ExitPoint(), Settings.L2_EXIT_X, Settings.L2_EXIT_Y);
     }
-
+    //Assobio: adormece todos os cães que estejam dentro do alcance do agente.
     @Override
     public void usePower(Agent user){
         Greenfoot.playSound(Settings.SOUND_WHISTLE);

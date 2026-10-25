@@ -1,10 +1,13 @@
 import greenfoot.*;
-
+/**
+ * Ecrã de fim de jogo: aparece quando um agente fica sem vidas e
+ * permite repetir o nível ou recomeçar do início.
+ */
 public class GameOverWorld extends ScreenWorld
 {
     private Level failedLevel;
     private int inputDelay;
-
+    //Desenha o ecrã com a pontuação e as opções
     public GameOverWorld(Level failedLevel)
     {
         inputDelay = Settings.GAME_OVER_INPUT_DELAY;
@@ -21,7 +24,7 @@ public class GameOverWorld extends ScreenWorld
 
         setBackground(bg);
     }
-
+    //Espera a escolha do jogador: repetir o nível (R) ou recomeçar no nível 1 (I)
     @Override
     public void act()
     {

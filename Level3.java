@@ -1,5 +1,8 @@
 import greenfoot.*;
-
+/**
+ * Nível 3: tem soldados e paredes que esmagam. O poder é apagar as luzes,
+ * o que reduz a visão dos soldados. Se um agente cair do mapa, o jogo acaba.
+ */
 public class Level3 extends Level {
     private int lightsOffTimer;
     private int fallTimer;
@@ -38,7 +41,7 @@ public class Level3 extends Level {
         addObject(new Clue(Settings.CLUE_POINTS), Settings.L3_CLUE2_X, Settings.L3_CLUE2_Y);
         addObject(new ExitPoint(), Settings.L3_EXIT_X, Settings.L3_EXIT_Y);
     }
-
+    //Verifica quedas, executa a lógica base e conta o tempo das luzes apagadas.
     @Override
     public void act(){
         if (checkFallenAgents()) {
@@ -55,7 +58,7 @@ public class Level3 extends Level {
             }
         }
     }
-
+    //Apaga as luzes: escurece o ecrã e reduz a visão dos soldados.
     @Override
     public void usePower(Agent user){
         Greenfoot.playSound(Settings.SOUND_LIGHTS);
@@ -97,7 +100,7 @@ public class Level3 extends Level {
     {
         return Settings.LEVEL_3;
     }
-
+    //Volta a acender as luzes e repõe a visão normal dos soldados. 
     private void lightsOn(){
         if (overlay != null) {
             removeObject(overlay);
@@ -109,6 +112,10 @@ public class Level3 extends Level {
         }
     }
 
+    /**
+     * Quando um agente toca no fundo do mundo inicia uma contagem; no fim dela
+     * mostra o fim de jogo. Devolve true se o mundo mudou.
+     */
     private boolean checkFallenAgents()
     {
         if (fallTimer == Settings.FALL_TIMER_OFF) {
@@ -128,13 +135,13 @@ public class Level3 extends Level {
         }
         return false;
     }
-
+    //Adiciona uma fila de paredes que esmagam nas posições x indicadas.
     private void addCrushingRow(int[] xPositions, int y){
         for (int x : xPositions) {
             addObject(new CrushingWall(Settings.L3_CRUSH_TILES), x, y);
         }
     }
-
+    //Diálogo inicial do nível
     private void dialogue(){
         String[] names = {"ZAG", "ZIG"};
 

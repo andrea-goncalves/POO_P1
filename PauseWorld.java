@@ -1,11 +1,13 @@
 import greenfoot.*;
-
+/**
+ * Ecrã de pausa: permite continuar o nível, guardar o jogo ou voltar ao menu.
+ */
 public class PauseWorld extends ScreenWorld
 {
     private Level pausedLevel;
     private int inputDelay;
 
-
+    //Cria o ecrã de pausa para o nível indicado
     public PauseWorld(Level pausedLevel)
     {
         inputDelay = Settings.PAUSE_INPUT_DELAY;
@@ -13,7 +15,7 @@ public class PauseWorld extends ScreenWorld
         drawScreen("");
     }
 
-
+    //Trata das teclas: continuar (C), guardar (G) ou menu (M).
     @Override
     public void act()
     {
@@ -33,7 +35,7 @@ public class PauseWorld extends ScreenWorld
         }
     }
 
-  
+    //Desenha o ecrã
     private void drawScreen(String message)
     {
         GreenfootImage bg = createBackground();

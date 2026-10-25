@@ -1,5 +1,8 @@
 import greenfoot.*; 
-
+/**
+ * Nível 1: introdução. Não tem inimigos nem poder; ensina a usar
+ * computadores, portas e plataformas móveis.
+ */
 public class Level1 extends Level
 {
     public Level1(){
@@ -45,7 +48,7 @@ public class Level1 extends Level
     {
         return Settings.LEVEL_1;
     }
-
+    //Diálogo inicial do nível. 
     private void dialogue(){
         String[] names = {"ZAG", "ZIG"};
 

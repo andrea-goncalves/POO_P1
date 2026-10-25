@@ -1,5 +1,9 @@
 import greenfoot.Color;
-
+/**
+ * Guarda todos os valores fixos do jogo (tamanhos, velocidades, tempos,
+ * teclas, nomes de ficheiros e posições).
+ 
+ */
 public class Settings
 {
     //Directions

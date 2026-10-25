@@ -18,7 +18,7 @@ public class BossLevel extends Level {
         addObject(boss, Settings.BOSS_START_X, Settings.BOSS_START_Y);
         addObject(new BossHealthBar(boss), Settings.BOSS_BAR_X, Settings.BOSS_BAR_Y);
     }
-
+    // Quando o boss morre e o diálogo final acaba, mostra o ecrã de vitória. 
     @Override
     public void act(){
         super.act();
@@ -26,7 +26,7 @@ public class BossLevel extends Level {
             Greenfoot.setWorld(new WinWorld(getScore()));
         }
     }
-
+    //Chamado pelo boss quando a sua vida chega a zero.
     public void bossDefeated(){
         bossDead = true;
         addLevelBonus();
@@ -63,7 +63,7 @@ public class BossLevel extends Level {
     public int getLevelNumber(){
         return Settings.BOSS_LEVEL;
     }
-
+    //Diálogo que aparece no início do combate.
     private void introDialogue(){
         String[] names = {"GENERAL VON KROSS", "ZAG", "ZIG"};
 
@@ -75,7 +75,7 @@ public class BossLevel extends Level {
 
         addObject(new Dialogue(names, texts), Settings.DIALOGUE_X, Settings.DIALOGUE_Y);
     }
-
+    //Diálogo que aparece depois de o chefe ser derrotado.
     private void victoryDialogue(){
         String[] names = {"GENERAL VON KROSS", "ZIG", "ZAG", "ZIG"};
 
