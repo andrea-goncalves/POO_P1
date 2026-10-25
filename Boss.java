@@ -1,5 +1,9 @@
 import greenfoot.*;
 
+/**
+ *  O boss (general Von Kross) dispara projéteis em alturas diferentes e protege-se com um
+ * escudo. Quando o escudo parte, fica atordoado e pode ser atacado.
+ */
 public class Boss extends Enemy {
 
     private boolean stunned;
@@ -17,7 +21,7 @@ public class Boss extends Enemy {
     private int shootFrameDelay;
     private int stunFrame;
     private int stunFrameDelay;
-
+    //Cria o chefe, carrega as imagens e vira-o para a esquerda
     public Boss(){
         super(Settings.BOSS_LIVES, Settings.BOSS_SPEED);
         stunned = false;
@@ -38,12 +42,12 @@ public class Boss extends Enemy {
         setImage(idleImage);
         setDirection(Settings.LEFT);
     }
-
+    //Quando o chefe entra no mundo, cria o escudo.
     @Override
     public void addedToWorld(World world){
         createShield();
     }
-
+    //espera nos diálogos, recupera do atordoamento ou dispara
     @Override
     public void update(){
         if (((Level) getWorld()).isDialogueActive()) {
@@ -73,7 +77,7 @@ public class Boss extends Enemy {
             shootTimer = Settings.BOSS_SHOOT_INTERVAL;
         }
     }
-
+    //O boss só sofre dano quando está atordoado; ao chegar a zero o nível acaba
     @Override
     public void takeDamage(int damage){
         if (!stunned || health <= 0) return;
@@ -84,7 +88,7 @@ public class Boss extends Enemy {
             ((BossLevel) getWorld()).bossDefeated();
         }
     }
-
+    // É chamado quando o escudo parte e o boss fica atordoado
     public void breakShield(){
         stunned = true;
         stunTimer = Settings.BOSS_STUN_DURATION;
@@ -111,28 +115,28 @@ public class Boss extends Enemy {
     public boolean isStunned(){
         return stunned;
     }
-
+    //Posição vertical do escudo
     private int getShieldY(){
         return Settings.BOSS_GROUND_Y - Settings.BOSS_SHIELD_HEIGHT / 2;
     }
-
+    //Posição horizontal do escudo
     private int getShieldX(){
         return getX() - Settings.BOSS_SHIELD_DISTANCE;
     }
-
+    //Cria um escudo novo à frente do boss
     private void createShield(){
         if (getWorld() == null) return;
 
         shield = new BossShield(this, Settings.BOSS_SHIELD_WIDTH, Settings.BOSS_SHIELD_HEIGHT);
         getWorld().addObject(shield, getShieldX(), getShieldY());
     }
-
+    //Mantém o escudo na posição certa
     private void updateShieldPosition(){
         if (shield != null && shield.getWorld() != null) {
             shield.setLocation(getShieldX(), getShieldY());
         }
     }
-
+    //Mostra a animação de atordoamento
     private void animateStun(){
         setImage(stunFrames[stunFrame]);
 
@@ -146,7 +150,7 @@ public class Boss extends Enemy {
             }
         }
     }
-
+    //Recupera do atordoamento e levanta um escudo novo
     private void recover(){
         stunned = false;
         stunTimer = 0;
@@ -158,7 +162,7 @@ public class Boss extends Enemy {
         setImage(idleImage);
         createShield();
     }
-
+    //Começa a animação de disparo
     private void startShooting(){
         shooting = true;
         shootFrame = 0;
@@ -166,7 +170,7 @@ public class Boss extends Enemy {
 
         setImage(shootFrames[0]);
     }
-
+    //Avança a animação e dispara na frame certa
     private void animateShooting(){
         if (!shooting) return;
 
@@ -189,7 +193,7 @@ public class Boss extends Enemy {
             }
         }
     }
-
+    //Cria um projétil numa altura aleatória e coloca o som do disparo
     private void shoot(){
         if (getWorld() == null) return;
 
@@ -201,7 +205,7 @@ public class Boss extends Enemy {
         );
         Greenfoot.playSound(Settings.SOUND_BOSS_SHOT);
     }
-
+    //Escolhe ao acaso entre três alturas: baixa, média e alta
     private int randomShotHeight(){
         int half = Settings.BOSS_PROJECTILE_SIZE / 2;
         int[] heights = {

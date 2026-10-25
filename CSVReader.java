@@ -1,8 +1,9 @@
 import java.io.*;
 import java.util.*;
-
+// Lê ficheiros CSV com os mapas dos níveis e devolve-os como matrizes de números
 public class CSVReader
 {
+    //Lê o ficheiro e devolve uma matriz com os valores de cada linha e coluna
     public static int[][] matrix(String path)
     {
         List<int[]> rows = new ArrayList<>();

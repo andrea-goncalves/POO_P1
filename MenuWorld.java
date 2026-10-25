@@ -98,7 +98,7 @@ public class MenuWorld extends ScreenWorld
         drawCentered(bg, "E  -  ativar portas e plataformas", Settings.SIZE_SMALL, Color.YELLOW, Settings.MENU_HELP_INTERACT_Y);
         drawCentered(bg, "P  -  pausa", Settings.SIZE_SMALL, Color.YELLOW, Settings.MENU_HELP_PAUSE_Y);
         drawCentered(bg, "Os dois agentes devem chegar à saída para passar o nível", Settings.SIZE_SMALL, Color.WHITE, Settings.MENU_HELP_EXIT_Y);
-        drawCentered(bg, "Clica duas vezes no salto e deixa pressionado para flutuar", Settings.SIZE_SMALL, Color.WHITE, Settings.MENU_HELP_GLIDE_Y);
+        drawCentered(bg, "Clica duas vezes no salto e deixa pressionado para planar", Settings.SIZE_SMALL, Color.WHITE, Settings.MENU_HELP_GLIDE_Y);
     }
     //Desenha as opções; só mostra "continuar" se existir um jogo guardado.
     private void drawOptions(GreenfootImage bg)

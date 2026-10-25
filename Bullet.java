@@ -1,9 +1,12 @@
 import greenfoot.*;
-
+/**
+ * Projétil disparado por inimigos. Anda na horizontal, tira uma vida
+ * ao primeiro agente que tocar e desaparece ao bater numa parede.
+ */
 public class Bullet extends Actor {
     private int speed;
     private int direction;
-
+    //Bala normal do soldado (um retângulo vermelho pequeno)
     public Bullet(int direction){
         this.direction = direction;
         this.speed = Settings.BULLET_SPEED;
@@ -13,7 +16,7 @@ public class Bullet extends Actor {
         img.fill();
         setImage(img);
     }
-
+    //Projétil redondo com velocidade e tamanho à escolha (usado pelo boss)
     public Bullet(int direction, int speed, int diameter){
         this.direction = direction;
         this.speed = speed;
@@ -23,7 +26,7 @@ public class Bullet extends Actor {
         img.fillOval(0, 0, diameter, diameter);
         setImage(img);
     }
-
+    //Move o projétil e trata das colisões com paredes, bordas e agentes
     @Override
     public void act(){
         setLocation(getX() + direction * speed, getY());

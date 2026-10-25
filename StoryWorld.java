@@ -1,5 +1,7 @@
 import greenfoot.*;
-
+/**
+ * Ecrã da história, pode ser saltado com a tecla de space
+ */
 public class StoryWorld extends ScreenWorld
 {
 
@@ -25,7 +27,7 @@ public class StoryWorld extends ScreenWorld
     private GreenfootImage text;
     private double offsetY;
     private int inputDelay;
-
+    //Cria o fundo de estrelas e a imagem do texto
     public StoryWorld()
     {
         inputDelay = Settings.STORY_INPUT_DELAY;
@@ -34,7 +36,7 @@ public class StoryWorld extends ScreenWorld
         offsetY = getHeight();
         setBackground(new GreenfootImage(stars));
     }
-
+    //Faz o texto subir e volta ao menu quando acaba ou quando o jogador salta
     @Override
     public void act()
     {
@@ -54,7 +56,7 @@ public class StoryWorld extends ScreenWorld
             Greenfoot.setWorld(new MenuWorld());
         }
     }
-
+    //Cria um fundo preto com estrelas em posições aleatórias
     private GreenfootImage createStars()
     {
         GreenfootImage img = new GreenfootImage(getWidth(), getHeight());
@@ -68,7 +70,7 @@ public class StoryWorld extends ScreenWorld
         }
         return img;
     }
-
+    //Desenha todas as linhas da história numa única imagem
     private GreenfootImage createText()
     {
         GreenfootImage img = new GreenfootImage(getWidth(), STORY.length * Settings.STORY_LINE_SPACING);

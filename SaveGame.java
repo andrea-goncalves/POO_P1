@@ -1,7 +1,9 @@
 import java.io.*;
-
+// Guarda e lê o progresso do jogo (número do nível e pontuação) num ficheiro de texto.
+ 
 public class SaveGame
 {
+    //Escreve o número do nível e a pontuação no ficheiro
     public static void save(int levelNumber, int score)
     {
         try (PrintWriter out = new PrintWriter(new FileWriter(Settings.SAVE_FILE))) {
@@ -11,27 +13,27 @@ public class SaveGame
             e.printStackTrace();
         }
     }
-
+    //Devolve o número do nível guardado 
     public static int load()
     {
         return readNumber(Settings.SAVE_LEVEL_LINE);
     }
-
+    //Devolve a pontuação guardada
     public static int loadScore()
     {
         return readNumber(Settings.SAVE_SCORE_LINE);
     }
-
+    //True se existir um jogo guardado válido
     public static boolean hasSave()
     {
         return load() > 0;
     }
-
+    //Apaga o jogo guardado
     public static void clear()
     {
         new File(Settings.SAVE_FILE).delete();
     }
-
+    //Cria o nível com o número indicado
     public static Level createLevel(int levelNumber)
     {
         switch (levelNumber) {
@@ -42,7 +44,7 @@ public class SaveGame
             default: return null;
         }
     }
-
+    //lê o número que está na linha indicada do ficheiro 
     private static int readNumber(int lineIndex)
     {
         try (BufferedReader reader = new BufferedReader(new FileReader(Settings.SAVE_FILE))) {

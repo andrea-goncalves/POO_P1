@@ -1,22 +1,25 @@
 import greenfoot.*;
-
+/**
+ * Barra de vida do boss, desenhada no fundo do ecrã.
+ * Só é redesenhada quando a vida do chefe muda.
+ */
 public class BossHealthBar extends Actor {
     private Boss boss;
     private int lastHealth;
-
+    //Cria a barra ligada ao chefe e desenha-a pela primeira vez
     public BossHealthBar(Boss boss){
         this.boss = boss;
         lastHealth = Settings.BAR_UNSET;
         updateBar();
     }
-
+    //Redesenha a barra se a vida do chefe mudou
     @Override
     public void act(){
         if (boss.getHealth() != lastHealth) {
             updateBar();
         }
     }
-
+    //Desenha a moldura, o fundo e a parte vermelha proporcional à vida
     private void updateBar(){
         int health = boss.getHealth();
         lastHealth = health;

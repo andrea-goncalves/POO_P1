@@ -1,11 +1,14 @@
 import greenfoot.*;
 
+//Armadilha no chão: tira uma vida ao agente que lhe tocar por cima.
+ 
 public class Trap extends Solid
 {
+    //Armadilha com o tamanho de um quadrado do mapa
     public Trap() {
         super(Settings.TILE_SIZE, Settings.TILE_SIZE);
     }
-
+    //Armadilha com largura e altura à escolha
     public Trap(int width, int height) {
         super(width, height);
     }
@@ -14,7 +17,7 @@ public class Trap extends Solid
     public void act() {
         damageAgentsOnTop();
     }
-
+    //Fere os agentes cujos pés tocam no topo da armadilha
     private void damageAgentsOnTop() {
         if (getWorld() == null) return;
 

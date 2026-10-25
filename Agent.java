@@ -1,5 +1,9 @@
 import greenfoot.*;
-
+/**
+ * Agente controlado por um jogador (Zig ou Zag). Anda, salta, plana,
+ * usa o poder do nível, ataca e levanta o escudo no combate com o chefe.
+ * As teclas e as imagens são recebidas no construtor.
+ */
 public class Agent extends GameCharacter {
     private String leftKey, rightKey, jumpKey, powerKey, attackKey;
     private int speed, jumpStrength;
@@ -17,7 +21,7 @@ public class Agent extends GameCharacter {
     private GreenfootImage shieldRight, shieldLeft;
     private AgentShield shield;
     private boolean shielding;
-
+    //Cria o agente. O prefixo ("zig" ou "zag") serve para carregar as imagens
     public Agent(int lives, int speed, int jumpStrength, String leftKey, String rightKey, String jumpKey, String powerKey, String attackKey, int attackFrameCount, String prefix){
         super(lives);
 
@@ -75,7 +79,7 @@ public class Agent extends GameCharacter {
     public boolean isShielding(){
         return shielding;
     }
-
+    //Só lê as teclas se o agente se puder mexer
     private void updateMovement(){
         if (canMove()) {
             checkKeys();
@@ -85,7 +89,7 @@ public class Agent extends GameCharacter {
             jumpKeyHeld = Greenfoot.isKeyDown(jumpKey);
         }
     }
-
+    //O agente não se mexe durante um diálogo nem com o escudo levantado
     private boolean canMove(){
         Level level = (Level) getWorld();
         if (level.isDialogueActive()) {
@@ -99,7 +103,7 @@ public class Agent extends GameCharacter {
 
         return true;
     }
-
+    //Lê as teclas: andar e saltar
     private void checkKeys(){
         boolean grounded = onGround();
         moving = false;
@@ -107,7 +111,7 @@ public class Agent extends GameCharacter {
         moveHorizontally();
         handleJump(grounded);
     }
-
+    //Anda para a esquerda ou para a direita
     private void moveHorizontally(){
         if (Greenfoot.isKeyDown(leftKey)) {
             walk(Settings.LEFT);
@@ -116,7 +120,7 @@ public class Agent extends GameCharacter {
             walk(Settings.RIGHT);
         }
     }
-
+    //Dá um passo na direção indicada, se não houver parede
     private void walk(int direction){
         int edge = direction * (getHalfWidth() + speed);
 
@@ -126,7 +130,7 @@ public class Agent extends GameCharacter {
             moving = true;
         }
     }
-
+    //Decide entre começar um salto,se está no chão ou no ar
     private void handleJump(boolean grounded){
         boolean jumpDown = Greenfoot.isKeyDown(jumpKey);
 
@@ -141,19 +145,19 @@ public class Agent extends GameCharacter {
         }
         jumpKeyHeld = jumpDown;
     }
-
+    //Começa o salto e guarda o deslocamento horizontal no ar
     private void startJump(){
         jump(jumpStrength);
         airDrift = facingRight ? Settings.DRIFT_SPEED : -Settings.DRIFT_SPEED;
         jumpKeyReleased = false;
     }
-
+    //Repõe o estado quando o agente está no chão
     private void landed(){
         setGliding(false);
         jumpKeyReleased = false;
         airDrift = 0;
     }
-
+    //quando carregamos na tecla de salto, soltamos e voltamos a carregar,o agente fica a planar
     private void controlInAir(boolean jumpDown){
         if (!jumpDown) {
             jumpKeyReleased = true;
@@ -164,7 +168,7 @@ public class Agent extends GameCharacter {
             driftInAir();
         }
     }
-
+    //Continua a mover-se na direção do salto, se não houver parede
     private void driftInAir(){
         if (airDrift == 0) {
             return;
@@ -176,7 +180,7 @@ public class Agent extends GameCharacter {
             setLocation(getX() + airDrift, getY());
         }
     }
-
+    //No nível do chefe usa o escudo; nos outros usa o poder do nível
     private void checkPower(){
         Level level = (Level) getWorld();
 
@@ -187,7 +191,7 @@ public class Agent extends GameCharacter {
         deactivateShield();
         usePowerIfReady(level);
     }
-
+    //coloca o escudo quando carregamos na tecla
     private void updateShield(){
         if (Greenfoot.isKeyDown(powerKey) && !attacking) {
             activateShield();
@@ -195,7 +199,7 @@ public class Agent extends GameCharacter {
             deactivateShield();
         }
     }
-
+    //Usa o poder do nível se já estiver desbloqueado e não houver espera
     private void usePowerIfReady(Level level){
         if (powerCooldown > 0) {
             powerCooldown--;
@@ -206,7 +210,7 @@ public class Agent extends GameCharacter {
             powerCooldown = Settings.POWER_COOLDOWN;
         }
     }
-
+    //Cria o escudo à frente do agente
     private void activateShield(){
         if (shielding) {
             return;
@@ -219,7 +223,7 @@ public class Agent extends GameCharacter {
 
         getWorld().addObject(shield,getX() + direction * Settings.SHIELD_DISTANCE,getY());
     }
-
+    //Remove o escudo do mundo
     private void deactivateShield(){
         shielding = false;
 
@@ -231,7 +235,7 @@ public class Agent extends GameCharacter {
             shield = null;
         }
     }
-
+    //Mantém o escudo à frente do agente quando ele se mexe
     private void updateShieldPosition(){
         if (!shielding || shield == null || shield.getWorld() == null) {
             return;
@@ -244,7 +248,7 @@ public class Agent extends GameCharacter {
             getY()
         );
     }
-
+    //Escolhe a imagem: escudo, ataque, salto, parado ou a andar
     private void animate(){
         if (shielding) {
             setImage(facingRight ? shieldRight : shieldLeft);
@@ -276,14 +280,14 @@ public class Agent extends GameCharacter {
 
         setImage(facingRight ? walkRight[frame] : walkLeft[frame]);
     }
-
+    //Escolhe a frame do salto conforme a velocidade vertical (a subir, no topo ou a descer)
     private int jumpFrameIndex(){
         int last = jumpRight.length - 1;
         int index = (getVerticalSpeed() + jumpStrength) * last / (2 * jumpStrength);
 
         return Math.max(0, Math.min(last, index));
     }
-
+    //Começa um ataque quando a tecla é carregada, se o nível permitir e não houver espera
     private void checkAttack(){
         if (attackCooldown > 0) {
             attackCooldown--;
@@ -303,14 +307,14 @@ public class Agent extends GameCharacter {
 
         attackKeyHeld = attackDown;
     }
-
+    //Inicia a animação de ataque e causa dano ao que estiver à frente
     private void attack(){
         attacking = true;
         attackFrame = 0;
         attackFrameDelay = 0;
         hitTargets();
     }
-
+    //Causa dano ao escudo do boss ou, se não houver escudo, ao boss
     private void hitTargets(){
         int direction = facingRight ? Settings.RIGHT : Settings.LEFT;
         int attackOffset = direction * (getHalfWidth() + Settings.ATTACK_REACH);
@@ -332,7 +336,7 @@ public class Agent extends GameCharacter {
             boss.takeDamage(Settings.ATTACK_DAMAGE);
         }
     }
-
+    //Mostra as frames do ataque, uma de cada vez, até ao fim.
     private void animateAttack(){
         GreenfootImage[] frames = facingRight ? attackRight : attackLeft;
 

@@ -1,7 +1,11 @@
 import greenfoot.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Plataforma que se move na vertical quando é ativada por um computador.
+ * Leva consigo as personagens que estiverem em cima, espera um pouco
+ * e volta à posição inicial.
+ */
 public class MovingPlatform extends Solid implements Activatable
 {
     private int moveY;
@@ -9,7 +13,7 @@ public class MovingPlatform extends Solid implements Activatable
     private int timer;
     private boolean moving;
     private boolean returning;
-
+    //Cria a plataforma, moveY é o deslocamento em pixels
     public MovingPlatform(int moveY) {
         super();
         this.moveY = moveY;
@@ -20,17 +24,17 @@ public class MovingPlatform extends Solid implements Activatable
 
         setImage(Settings.PLATFORM_IMAGE);
     }
-
+    //Guarda a posição inicial quando a plataforma é adicionada no mundo
     @Override
     public void addedToWorld(World world) {
         startY = getY();
     }
-
+    
     @Override
     public void act() {
         movePlatform();
     }
-
+    //Começa a mover a plataforma
     @Override
     public void activate() {
         if (!moving && moveY != 0) {
@@ -39,7 +43,7 @@ public class MovingPlatform extends Solid implements Activatable
             timer = 0;
         }
     }
-
+    //Vai até ao destino, espera e volta ao início
     private void movePlatform() {
         if (!moving) return;
 
@@ -62,7 +66,7 @@ public class MovingPlatform extends Solid implements Activatable
             timer = Settings.PLATFORM_WAIT_TIME;
         }
     }
-
+    //Move a plataforma e a personagen que está em cima
     private void moveBy(int step) {
         List<GameCharacter> riders = findRiders();
         setLocation(getX(), getY() + step);
@@ -71,7 +75,7 @@ public class MovingPlatform extends Solid implements Activatable
             rider.setLocation(rider.getX(), rider.getY() + step);
         }
     }
-
+    //Devolve as personagens que têm os pés em cima da plataforma
     private List<GameCharacter> findRiders() {
         List<GameCharacter> riders = new ArrayList<>();
         int top = getY() - getImage().getHeight() / 2;

@@ -1,5 +1,8 @@
 import greenfoot.*;
-
+/**
+ * Caixa de diálogo com o nome de quem fala e o texto. O jogador avança
+ * com a tecla ENTER e a caixa desaparece depois da última fala.
+ */
 public class Dialogue extends Actor {
     private String[] names;
     private String[] texts;
@@ -7,7 +10,7 @@ public class Dialogue extends Actor {
     private boolean enterHeld;
     private Font nameFont;
     private Font textFont;
-
+    //Cria o diálogo e mostra a primeira fala
     public Dialogue(String[] names, String[] texts){
         this.names = names;
         this.texts = texts;
@@ -17,7 +20,7 @@ public class Dialogue extends Actor {
         textFont = new Font(Settings.DIALOGUE_TEXT_SIZE);
         showDialogue();
     }
-
+    //Avança para a fala seguinte quando se carrega em ENTER; remove a caixa no fim
     @Override
     public void act(){
         boolean enter = Greenfoot.isKeyDown(Settings.KEY_NEXT_DIALOGUE);
@@ -35,7 +38,7 @@ public class Dialogue extends Actor {
 
         enterHeld = enter;
     }
-
+    // desenha a fala atual
     private void showDialogue(){
         GreenfootImage image = new GreenfootImage(Settings.DIALOGUE_WIDTH, Settings.DIALOGUE_HEIGHT);
 
