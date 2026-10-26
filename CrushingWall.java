@@ -86,10 +86,12 @@ public class CrushingWall extends Solid
             setImage(middleImage);
         }
     }
-    //Tira uma vida aos agentes que estiverem a tocar na parede
+    // Tira uma vida aos agentes apenas quando a parede está ativamente a descer
     private void damageTouchingAgents() {
-        for (Agent agent : getIntersectingObjects(Agent.class)) {
-            agent.takeDamage();
+        if (descending && timer == 0) {
+            for (Agent agent : getIntersectingObjects(Agent.class)) {
+                agent.takeDamage();
+            }
         }
     }
 }

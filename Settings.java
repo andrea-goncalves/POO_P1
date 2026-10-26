@@ -206,6 +206,7 @@ public class Settings
     public static final String COMPUTER_IMAGE = "computer.png";
     public static final String CRUSH_TOP_IMAGE = "crushWallTopo.png";
     public static final String CRUSH_BOTTOM_IMAGE = "crusherWall_down.png";
+    public static final String CLUE_IMAGE = "clue.png";
 
     //Sounds
     public static final String SOUND_WHISTLE = "whistle.wav";
@@ -253,10 +254,7 @@ public class Settings
     public static final String HUD_READY = "READY";
     public static final String HUD_PROGRESS_SEPARATOR = "/";
 
-    // Clue, darkness, shields, boss bar
-    public static final int CLUE_SIZE = 24;
-    public static final Color CLUE_FILL_COLOR = Color.YELLOW;
-    public static final Color CLUE_BORDER_COLOR = Color.ORANGE;
+    // darkness, shields, boss bar
     public static final Color DARKNESS_COLOR = new Color(0, 0, 0, 150);
     public static final int BOSS_SHIELD_HEALTH = 100;
     public static final int AGENT_SHIELD_WIDTH = 16;
@@ -289,7 +287,7 @@ public class Settings
     public static final int L1_COMPUTER_DOORS_X = 500;
     public static final int L1_COMPUTER_DOORS_Y = 100;
     public static final int L1_CLUE1_X = 160;
-    public static final int L1_CLUE1_Y = 400;
+    public static final int L1_CLUE1_Y = 390;
     public static final int L1_CLUE2_X = 650;
     public static final int L1_CLUE2_Y = 100;
     public static final int L1_EXIT_X = 955;
@@ -324,7 +322,7 @@ public class Settings
     public static final int L2_DOG2_X = 920;
     public static final int L2_DOG2_Y = 100;
     public static final int L2_CLUE_X = 31;
-    public static final int L2_CLUE_Y = 300;
+    public static final int L2_CLUE_Y = 290;
     public static final int L2_EXIT_X = 950;
     public static final int L2_EXIT_Y = 100;
 
@@ -340,7 +338,7 @@ public class Settings
     public static final int L3_COMPUTER_PLATFORM_X = 585;
     public static final int L3_COMPUTER_PLATFORM_Y = 455;
     public static final int L3_PLATFORM1_X = 350;
-    public static final int L3_PLATFORM1_Y = 490;
+    public static final int L3_PLATFORM1_Y = 530;//490
     public static final int L3_PLATFORM1_TILES = -4;
     public static final int L3_PLATFORM2_X = 448;
     public static final int L3_PLATFORM2_Y = 302;
@@ -358,9 +356,9 @@ public class Settings
     public static final int L3_SOLDIER2_X = 900;
     public static final int L3_SOLDIER2_Y = 50;
     public static final int L3_CLUE1_X = 420;
-    public static final int L3_CLUE1_Y = 80;
-    public static final int L3_CLUE2_X = 500;
-    public static final int L3_CLUE2_Y = 250;
+    public static final int L3_CLUE1_Y = 70;
+    public static final int L3_CLUE2_X = 900;
+    public static final int L3_CLUE2_Y = 40;
     public static final int L3_EXIT_X = 870;
     public static final int L3_EXIT_Y = 450;
 
